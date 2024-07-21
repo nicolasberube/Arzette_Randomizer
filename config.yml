@@ -1,0 +1,18 @@
+level_order: true
+barrier_types: true
+npc:
+  randomize: true
+  include_foolish: false
+item_pool:
+  bags: true
+  keys: true
+  candles: true
+  coins: true
+  plants: true
+  upgrades: true
+  life_ups: true
+  bonus_scrolls: false
+  bonus_rewards: true
+  race_rewards: true
+  trading_sequence: false
+enemy_spawn: false
