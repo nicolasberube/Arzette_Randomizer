@@ -18,9 +18,11 @@ The fourth section is the item location assignment.
 The key (item on the left) is the location, meaning that this is where you would find the item in the vanilla game.
 The value (item on the right) is the item, meaning that this is the item you will get if you go to this location.
 
+Note that the code is *not* currently Archipelago compatible. I tried my best to make a possible future Achipelago port as smooth as possible, while still keeping the code as simple as possible and not relying on the Archipelago libraries. I guess by doing so, I upheld Larry David's quote of "A good compromise is when both parties are dissatisfied".
+
 # Configuration options
 
-## Level order
+## level_order
 Each beacon will still unlock the same number of levels. However, the unlocked levels will be random. The two levels that are unlocked at the start of the game will also be randomised.
 
 ## barrier_types
@@ -79,7 +81,7 @@ This would theoretically spawn random enemies instead of their vanilla placement
 # Logic rules assumptions
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
 
-All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate location and test it. A modification of the key sprites might be needed.
+All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate location and test it. A modification of the key sprites might be needed before activating the inclusion of the keys in the item pool.
 
 NPC spawn rules are local. For example, Cypress needs you to have the Lantern for him to spawn in Faramore. If Cypress' randomised location is now in Caves, then this Caves location will be left empty until you get the Lantern.
 
