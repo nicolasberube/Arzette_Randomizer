@@ -1,0 +1,260 @@
+[ITEMS]
+
+Forest Bag (First Room 1)
+Forest Bag (First Room 2)
+Forest Bag (Sword Wave)
+Forest Bag (Last Room)
+Caves Bag (Rope Ladder)
+Desert Bag (First Room 1)
+Desert Bag (First Room 2)
+Desert Bag (Last Room)
+Canyon Bag (Before Checkpoint)
+Canyon Bag (After Checkpoint 1)
+Canyon Bag (After Checkpoint 2)
+Canyon Bag (After Checkpoint 3)
+Canyon Bag (First Room End)
+Canyon Bag (After Zipline 1)
+Canyon Bag (After Zipline 2)
+Canyon Bag (After Zipline 3)
+Canyon Bag (Motte House)
+Swamp Bag (First Room)
+Peak Bag (First Cave 1)
+Peak Bag (First Cave 2)
+Peak Bag (Before Apatu)
+Peak Bag (After Apatu)
+Crypts Bag (Skelvis)
+Beach Bag (First Room)
+River Bag (Last Room)
+Hills Bag (Barn)
+Hills Bag (Music Shrine)
+Fort Bag (Dungeon 1)
+Fort Bag (Dungeon 2)
+Fort Bag (Dungeon 3)
+Fort Bag (Dungeon 4)
+Fort Bag (Dark Room)
+Fort Bag (Top Room 1)
+Fort Bag (Top Room 2)
+Fort Bag (Top Room 3)
+Fort Bag (Last Room)
+Castle Bag (Entrance)
+Castle Bag (Top Room)
+Castle Bag (Bonus)
+Lair Bag (First Room)
+Lair Bag (Lava Room)
+Lair Bag (Final Room 1)
+Lair Bag (Final Room 2)
+Lair Bag (Final Room 3)
+Faramore Key (Well)
+Faramore Key (Tavern)
+Forest Key
+Desert Key
+Canyon Key
+Swamp Key (Frich House)
+Swamp Key (Griffin Boots)
+Peak Key
+Crypts Key
+Beach Key (First House)
+Beach Key (Tork Cabin)
+River Key (Francine)
+River Key (Submarine)
+Hills Key
+Fort Key
+Castle Key (Nodelki)
+Castle Key (Left Room)
+Dungeon Key
+Faramore Candle (Empty House)
+Faramore Candle (Cypress House)
+Forest Candle (Tree)
+Forest Candle (Cypress)
+Caves Candle (First Dark Room)
+Caves Candle (Second Dark Room)
+Desert Candle (Pit)
+Desert Candle (Last Room)
+Canyon Candle (First Room End)
+Canyon Candle (Motte House)
+Swamp Candle (First Room)
+Swamp Candle (Frich House)
+Peak Candle (First Cave)
+Peak Candle (Ciclena Cave)
+Crypts Candle (After Crypt)
+Crypts Candle (Skelvis)
+Volcano Candle (First Room)
+Volcano Candle (Last Room)
+Beach Candle (Tork Cabin)
+Beach Candle (Cave)
+River Candle (Boat)
+River Candle (Last Room)
+Hills Candle (Cave)
+Hills Candle (Music Shrine)
+Fort Candle (Dark Room)
+Fort Candle (Last Room)
+Castle Candle (Right Room)
+Castle Candle (Top Room)
+Lair Candle (Tree Trunk)
+Lair Candle (Tree Top)
+Faramore Coin
+Forest Coin
+Caves Coin
+Desert Coin
+Canyon Coin
+Swamp Coin
+Peak Coin
+Crypts Coin
+Volcano Coin
+Beach Coin
+River Coin
+Hills Coin
+Fort Coin
+Castle Coin
+Lair Coin
+Swamp Plant
+Beach Plant
+Hills Plant
+Power Stone Upgrade
+Wallet Upgrade
+Bomb Upgrade
+Lamp Oil Upgrade
+Rope Upgrade
+Soul Upgrade
+Infinite Soulfire
+Desert Life-Up
+Crypts Life-Up
+River Life-Up
+Faramore Bonus Reward
+Forest Bonus Reward
+Caves Bonus Reward
+Desert Bonus Reward
+Canyon Bonus Reward
+Swamp Bonus Reward
+Peak Bonus Reward
+Crypts Bonus Reward
+Volcano Bonus Reward
+Beach Bonus Reward
+River Bonus Reward
+Hills Bonus Reward
+Fort Bonus Reward
+Castle Bonus Reward
+Lair Bonus Reward
+Forest Race 100 Rupees
+Peak Race 100 Rupees
+Hills Race 100 Rupees
+Sacred Oil
+Funky Fungus
+Snail Salt
+Cleaver Shovel
+Ogre Hair
+Oil and Chains
+Chainsword
+Sword Wave
+Golden Fly
+Magic Armor
+Silver Cricket
+Rope Ladder
+Shield Ring
+Compass
+Griffin Boots
+Bell
+Crystal of Refraction
+Fatal Flute
+Blue Magic
+Lightning Sword
+Enchanted Shoes
+Reflector Ring
+Winged Belt
+Purple Magic
+Citizenship Papers
+Canteen
+Calendar
+200 Rupees
+Lantern
+Rope
+Fairy Dust
+Backstep
+Smart Gun
+Star Earrings
+Power Pendant
+Bomb Gauntlet
+Speedy Shoes
+Magic Cloak
+Double Wave
+
+
+[ITEMS (currently not in the randomisation pool)]
+
+Default Beacon
+Bombs
+Daimur
+Orange Rock
+Brown Rock
+Gray Rock
+Blue Rock
+Default Beacon
+Forest Beacon
+Desert Beacon
+Swamp Beacon
+Beach Beacon
+Hills Beacon
+Forest Jewel
+Canyon Jewel
+Peak Jewel
+Fort Jewel
+Castle Jewel
+Faramore Bonus
+Forest Bonus
+Caves Bonus
+Desert Bonus
+Canyon Bonus
+Swamp Bonus
+Peak Bonus
+Crypts Bonus
+Volcano Bonus
+Beach Bonus
+River Bonus
+Hills Bonus
+Fort Bonus
+Castle Bonus
+Lair Bonus
+
+
+[NPC]
+
+Faramore Yukeen
+Faramore Covenplate
+Faramore Kari
+Faramore Alven
+Faramore Brinda
+Faramore Frich
+Faramore Rudy
+Faramore Barnabuss
+Faramore Denny
+Faramore Dewey
+Faramore Cypress
+Faramore Munhum
+Forest Cypress
+Caves Munhum
+Caves Ellido
+Desert Fairy
+Canyon Crowdee
+Canyon Motte
+Canyon Odie
+Swamp Glubbert
+Peak Ciclena
+Crypts Skelvis
+Beach Fleetus
+Beach Tork
+River Francine
+River Morgh
+Hills Milbert
+Lair Zazie
+
+
+[NPC (currently not in the randomisation pool)]
+
+Faramore Mortar
+Swamp Frich
+Forest Rudy (Start)
+Forest Rudy (End)
+Peak Rudy (Start)
+Peak Rudy (End)
+Hills Rudy (Start)
+Hills Rudy (End)

@@ -17,7 +17,7 @@ level_locations = {
     "Forest": [
         "Forest Bag (First Room 1)",
         "Forest Bag (First Room 2)",
-        "Forest Key (Tree)",
+        "Forest Key",
         "Forest Bonus",
         "Forest Candle (Tree)",
         "Forest Candle (Cypress)",
@@ -47,7 +47,7 @@ level_locations = {
         "Compass",
         "Desert Candle (Pit)",
         "Desert Bonus",
-        "Desert Key (Tomb)",
+        "Desert Key",
         "Desert Candle (Last Room)",
         "Desert Life-Up",
         "Desert Bag (Last Room)",
@@ -62,7 +62,7 @@ level_locations = {
         "Canyon Bag (First Room End)",
         "Canyon Candle (First Room End)",
         "Canyon Jewel",
-        "Canyon Key (House)",
+        "Canyon Key",
         "Canyon Bag (After Zipline 1)",
         "Canyon Bag (After Zipline 2)",
         "Canyon Bag (After Zipline 3)",
@@ -251,19 +251,18 @@ default_npc_locations = {
     "Soul Upgrade": "Lair Zazie"
 }
 default_npc_locked = [
-    "Swamp Frich", "Faramore Mortar", "Forest Rudy (Start)", "Forest Rudy (End)",
+    "Faramore Mortar", "Swamp Frich", "Forest Rudy (Start)", "Forest Rudy (End)",
     "Peak Rudy (Start)", "Peak Rudy (End)", "Hills Rudy (Start)", "Hills Rudy (End)"]
 trading_locations = [
     "Sacred Oil", "Funky Fungus", "Snail Salt",
-    "Cleaver Shovel", "Ogre Hair", "Oil and Chains"]
+    "Cleaver Shovel", "Ogre Hair", "Oil and Chains", "Chainsword"]
 
 default_barrier_types = {typ: typ for typ in ["Red", "Blue", "Purple", "Gauntlet", "Flute"]}
 
-all_locations = [
+all_locations = starting_locations + [
     location for locations in level_locations.values() for location in locations] + \
     [location for location in (
-        list(default_npc_locations) + rock_locations +
-        starting_locations + bonus_locations)]
+        list(default_npc_locations) + rock_locations + bonus_locations)]
 all_npcs = (list(set(default_npc_locations.values())) + default_npc_locked + default_npc_fool)
 
 def add_rule(spot, rule, combine="and"):
@@ -428,20 +427,27 @@ class ArzetteWorld():
             else:
                 item_locked += sub_item_list
 
-        if self.config["item_pool"]["trading_sequence"]:
-            item_list += trading_locations
-        else:
-            for item in trading_locations[1:-1]:
-                self.location_cache[item].item = item
-            self.location_cache[trading_locations[-1]].item = trading_locations[0]
-            item_list += trading_locations[-1:]
-
+        # Locking items in location before trading_sequence
         for item in item_locked:
             self.location_cache[item].item = item
-        item_locked = [name for name, location in self.location_cache.items()
-                       if location.item is not None]
+
+        if self.config["item_pool"]["trading_sequence"]:
+            start_position = random.randint(0, len(trading_locations)-1)
+        else:
+            start_position = len(trading_locations)-1
+        if start_position != 0:
+            item_locked.append(trading_locations[0])
+            self.location_cache[trading_locations[start_position]].item = \
+                trading_locations[0]
+        for i_s, item in enumerate(trading_locations):
+            if i_s in {0, start_position}:
+                continue
+            item_locked.append(item)
+            self.location_cache[item].item = item
+        item_list.append(trading_locations[start_position])
+
         core_items = [name for name in all_locations
-                      if name not in item_list+item_locked+trading_locations]
+                      if name not in item_list+item_locked]
         item_list += core_items
 
         location_list = [name for name, location in self.location_cache.items()
@@ -581,10 +587,10 @@ class ArzetteWorld():
 
         # Forest Rules
         add_rule(self.get_npc("Forest Cypress"), lambda state:
-            state.has("Forest Key (Tree)") or state.has("Griffin Boots"))
+            state.has("Forest Key") or state.has("Griffin Boots"))
         
         add_rule(self.get_npc("Forest Rudy (End)"), lambda state:
-            state.has("Forest Key (Tree)") or state.has("Griffin Boots"))
+            state.has("Forest Key") or state.has("Griffin Boots"))
 
         # Caves Rules
         add_rule(self.get_npc("Caves Ellido"), lambda state:
@@ -593,7 +599,7 @@ class ArzetteWorld():
         
         # Desert Rules
         add_rule(self.get_npc("Desert Fairy"), lambda state:
-            state.has("Desert Key (Tomb)"))
+            state.has("Desert Key"))
 
         # Canyon Rules
         add_rule(self.get_npc("Canyon Crowdee"), lambda state:
@@ -601,7 +607,7 @@ class ArzetteWorld():
 
         for npc in ["Canyon Motte", "Canyon Odie"]:
             add_rule(self.get_npc(npc), lambda state:
-                state.has("Bombs") and state.has("Canyon Key (House)"))
+                state.has("Bombs") and state.has("Canyon Key"))
         add_rule(self.get_npc("Canyon Odie"), lambda state:
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) or
             state.has("Griffin Boots"))
@@ -689,7 +695,7 @@ class ArzetteWorld():
 
         # Bonus Rewards Rules
         for item in [location for location in self.location_cache
-                if "Bonus" in location.split() and "Reward" in item.split()]:
+                if "Bonus" in location.split() and "Reward" in location.split()]:
             level = item.split()[0]
             parent = f"{level} Bonus"
             add_rule(self.get_location(item), lambda state, parent=parent:
@@ -716,7 +722,8 @@ class ArzetteWorld():
             self.get_npc(self.npc_locations["Lantern"]).access_rule(state))
 
         add_rule(self.get_location("Faramore Key (Well)"), lambda state:
-            state.has("Faramore Key (Well)") or state.has("Griffin Boots"))
+            state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)") or
+            state.has("Griffin Boots"))
 
         add_rule(self.get_location("Power Stone Upgrade"), lambda state:
             self.get_npc(self.npc_locations["Power Stone Upgrade"]).access_rule(state) and
@@ -785,7 +792,7 @@ class ArzetteWorld():
         for item in ["Forest Coin", "Forest Bag (Sword Wave)", "Golden Fly", "Sword Wave",
                 "Forest Bag (Last Room)", "Forest Beacon", "Forest Jewel", "Magic Armor"]:
             add_rule(self.get_location(item), lambda state:
-                state.has("Forest Key (Tree)") or state.has("Griffin Boots"))
+                state.has("Forest Key") or state.has("Griffin Boots"))
         add_rule(self.get_location("Golden Fly"), lambda state:
             state.has("Bombs") and
             self.get_barrier(self.barrier_types["Red"]).access_rule(state))
@@ -796,10 +803,10 @@ class ArzetteWorld():
             self.get_barrier(self.barrier_types["Gauntlet"]).access_rule(state))
 
         add_rule(self.get_location("Forest Bonus"), lambda state:
-            state.has("Forest Key (Tree)"))
+            state.has("Forest Key"))
 
         add_rule(self.get_location("Forest Candle (Tree)"), lambda state:
-            state.has("Forest Key (Tree)") and
+            state.has("Forest Key") and
             self.get_barrier(self.barrier_types["Red"]).access_rule(state))
 
         add_rule(self.get_location("Forest Candle (Cypress)"), lambda state:
@@ -847,11 +854,11 @@ class ArzetteWorld():
             state.has("Funky Fungus"))
 
         # Desert Rules
-        add_rule(self.get_location("Desert Key (Tomb)"), lambda state: state.has("Bombs"))
+        add_rule(self.get_location("Desert Key"), lambda state: state.has("Bombs"))
 
         for item in ["Desert Candle (Last Room)", "Desert Life-Up",
                 "Desert Bag (Last Room)", "Desert Beacon"]:
-            add_rule(self.get_location(item), lambda state: state.has("Desert Key (Tomb)"))
+            add_rule(self.get_location(item), lambda state: state.has("Desert Key"))
 
         add_rule(self.get_location("Fairy Dust"), lambda state:
             self.get_npc(self.npc_locations["Fairy Dust"]).access_rule(state))
@@ -882,13 +889,13 @@ class ArzetteWorld():
             self.get_npc(self.npc_locations["Backstep"]).access_rule(state) and
             state.has("Canyon Jewel"))
 
-        for item in ["Canyon Key (House)", "Canyon Bag (After Zipline 1)",
+        for item in ["Canyon Key", "Canyon Bag (After Zipline 1)",
                 "Canyon Bag (After Zipline 2)", "Canyon Bag (After Zipline 3)",
                 "Canyon Coin", "Canyon Bag (Motte House)", "Canyon Candle (Motte House)"]:
             add_rule(self.get_location(item), lambda state: state.has("Bombs"))
         
         add_rule(self.get_location("Canyon Candle (Motte House)"), lambda state:
-            state.has("Canyon Key (House)") and
+            state.has("Canyon Key") and
             (self.get_barrier(self.barrier_types["Red"]).access_rule(state) or
              state.has("Griffin Boots")) and
             self.get_barrier(self.barrier_types["Blue"]).access_rule(state))
@@ -1335,7 +1342,7 @@ class ArzetteWorld():
                     collection_flag = True
         return state
 
-    def print(self, save_path="randomizer.txt"):
+    def print(self, save_path="randomizer.txt", sphere_path=None):
         output = ["[Level Unlock Order]"]
         for beacon, levels in self.level_order.items():
             output.append(f"{beacon}={levels}")
@@ -1354,9 +1361,61 @@ class ArzetteWorld():
             if item is None:
                 raise Exception(f"Location {location} not assigned")
             output.append(f"{location}={item}")
-        output = '\n'.join(output)
+        output = "\n".join(output)
         with open(save_path, "w") as file:
             file.write(output)
+
+        # Prints a collection document for testing
+        if not sphere_path:
+            return
+
+        state = ArzetteCollectionState(self)
+        for item in starting_locations:
+            state.collect(item)
+
+        all_spheres = [[{"item": self.get_location(name).item, "location": name, "expander": True}
+                        for name in starting_locations]]
+
+        while True:
+            collected_items = [collect["item"] for sphere in all_spheres for collect in sphere]
+            current_sphere = []
+            for name in all_locations:
+                location = self.get_location(name)
+                if (location.can_reach(state) and location.item not in collected_items):
+                    current_sphere.append(
+                        {"item": location.item, "location": name, "expander": False})
+
+            for collect in current_sphere:
+                test_state = state.copy()
+                test_state.collect(collect["item"])
+                test_sphere = [name for name in all_locations
+                               if (self.get_location(name).can_reach(test_state) and
+                                   self.get_location(name).item not in collected_items)]
+                if len(test_sphere) > len(current_sphere):
+                    collect["expander"] = True
+
+            all_spheres.append(current_sphere)
+            for collect in current_sphere:
+                state.collect(collect["item"])
+            if "Daimur" in [collect["item"] for collect in current_sphere]:
+                break
+            if len(current_sphere) == 0:
+                raise Exception("Something went wrong")
+
+        output = []
+        for i_s, sphere in enumerate(all_spheres):
+            output.append(" "*28+f"[SPHERE {i_s}]")
+            for collect in sphere:
+                if collect["expander"]:
+                    output.append(f"*{collect['item']:31s} in  {collect['location']}")
+                else:
+                    output.append(f"{collect['item']:32s} in  {collect['location']}")
+        output = "\n".join(output)
+        print(output)
+
+        with open(sphere_path, "w") as file:
+            file.write(output)
+
 
 class ArzetteCollectionState():
     def __init__(self, parent: ArzetteWorld):
@@ -1385,5 +1444,5 @@ class ArzetteCollectionState():
 
 if __name__ == "__main__":
     world = ArzetteWorld()
-    world.fill()
+    world.fill("vanilla")
     world.print()
