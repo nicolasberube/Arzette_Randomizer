@@ -432,9 +432,9 @@ class ArzetteWorld():
             self.location_cache[item].item = item
 
         if self.config["item_pool"]["trading_sequence"]:
-            start_position = random.randint(0, len(trading_locations)-1)
+            start_position = random.randint(0, len(trading_locations)-2)
         else:
-            start_position = len(trading_locations)-1
+            start_position = len(trading_locations)-2
         if start_position != 0:
             item_locked.append(trading_locations[0])
             self.location_cache[trading_locations[start_position]].item = \

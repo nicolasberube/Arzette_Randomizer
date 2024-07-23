@@ -71,9 +71,11 @@ Includes the rupees rewards of the bonus minigame scrolls in the pool.
 Includes the 100 rupees rewards of the Rudy races in the pool.
 
 ### trading_sequence
-Deactivating the inclusion of the trading squence means that the Sacred Oil location at the end of the Fort's Dungeon will be included in the pool, as well as the Sacred Oil and Refined Chains item. All other locations in the trading sequence are gonna remain vanilla, except for the Morgh reward (the vanilla Sacred Oil and Refined Chains item) which will be replaced with the Sacred Oil item. In other words, all other locations in the trading sequence will be inaccessible.
+All items in the trading sequence are in their vanilla location except for one, and the location that will contain a random item will always be the vanilla Sacred Oil location. This is the case wether the trading_sequence is set to true of false. 
 
-This means that the Soul Upgrade location will also be inaccessible, since it is normally available after starting the trading sequence.
+If the option is deactivated, the one that's not in its original place in the trading sequence is the Sacred Oil and Chains (therefore making all other items in the trading sequence inaccessible - and Zazie's Soul Upgrade item as well, since it is normally available after starting the trading sequence). Giving the Sacred Oil and Chains to Alven (the moose) will give you one random item in lieu of the normal Chainsword.
+
+If it's activated, the one that's not in its original place in the trading sequence is one random item in the sequence, starting with the Sacred Oil. This will force players to go through the rest of the vanilla trading sequence (except that NPC could be at different places) to get the Sacred Oil and Chains to give to Alven and get a random item in lieu of the Chainsword.
 
 ## enemy_spawn
 This would theoretically spawn random enemies instead of their vanilla placement. This is not currently implemented since the logic rules include red/blue enemies placement.
