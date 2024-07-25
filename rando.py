@@ -302,7 +302,7 @@ class ArzetteLocation():
 class ArzetteWorld():
     level_locations = level_locations
     all_locations = all_locations
-
+    n_tries = 0
     item_name_groups = {
         "magic": {"Sword Wave", "Smart Gun"},
         "candles": {location for location in all_locations if "Candle" in location.split()},
@@ -318,7 +318,6 @@ class ArzetteWorld():
             self.config = yaml.safe_load(file)
 
     def fill(self, seed=None):
-        self.n_tries = 0
         if seed == "vanilla":
             self.level_order = default_level_order
             self.level_beacons = {
@@ -1393,7 +1392,8 @@ class ArzetteWorld():
             key = f"{name}_Barrier"
             if key in location_dict:
                 raise Exception(f"Multiple key {key}")
-            location_dict[key] = f"{barrier}_Barrier"
+            value = variable_dictionary[f"{barrier}_Barrier"]
+            location_dict[key] = value
         for name in all_npcs:
             key = name.replace(" ", "_")
             npc = self.get_npc(name).item
@@ -1508,5 +1508,6 @@ class ArzetteCollectionState():
 
 if __name__ == "__main__":
     world = ArzetteWorld()
-    world.fill("vanilla")
+    #world.fill("vanilla")
+    world.fill()
     world.print()
