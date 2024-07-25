@@ -1,6 +1,7 @@
 import copy
 import random
 import yaml
+import csv
 from itertools import combinations
 
 starting_locations = ["Bombs", "Default Beacon"]
@@ -152,11 +153,12 @@ level_locations = {
         "Fort Bag (Dungeon 3)",
         "Fort Bag (Dungeon 4)",
         "Sacred Oil",
+        "Fort Key (First Room)",
         "Fort Candle (Dark Room)",
         "Fort Bag (Dark Room)",
         "Enchanted Shoes",
         "Fort Coin",
-        "Fort Key",
+        "Fort Key (Top Room)",
         "Fort Bag (Top Room 1)",
         "Fort Bag (Top Room 2)",
         "Fort Bag (Top Room 3)",
@@ -206,7 +208,7 @@ default_level_order = {
 
 default_npc_fool = [
     "Faramore Boru",  # blacksmith help
-    "Faramore Kari (Floor)",  # bell quest dude
+    "Faramore Kari",  # bell quest dude
     "Faramore Univor",  # guard
     "Faramore Salvik",  # drunk dude
     "Faramore Maki",  # baker
@@ -218,7 +220,7 @@ default_npc_fool = [
 default_npc_locations = {
     "Purple Magic": "Faramore Yukeen",
     "Citizenship Papers": "Faramore Covenplate",
-    "Power Stone Upgrade": "Faramore Kari",
+    "Power Stone Upgrade": "Faramore Kari Quest",
     "Dungeon Key": "Faramore Alven",
     "Chainsword": "Faramore Alven",
     "Canteen": "Faramore Brinda",
@@ -264,6 +266,24 @@ all_locations = starting_locations + [
     [location for location in (
         list(default_npc_locations) + rock_locations + bonus_locations)]
 all_npcs = (list(set(default_npc_locations.values())) + default_npc_locked + default_npc_fool)
+
+level_names = {
+    "Faramore": "Faramore Town",
+    "Forest": "Durridin Forest",
+    "Caves": "Cogwyn Caves",
+    "Desert": "Anju Desert",
+    "Canyon": "Creece Canyon",
+    "Swamp": "Norin Swamp",
+    "Peak": "Chillinax Peaks",
+    "Crypts": "Boanjale Crypts",
+    "Volcano": "Sprigum Volcano",
+    "Beach": "Badonc Beach",
+    "River": "Ryha River",
+    "Hills": "Lichen Hills",
+    "Fort": "Fort Findula",
+    "Castle": "Dennys Castle",
+    "Lair": "Daimurs Lair"
+}
 
 def add_rule(spot, rule, combine="and"):
     old_rule = spot.access_rule
@@ -406,19 +426,24 @@ class ArzetteWorld():
         item_locked += [item for item in all_locations if "Jewel" in item.split()]
         item_locked += [item for item in all_locations if "Bonus" in item.split()
                         and "Reward" not in item.split()]
+        item_locked += ["Faramore Bonus Reward",
+                        "Volcano Bonus Reward",
+                        "Castle Bonus Reward"]
 
         item_list = []
         sub_item_lists = {
             "bags": [item for item in all_locations if "Bag" in item.split()],
-            "keys": [item for item in all_locations if "Key" in item.split()],
+            "keys": [item for item in all_locations if "Key" in item.split()
+                     and item != "Dungeon Key"],
             "candles": [item for item in all_locations if "Candle" in item.split()],
             "coins": [item for item in all_locations if "Coin" in item.split()],
             "plants": [item for item in all_locations if "Plant" in item.split()],
             "upgrades": ([item for item in all_locations if "Upgrade" in item.split()] +
                         ["Infinite Soulfire"]),
             "life_ups": [item for item in all_locations if "Life-Up" in item.split()],
-            "bonus_rewards": [item for item in all_locations if "Bonus" in item.split()
-                            and "Reward" in item.split()],
+            "bonus_rewards": [item for item in all_locations if "Bonus" in item.split() and
+                "Reward" in item.split() and
+                not any(level in item for level in ["Faramore", "Volcano", "Castle"])],
             "race_rewards": [item for item in all_locations if "Race" in item.split()],
         }
         for option, sub_item_list in sub_item_lists.items():
@@ -559,7 +584,7 @@ class ArzetteWorld():
                     state.has("Power Pendant"))
 
         # Faramore Rules
-        for npc in ["Faramore Kari", "Faramore Barnabuss"]:
+        for npc in ["Faramore Kari Quest", "Faramore Barnabuss"]:
             add_rule(self.get_npc(npc), lambda state:
                  state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)") or
                  (state.has("Griffin Boots") and
@@ -1171,7 +1196,7 @@ class ArzetteWorld():
                 "Fort Bag (Dark Room)"]:
             add_rule(self.get_location(item), lambda state: state.has("Lantern"))
 
-        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key",
+        for item in ["Fort Key (First Room)", "Enchanted Shoes", "Fort Coin", "Fort Key (Top Room)",
                 "Fort Bag (Top Room 1)", "Fort Bag (Top Room 2)", "Fort Bag (Top Room 3)",
                 "Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
                 "Fort Jewel", "Fort Bonus"]:
@@ -1180,11 +1205,11 @@ class ArzetteWorld():
         add_rule(self.get_location("Enchanted Shoes"), lambda state:
             self.get_barrier(self.barrier_types["Flute"]).access_rule(state))
 
-        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key"]:
+        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key (Top Room)"]:
             add_rule(self.get_location(item), lambda state:
                 state.has("Blue Magic"))
 
-        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key",
+        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key (Top Room)",
                 "Fort Bag (Top Room 1)", "Fort Bag (Top Room 2)", "Fort Bag (Top Room 3)",
                 "Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
                 "Fort Jewel", "Fort Bonus"]:
@@ -1200,7 +1225,7 @@ class ArzetteWorld():
         for item in ["Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
                 "Fort Jewel", "Fort Bonus"]:
             add_rule(self.get_location(item), lambda state:
-                state.has("Fort Key") and
+                state.has("Fort Key (Top Room)") and
                 self.get_barrier(self.barrier_types["Blue"]).access_rule(state))
 
         for item in ["Fort Bag (Last Room)", "Reflector Ring",
@@ -1342,28 +1367,67 @@ class ArzetteWorld():
                     collection_flag = True
         return state
 
-    def print(self, save_path="randomizer.txt", sphere_path=None):
-        output = ["[Level Unlock Order]"]
+    def print(self, save_path="randomizer.csv", sphere_path=None):
+        with open("vanilla.csv", "r") as csvfile:
+            vanilla_output = [row for row in csv.reader(csvfile, delimiter=',')]
+
+        variable_dictionary = {}
+        for i_r, row in enumerate(vanilla_output):
+            if (i_r == 0 or row[0] == "" or row[0].startswith("[") or
+                    (row[1].startswith("world_") and row[1].endswith("_unlocked"))):
+                continue
+            if row[0] in variable_dictionary:
+                raise Exception("Cannot import vanilla.csv")
+            variable_dictionary[row[0]] = row[1].split('//')[0]
+
+        level_unlocks = {}
         for beacon, levels in self.level_order.items():
-            output.append(f"{beacon}={levels}")
-        output.append("[Barrier Types]")
+            if beacon != "Default":
+                beacon = f"{beacon}_Beacon"
+            for i_u, level in enumerate(levels):
+                level = level_names[level].lower().replace(" ", "_")
+                level_unlocks[f"{beacon}_{i_u+1}"] = f"world_{level}_unlocked"
+
+        location_dict = {}
         for name, barrier in self.barrier_types.items():
-            output.append(f"{name}={barrier}")
-        output.append("[NPC]")
+            key = f"{name}_Barrier"
+            if key in location_dict:
+                raise Exception(f"Multiple key {key}")
+            location_dict[key] = f"{barrier}_Barrier"
         for name in all_npcs:
+            key = name.replace(" ", "_")
             npc = self.get_npc(name).item
             if npc is None:
                 raise Exception(f"NPC {name} not assigned")
-            output.append(f"{name}={npc}")
-        output.append("[Items]")
+            value = variable_dictionary[npc.replace(" ", "_")]
+            if key in location_dict:
+                raise Exception(f"Multiple key {key}")
+            location_dict[key] = value
         for location in all_locations:
+            key = location.replace(" ", "_")
             item = self.get_location(location).item
             if item is None:
                 raise Exception(f"Location {location} not assigned")
-            output.append(f"{location}={item}")
-        output = "\n".join(output)
-        with open(save_path, "w") as file:
-            file.write(output)
+            value = variable_dictionary[item.replace(" ", "_")]
+            location_dict[key] = value
+
+        output = []
+        for i_r, row in enumerate(vanilla_output):
+            if (i_r == 0 or row[0] == "" or row[0].startswith("[")):
+                output.append(row)
+                if row[0].startswith("[WORLD UNLOCKS]"):
+                    for key, value in level_unlocks.items():
+                        output.append([key, value])
+                continue
+            if (row[1].startswith("world_") and row[1].endswith("_unlocked")):
+                continue
+            value = location_dict[row[0]]
+            output.append([row[0], value])
+
+        with open(save_path, 'w') as csvfile:
+            writer = csv.writer(csvfile, delimiter=',')
+            for row in output:
+                writer.writerow(row)
 
         # Prints a collection document for testing
         if not sphere_path:

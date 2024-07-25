@@ -62,7 +62,7 @@ Include all the capacity upgrades in the pool. This does include the Infinite So
 Include life-ups (extra hearts) in the pool.
 
 ### bonus_scrolls
-Includes the bonus minigame scrolls location in the pool. This is not implemented yet, since we need to separate locations in the world and locations as rewards. Doing this would make including NPCs in the general item pool possible.
+Includes the bonus minigame scrolls location in the pool. This is not implemented yet, since we need to separate locations in the world and locations as rewards. Doing this would make including NPCs in the general item pool possible. Also, each bonus scroll is automatically linked to the level they are in, so the logic needs to be modified accordingly.
 
 ### bonus_rewards
 Includes the rupees rewards of the bonus minigame scrolls in the pool.
@@ -77,6 +77,8 @@ If the option is deactivated, the one that's not in its original place in the tr
 
 If it's activated, the one that's not in its original place in the trading sequence is one random item in the sequence, starting with the Sacred Oil. This will force players to go through the rest of the vanilla trading sequence (except that NPC could be at different places) to get the Sacred Oil and Chains to give to Alven and get a random item in lieu of the Chainsword.
 
+We could change this and incorporate all trading sequence items in the default pool if we change the game so that we can hold on to multiple items of the trading sequence at a time.
+
 ## enemy_spawn
 This would theoretically spawn random enemies instead of their vanilla placement. This is not currently implemented since the logic rules include red/blue enemies placement.
 
@@ -90,3 +92,14 @@ NPC spawn rules are local. For example, Cypress needs you to have the Lantern fo
 NPC requirements are local. For example, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomised location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
 
 Enemy spawns are not randomised for now.
+
+
+# TODO
+
+The trading sequence could be included like any other objects if we change the game so that we can hold on to multiple items of the trading sequence at a time.
+
+Jewels are not included in the pool, but they could be.
+
+Bombs are not included in the pool. They could be if we code an extra location (at the start of a specified level), and make sure that bombs cannot spawn in bag and shop before that collection.
+
+Bonus scrolls logic needs to be changed so one spawns every level, and location must be documented as out-in-the-open or quest-reward to include NPC and bonus scrolls in the general item pool.

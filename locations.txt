@@ -58,10 +58,10 @@ Beach Key (Tork Cabin)
 River Key (Francine)
 River Key (Submarine)
 Hills Key
-Fort Key
+Fort Key (First Room)
+Fort Key (Top Room)
 Castle Key (Nodelki)
 Castle Key (Left Room)
-Dungeon Key
 Faramore Candle (Empty House)
 Faramore Candle (Cypress House)
 Forest Candle (Tree)
@@ -138,6 +138,7 @@ Lair Bonus Reward
 Forest Race 100 Rupees
 Peak Race 100 Rupees
 Hills Race 100 Rupees
+Dungeon Key
 Sacred Oil
 Funky Fungus
 Snail Salt
@@ -181,7 +182,6 @@ Double Wave
 
 [ITEMS (currently not in the randomisation pool)]
 
-Default Beacon
 Bombs
 Daimur
 Orange Rock
@@ -220,7 +220,7 @@ Lair Bonus
 
 Faramore Yukeen
 Faramore Covenplate
-Faramore Kari
+Faramore Kari Quest
 Faramore Alven
 Faramore Brinda
 Faramore Frich
@@ -246,7 +246,14 @@ River Francine
 River Morgh
 Hills Milbert
 Lair Zazie
-
+Faramore Boru
+Faramore Kari
+Faramore Univor
+Faramore Salvik
+Faramore Maki
+Faramore Payop
+Volcano Joe
+River Barnabuss
 
 [NPC (currently not in the randomisation pool)]
 
