@@ -44,7 +44,10 @@ Those options decide which item types to include in the item pool to randomise.
 Include bags in the pool
 
 ### keys
-Include keys in the pool. This does not include quest items like the Fort Findula Dungeon Key.
+Include keys in the pool. This does not include quest items like the Fort Findula Dungeon Key. This also does not include the Key in Lichen Hills.
+
+### hills_key
+Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. Note that empty locations could also be NPCs with their own spawn rules.
 
 ### candles
 Include candles in the pool.
@@ -71,21 +74,37 @@ Includes the rupees rewards of the bonus minigame scrolls in the pool.
 Includes the 100 rupees rewards of the Rudy races in the pool.
 
 ### trading_sequence
-All items in the trading sequence are in their vanilla location except for one, and the location that will contain a random item will always be the vanilla Sacred Oil location. This is the case wether the trading_sequence is set to true of false. 
+This variable can take many values, as explained here.
 
-If the option is deactivated, the one that's not in its original place in the trading sequence is the Sacred Oil and Chains (therefore making all other items in the trading sequence inaccessible - and Zazie's Soul Upgrade item as well, since it is normally available after starting the trading sequence). Giving the Sacred Oil and Chains to Alven (the moose) will give you one random item in lieu of the normal Chainsword.
+#### excluded
+This means that the trading sequence will only put the Fort Findula Dungeon Key, the Sacred Oil and Refined Chains and the Chainsword in the pool. The locations that will be put in the pool are both the moose Alven's interaction (the first one being always present, and the second being when offered the Sacred Oil and Chains), as well as the vanilla Sacred Oil location at the end of the Fort Findula Dungeon.
 
-If it's activated, the one that's not in its original place in the trading sequence is one random item in the sequence, starting with the Sacred Oil. This will force players to go through the rest of the vanilla trading sequence (except that NPC could be at different places) to get the Sacred Oil and Chains to give to Alven and get a random item in lieu of the Chainsword.
+In other words, talking to Alven once will give you random item, talking to Alven with the Sacred Oil and Refined Chains will give you a random item, and going to the end of the Fort Findula Dungeon will give you a random item. Every other NPC interaction in the sequence will ask for an item that you cannot obtain, and will therefore be foolish. This also mean that whatever item that will get attributed to Zazie's Soul Upgrade location will never be obtainable.
 
-We could change this and incorporate all trading sequence items in the default pool if we change the game so that we can hold on to multiple items of the trading sequence at a time.
+#### included
+This will include all items in the Chainsword trading sequence, starting with the Fort Findula Dungeon Key to the Chainsword. The game has been modified so you can hold multiple items of the trading sequence at the same time, but they might not show up in the inventory.
+
+#### vanilla
+Activating the vanilla flag will lock all items in the trading sequence to their vanilla locations, including the Chainsword, except for the Fort Findula Dungeon Key. The only location included in the pool will be Alven's first interaction.
+
+In other words, talking to Alven once will give you random item. Finding the Fort Findula Dungeon Key will kickstart the trading sequence, which will always lead to the Chainsword in the end.
 
 ## enemy_spawn
 This would theoretically spawn random enemies instead of their vanilla placement. This is not currently implemented since the logic rules include red/blue enemies placement.
 
-# Logic rules assumptions
+# Logic rules game assumptions
+
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
 
+The trading sequence has been modified so you can hold multiple items from it at a time. If this is not the case, we can still include flag "excluded" and "vanilla" in the config file.
+
+An extra location for the Bombs has been coded in (preferably at the start of Forest or Faramore). Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
+
 All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate location and test it. A modification of the key sprites might be needed before activating the inclusion of the keys in the item pool.
+
+All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game.
+
+Cypress' spawning rules in Faramore is changed to having given his the Citizenship Papers in Forest. In the vanilla game, this requirement is only obtaining the Lantern.
 
 NPC spawn rules are local. For example, Cypress needs you to have the Lantern for him to spawn in Faramore. If Cypress' randomised location is now in Caves, then this Caves location will be left empty until you get the Lantern.
 
@@ -94,12 +113,17 @@ NPC requirements are local. For example, Cypress needs 3 plants to give the Lamp
 Enemy spawns are not randomised for now.
 
 
+# Logic rules caveats
+
+Since NPC, the Hills Keys and quest items (Plants, Rocks, Compass and Bell) have local requirements, we cannot implement a logic rule to their location before they are assigned.
+
+For the NPC, we do their assignment first, which will then dictate the rule for the location of interacting with them. This is mandatory since we cannot know the logic rules of an NPC interaction location before knowing where this NPC is.
+
+For the objects, we assume that going to their location allows for their collection without considering their spawning equirements - which will be the case for Archipelago anyway. To fix this, we include the spawning requirements in *every* logic rules that expect to have those items in the collection state. This won't be Archipelago compatible - since if those item are in another world, they won't care about your spawning requirements unless such requirements are an item in itself - but even then it would only make the logic stricter than necessary.
+
+
 # TODO
 
-The trading sequence could be included like any other objects if we change the game so that we can hold on to multiple items of the trading sequence at a time.
-
-Jewels are not included in the pool, but they could be.
-
-Bombs are not included in the pool. They could be if we code an extra location (at the start of a specified level), and make sure that bombs cannot spawn in bag and shop before that collection.
-
 Bonus scrolls logic needs to be changed so one spawns every level, and location must be documented as out-in-the-open or quest-reward to include NPC and bonus scrolls in the general item pool.
+
+We need to clean vanilla.csv (comments, useless rows like "Default_Beacon", etc.)
