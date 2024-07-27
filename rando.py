@@ -386,9 +386,24 @@ class ArzetteWorld():
         else:
             self.barrier_types = default_barrier_types
 
+        # Bonus scrolls randomisation
+        self.location_cache = {name: ArzetteLocation() for name in all_locations}
+        item_locked = []
+        scroll_locations = [item for item in all_locations if "Bonus" in item.split()
+                            and "Reward" not in item.split()]
+        if self.config["item_pool"]["bonus_scrolls"]:
+            for item in scroll_locations:
+                level = item.split()[0]
+                possible_locations = [
+                    location for location in level_locations[level]
+                    if not any(word in location for word in {"Jewel", "Beacon"})]
+                location = random.choice(possible_locations)
+                self.get_location(location).item = item
+        else:
+            item_locked += scroll_locations
+
         # NPC randomisation
         if self.config["npc"]["randomize"]:
-
             npc_cache = {name: ArzetteLocation() for name in all_npcs}            
             if self.config["npc"]["include_foolish"]:
                 npc_list = list(set(default_npc_locations.values())) + default_npc_fool
@@ -419,15 +434,12 @@ class ArzetteWorld():
         # Item randomisation
 
         # Set-up item pool based on settings
-        self.location_cache = {name: ArzetteLocation() for name in all_locations}
         self.set_rules()
 
-        item_locked = ["Default Beacon", "Daimur", "Hills Key"]
+        item_locked += ["Default Beacon", "Daimur", "Hills Key"]
         #item_locked += [item for item in all_locations if "Rock" in item.split()]
         item_locked += [item for item in all_locations if "Beacon" in item.split()]
         # item_locked += [item for item in all_locations if "Jewel" in item.split()]
-        item_locked += [item for item in all_locations if "Bonus" in item.split()
-                        and "Reward" not in item.split()]
         item_locked += ["Faramore Bonus Reward",
                         "Volcano Bonus Reward",
                         "Castle Bonus Reward"]
@@ -486,7 +498,7 @@ class ArzetteWorld():
             item_list.append(trading_locations[start_position])
 
         core_items = [name for name in all_locations
-                      if name not in item_list+item_locked]
+                      if name not in item_list+item_locked+scroll_locations]
         item_list += core_items
 
         location_list = [name for name, location in self.location_cache.items()
@@ -710,6 +722,11 @@ class ArzetteWorld():
                         state.has("Power Pendant"))
 
         # Rocks Rules
+        for item in rock_locations:
+            add_rule(self.get_location(item), lambda state:
+                self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
+                self.get_npc(self.npc_locations["Rope"]).access_rule(state))
+
         add_rule(self.get_location("Orange Rock"), lambda state:
             state.has(self.level_beacons["Caves"]) and
             state.has_group("bombs"))
@@ -1121,6 +1138,9 @@ class ArzetteWorld():
             state.has("Calendar"))
 
         # River Rules
+        add_rule(self.get_location("River Bonus"), lambda state:
+            state.has("River Key (Francine)"))
+
         add_rule(self.get_location("River Key (Francine)"), lambda state:
             state.has_group("magic"))
 
@@ -1524,6 +1544,5 @@ class ArzetteCollectionState():
 
 if __name__ == "__main__":
     world = ArzetteWorld()
-    #world.fill("vanilla")
     world.fill()
     world.print()

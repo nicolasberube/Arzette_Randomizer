@@ -65,7 +65,7 @@ Include all the capacity upgrades in the pool. This does include the Infinite So
 Include life-ups (extra hearts) in the pool.
 
 ### bonus_scrolls
-Includes the bonus minigame scrolls location in the pool. This is not implemented yet, since we need to separate locations in the world and locations as rewards. Doing this would make including NPCs in the general item pool possible. Also, each bonus scroll is automatically linked to the level they are in, so the logic needs to be modified accordingly.
+Includes the bonus minigame scrolls location in the pool. The scrolls will only spawn in open locations, not as quest rewards - even though they probably could be given as quest rewards without crashing with the current game mod. Also, each bonus scroll is automatically linked to the level they are in, so there will be one and only one bonus scroll per level.
 
 ### bonus_rewards
 Includes the rupees rewards of the bonus minigame scrolls in the pool.
@@ -124,6 +124,6 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-Bonus scrolls logic needs to be changed so one spawns every level, and location must be documented as out-in-the-open or quest-reward to include NPC and bonus scrolls in the general item pool.
+Merge NPC pool and item pool so thw former can spawn in the latter (level_location except Jewel and Beacon) and vice-versa.
 
 We need to clean vanilla.csv (comments, useless rows like "Default_Beacon", etc.)
