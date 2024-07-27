@@ -1,233 +1,225 @@
+seed: 2003854478
                             [SPHERE 0]
 *Default Beacon                  in  Default Beacon
                             [SPHERE 1]
-*Griffin Boots                   in  Canyon Bag (Before Checkpoint)
-Forest Bag (First Room 2)        in  Canyon Bag (After Checkpoint 1)
-Backstep                         in  Canyon Bag (After Checkpoint 2)
-Canyon Bag (After Zipline 3)     in  Canyon Bag (After Checkpoint 3)
-*Canyon Bonus                    in  Canyon Bag (First Room End)
+Crypts Candle (After Crypt)      in  Canyon Bag (Before Checkpoint)
+Blue Rock                        in  Canyon Bag (After Checkpoint 1)
+*Griffin Boots                   in  Canyon Bag (After Checkpoint 2)
+Desert Candle (Last Room)        in  Canyon Bag (After Checkpoint 3)
+Smart Gun                        in  Canyon Bag (First Room End)
                             [SPHERE 2]
-*Bomb Gauntlet                   in  Canyon Candle (First Room End)
-Hills Coin                       in  Canyon Bonus Reward
+River Life-Up                    in  Canyon Candle (First Room End)
+*Golden Fly                      in  Swamp Candle (First Room)
+Blue Magic                       in  Swamp Bag (First Room)
                             [SPHERE 3]
-Dungeon Key                      in  Canyon Bonus
-Smart Gun                        in  Canyon Key
-Rope Ladder                      in  Canyon Bag (After Zipline 1)
-Beach Coin                       in  Canyon Bag (After Zipline 2)
-Oil and Chains                   in  Canyon Bag (After Zipline 3)
-Fort Candle (Last Room)          in  Canyon Coin
-Blue Magic                       in  Canyon Bag (Motte House)
+Swamp Bonus                      in  Swamp Coin
+*Swamp Key (Frich House)         in  Swamp Key (Frich House)
                             [SPHERE 4]
-Blue Rock                        in  Hills Bonus
-River Key (Submarine)            in  Hills Bag (Barn)
-Hills Key                        in  Hills Key
-Forest Race 100 Rupees           in  Hills Bag (Music Shrine)
-*Fatal Flute                     in  Hills Candle (Music Shrine)
+Hills Race 100 Rupees            in  Swamp Candle (Frich House)
+*Swamp Key (Griffin Boots)       in  Rope
                             [SPHERE 5]
-Desert Bag (First Room 2)        in  Hills Coin
-Desert Bag (Last Room)           in  Hills Plant
-*Hills Beacon                    in  Hills Beacon
+Canyon Bag (After Zipline 1)     in  Griffin Boots
+Desert Bonus Reward              in  Swamp Plant
+Bombs                            in  Swamp Bonus
                             [SPHERE 6]
-Forest Coin                      in  Silver Cricket
-Beach Bonus Reward               in  Rope Ladder
-*Lantern                         in  Caves Bag (Rope Ladder)
-River Key (Francine)             in  Desert Coin
-Rope Upgrade                     in  Desert Bag (First Room 1)
-Fort Key (Top Room)              in  Desert Bag (First Room 2)
-Fort Bag (Last Room)             in  Compass
-Desert Bonus                     in  Desert Candle (Pit)
-Forest Bonus Reward              in  Desert Bonus
-Swamp Key (Frich House)          in  Desert Key
-Castle Bag (Entrance)            in  Speedy Shoes
-                            [SPHERE 7]
-Hills Plant                      in  Caves Candle (First Dark Room)
-*Desert Key                      in  Caves Coin
-Fort Bag (Top Room 2)            in  Caves Candle (Second Dark Room)
-Castle Candle (Top Room)         in  Caves Bonus
-Canyon Bag (After Checkpoint 1)  in  Caves Bag (Last Room)
-*Caves Bonus                     in  Shield Ring
-*Hills Bonus                     in  Hills Candle (Cave)
-Bombs                            in  Lightning Sword
-Crypts Candle (Skelvis)          in  Fairy Dust
-River Life-Up                    in  Desert Bonus Reward
-                            [SPHERE 8]
-Forest Bag (Last Room)           in  Desert Candle (Last Room)
-Caves Candle (Second Dark Room)  in  Desert Bag (Last Room)
-*Desert Beacon                   in  Desert Beacon
-*Canyon Key                      in  Caves Bonus Reward
-Faramore Candle (Empty House)    in  Hills Bonus Reward
-                            [SPHERE 9]
-Lair Bonus Reward                in  Canyon Candle (Motte House)
-Power Pendant                    in  Peak Candle (First Cave)
-Faramore Coin                    in  Peak Bag (First Cave 1)
-Fort Bonus Reward                in  Peak Bag (First Cave 2)
-Peak Candle (Ciclena Cave)       in  Peak Bonus
-*Peak Bonus                      in  Peak Coin
-Lair Bag (First Room)            in  Peak Key
-Lair Coin                        in  Peak Bag (Before Apatu)
-Lair Bag (Final Room 1)          in  Volcano Bonus
-Forest Key                       in  Volcano Candle (First Room)
-Peak Bag (After Apatu)           in  Volcano Coin
-*Volcano Bonus                   in  Volcano Candle (Last Room)
-Lair Bag (Final Room 2)          in  Crystal of Refraction
-*Beach Bonus                     in  Beach Bag (First Room)
-Star Earrings                    in  Beach Key (First House)
-Calendar                         in  Beach Coin
-*Beach Key (First House)         in  Rope
-Crypts Candle (After Crypt)      in  Orange Rock
-Purple Magic                     in  Brown Rock
-Canyon Bag (First Room End)      in  Gray Rock
-                            [SPHERE 10]
-Peak Race 100 Rupees             in  Beach Key (Tork Cabin)
-Lightning Sword                  in  Beach Candle (Tork Cabin)
-Faramore Key (Well)              in  Beach Candle (Cave)
-*Fairy Dust                      in  Fatal Flute
-*Beach Beacon                    in  Beach Beacon
-River Bonus Reward               in  Canteen
-Crystal of Refraction            in  Blue Rock
-Forest Bag (First Room 1)        in  Peak Bonus Reward
-Volcano Bonus Reward             in  Volcano Bonus Reward
-Sacred Oil                       in  Beach Bonus Reward
-                            [SPHERE 11]
-Hills Bag (Music Shrine)         in  Bombs
-Forest Candle (Tree)             in  Forest Bag (First Room 1)
-Peak Bag (First Cave 1)          in  Forest Bag (First Room 2)
-Fort Key (First Room)            in  Forest Key
-Chainsword                       in  Forest Bonus
-Fort Bag (Dungeon 1)             in  Forest Candle (Tree)
-Fort Bag (Dungeon 4)             in  Forest Candle (Cypress)
-Crypts Coin                      in  Forest Coin
-*Forest Bonus                    in  Forest Bag (Sword Wave)
-Canyon Bag (After Zipline 2)     in  Sword Wave
-Ogre Hair                        in  Golden Fly
-Hills Bag (Barn)                 in  Forest Bag (Last Room)
-*Forest Beacon                   in  Forest Beacon
-Desert Bag (First Room 1)        in  Castle Bag (Entrance)
-Hills Candle (Music Shrine)      in  Castle Candle (Right Room)
-Faramore Candle (Cypress House)  in  Castle Key (Nodelki)
-Fort Bag (Dungeon 3)             in  Castle Candle (Top Room)
-Peak Coin                        in  Castle Bag (Top Room)
-Fort Bag (Top Room 1)            in  Castle Coin
-Volcano Candle (Last Room)       in  Castle Key (Left Room)
-River Coin                       in  Castle Bag (Bonus)
-*Castle Bonus                    in  Castle Bonus
-Fort Bag (Top Room 3)            in  Dungeon Key
-*Peak Key                        in  Chainsword
-Peak Bag (First Cave 2)          in  Smart Gun
-                            [SPHERE 12]
-Desert Life-Up                   in  Faramore Key (Well)
-Fort Candle (Dark Room)          in  Faramore Key (Tavern)
-Canyon Bonus Reward              in  Faramore Bonus
-*Faramore Bonus                  in  Faramore Candle (Empty House)
-Gray Rock                        in  Faramore Candle (Cypress House)
-Caves Bonus Reward               in  Faramore Coin
-Winged Belt                      in  Swamp Candle (First Room)
-Magic Armor                      in  Swamp Bag (First Room)
-Castle Coin                      in  Peak Candle (Ciclena Cave)
-Peak Candle (First Cave)         in  River Key (Francine)
-Swamp Bag (First Room)           in  River Bonus
-Canyon Bag (Before Checkpoint)   in  River Candle (Boat)
-*River Bonus                     in  River Key (Submarine)
-Rope                             in  River Coin
-Lair Bag (Final Room 3)          in  Blue Magic
-Desert Bonus Reward              in  River Bag (Last Room)
-Canyon Bag (After Zipline 1)     in  River Candle (Last Room)
-Crypts Life-Up                   in  Citizenship Papers
-River Candle (Boat)              in  200 Rupees
-Desert Coin                      in  Star Earrings
-River Bag (Last Room)            in  Power Pendant
-Swamp Bonus Reward               in  Magic Cloak
-*Beach Key (Tork Cabin)          in  Oil and Chains
-Soul Upgrade                     in  Funky Fungus
-Canyon Bag (After Checkpoint 2)  in  Soul Upgrade
-Caves Bag (Rope Ladder)          in  Forest Bonus Reward
-Castle Bonus Reward              in  Castle Bonus Reward
-                            [SPHERE 13]
-*Sword Wave                      in  Beach Plant
-Forest Bag (Sword Wave)          in  Beach Bonus
-Faramore Bonus Reward            in  Faramore Bonus Reward
-Reflector Ring                   in  River Bonus Reward
-                            [SPHERE 14]
-*Snail Salt                      in  Double Wave
-                            [SPHERE 15]
-*Citizenship Papers              in  Cleaver Shovel
-                            [SPHERE 16]
-*Bell                            in  Lantern
-                            [SPHERE 17]
-*Golden Fly                      in  Power Stone Upgrade
-                            [SPHERE 18]
-*Swamp Bonus                     in  Swamp Coin
-Caves Coin                       in  Swamp Key (Frich House)
-Castle Key (Left Room)           in  Swamp Candle (Frich House)
-Fort Bag (Dungeon 2)             in  Swamp Key (Griffin Boots)
-Castle Candle (Right Room)       in  Griffin Boots
-Swamp Candle (Frich House)       in  Swamp Plant
-Beach Candle (Cave)              in  Swamp Bonus
 *Swamp Beacon                    in  Swamp Beacon
-                            [SPHERE 19]
+                            [SPHERE 7]
+*Volcano Bonus                   in  Volcano Candle (First Room)
+Faramore Candle (Empty House)    in  Volcano Coin
+Crypts Bag (Skelvis)             in  Volcano Candle (Last Room)
+Infinite Soulfire                in  Crystal of Refraction
+*Beach Bonus                     in  Beach Bag (First Room)
+Beach Plant                      in  Beach Key (First House)
+                            [SPHERE 8]
+Volcano Bonus Reward             in  Volcano Bonus Reward
+*Funky Fungus                    in  Beach Bonus Reward
+                            [SPHERE 9]
+*Purple Magic                    in  Snail Salt
+                            [SPHERE 10]
+Castle Bag (Top Room)            in  Swamp Key (Griffin Boots)
+*Beach Key (First House)         in  Beach Coin
+                            [SPHERE 11]
+Castle Candle (Top Room)         in  Beach Key (Tork Cabin)
+*Lantern                         in  Beach Candle (Tork Cabin)
+Forest Bag (Last Room)           in  Beach Candle (Cave)
+Hills Candle (Music Shrine)      in  Fatal Flute
+*Beach Beacon                    in  Beach Beacon
+                            [SPHERE 12]
+*Canyon Bonus                    in  Canyon Key
+Caves Coin                       in  Canyon Bag (After Zipline 1)
+River Bonus Reward               in  Canyon Bag (After Zipline 2)
+Sacred Oil                       in  Canyon Bag (After Zipline 3)
+*River Key (Francine)            in  Canyon Coin
+Swamp Bonus Reward               in  Canyon Bag (Motte House)
+Canyon Candle (First Room End)   in  River Key (Francine)
+Lair Bag (First Room)            in  River Candle (Boat)
+Forest Candle (Cypress)          in  River Key (Submarine)
+Faramore Coin                    in  River Coin
+Fort Key (First Room)            in  Hills Candle (Cave)
+Ogre Hair                        in  Hills Coin
+Winged Belt                      in  Hills Bonus
+Canteen                          in  Hills Bag (Barn)
+Hills Key                        in  Hills Key
+Lair Candle (Tree Top)           in  Hills Bag (Music Shrine)
+Fort Coin                        in  Hills Candle (Music Shrine)
+Castle Key (Left Room)           in  Swamp Bonus Reward
+                            [SPHERE 13]
+Castle Key (Nodelki)             in  River Bonus
+*Fatal Flute                     in  Speedy Shoes
+Rope Upgrade                     in  Canyon Bonus Reward
+                            [SPHERE 14]
+Crypts Candle (Skelvis)          in  Canyon Bonus
+Faramore Key (Tavern)            in  Peak Candle (First Cave)
+Forest Bag (First Room 1)        in  Peak Bag (First Cave 1)
+Castle Candle (Right Room)       in  Peak Bag (First Cave 2)
+Crystal of Refraction            in  Peak Bonus
+Desert Key                       in  Peak Coin
+Swamp Plant                      in  Peak Key
+*Peak Bonus                      in  Peak Bag (Before Apatu)
+Peak Bonus Reward                in  Blue Magic
+Calendar                         in  River Bag (Last Room)
+*River Bonus                     in  River Candle (Last Room)
+Caves Bonus Reward               in  Lightning Sword
+*Hills Bonus                     in  Hills Plant
+*Hills Beacon                    in  Hills Beacon
+Swamp Candle (First Room)        in  Bomb Gauntlet
+                            [SPHERE 15]
+Peak Candle (Ciclena Cave)       in  Desert Coin
+Fort Bag (Dungeon 4)             in  Desert Bag (First Room 1)
+Castle Coin                      in  Desert Bag (First Room 2)
+*Desert Bonus                    in  Compass
+Peak Bag (After Apatu)           in  Desert Candle (Pit)
+Desert Coin                      in  Desert Bonus
+River Bag (Last Room)            in  Desert Key
+Fort Bag (Dungeon 1)             in  Desert Candle (Last Room)
+Beach Bonus Reward               in  Desert Bag (Last Room)
+*Desert Beacon                   in  Desert Beacon
+Canyon Bonus Reward              in  Peak Bonus Reward
+*Canyon Key                      in  River Bonus Reward
+Fort Bonus Reward                in  Hills Bonus Reward
+                            [SPHERE 16]
+Beach Coin                       in  Faramore Key (Well)
+Soul Upgrade                     in  Faramore Key (Tavern)
+Hills Bag (Music Shrine)         in  Faramore Bonus
+*Faramore Bonus                  in  Faramore Candle (Empty House)
+*Snail Salt                      in  Faramore Candle (Cypress House)
+Canyon Bag (After Checkpoint 2)  in  Faramore Coin
+Hills Bonus Reward               in  Bombs
+Crypts Life-Up                   in  Forest Bag (First Room 1)
+Volcano Candle (Last Room)       in  Forest Bag (First Room 2)
+Bell                             in  Forest Key
+Forest Coin                      in  Forest Candle (Cypress)
+Reflector Ring                   in  Forest Coin
+*Forest Bonus                    in  Forest Bag (Sword Wave)
+Beach Candle (Tork Cabin)        in  Sword Wave
+*Compass                         in  Golden Fly
+Lair Bag (Final Room 1)          in  Forest Bag (Last Room)
+*Forest Beacon                   in  Forest Beacon
+Swamp Coin                       in  Canyon Candle (Motte House)
+Canyon Candle (Motte House)      in  Citizenship Papers
+Double Wave                      in  Forest Race 100 Rupees
+Caves Bag (Rope Ladder)          in  Peak Race 100 Rupees
+Power Stone Upgrade              in  Power Pendant
+*Citizenship Papers              in  Magic Cloak
+Hills Plant                      in  Oil and Chains
+Canyon Bag (Before Checkpoint)   in  Brown Rock
+Star Earrings                    in  Gray Rock
+Caves Candle (First Dark Room)   in  Blue Rock
+Magic Armor                      in  Desert Bonus Reward
+                            [SPHERE 17]
+Fort Bag (Dungeon 2)             in  Silver Cricket
+Wallet Upgrade                   in  Rope Ladder
+Peak Race 100 Rupees             in  Caves Bag (Rope Ladder)
+Chainsword                       in  Caves Candle (First Dark Room)
+*Power Pendant                   in  Caves Coin
+Lair Coin                        in  Caves Candle (Second Dark Room)
+Canyon Bag (After Checkpoint 1)  in  Caves Bonus
+*Swamp Candle (Frich House)      in  Caves Bag (Last Room)
+*Caves Bonus                     in  Shield Ring
+*Beach Candle (Cave)             in  Bomb Upgrade
+Desert Bag (First Room 2)        in  Lamp Oil Upgrade
+*Lair Candle (Tree Trunk)        in  Lantern
+Forest Bag (Sword Wave)          in  Star Earrings
+Forest Race 100 Rupees           in  Cleaver Shovel
+Forest Bag (First Room 2)        in  Orange Rock
+Faramore Bonus Reward            in  Faramore Bonus Reward
+*Peak Candle (First Cave)        in  Forest Bonus Reward
+                            [SPHERE 18]
 Forest Jewel                     in  Forest Jewel
-River Candle (Last Room)         in  Crypts Bonus
-*Silver Cricket                  in  Crypts Key
-Canteen                          in  Fort Bag (Dungeon 1)
-200 Rupees                       in  Fort Bag (Dungeon 2)
-Brown Rock                       in  Fort Bag (Dungeon 3)
-Crypts Bonus Reward              in  Fort Bag (Dungeon 4)
-Castle Bag (Top Room)            in  Sacred Oil
-Desert Candle (Last Room)        in  Fort Key (First Room)
-Lair Candle (Tree Top)           in  Fort Candle (Dark Room)
-Beach Candle (Tork Cabin)        in  Fort Bag (Dark Room)
-Lamp Oil Upgrade                 in  Enchanted Shoes
-Canyon Bag (Motte House)         in  Fort Coin
-Lair Candle (Tree Trunk)         in  Fort Key (Top Room)
-Volcano Coin                     in  Fort Bag (Top Room 1)
-*Fort Bonus                      in  Fort Bag (Top Room 2)
-Caves Bag (Last Room)            in  Fort Bag (Top Room 3)
-Orange Rock                      in  Fort Candle (Last Room)
-Double Wave                      in  Fort Bag (Last Room)
-Beach Plant                      in  Reflector Ring
-Hills Race 100 Rupees            in  Lair Candle (Tree Trunk)
-Swamp Key (Griffin Boots)        in  Lair Candle (Tree Top)
-*Crypts Key                      in  Lair Bonus
-Wallet Upgrade                   in  Lair Bag (First Room)
-*Lair Bonus                      in  Lair Coin
-Beach Bag (First Room)           in  Lair Bag (Lava Room)
-Bomb Upgrade                     in  Lair Bag (Final Room 1)
-Desert Candle (Pit)              in  Lair Bag (Final Room 2)
-Crypts Bag (Skelvis)             in  Lair Bag (Final Room 3)
-Canyon Bag (After Checkpoint 3)  in  Swamp Bonus Reward
-                            [SPHERE 20]
-Faramore Key (Tavern)            in  Magic Armor
-Peak Bonus Reward                in  Desert Life-Up
+Peak Bag (First Cave 1)          in  Desert Life-Up
 *Canyon Jewel                    in  Canyon Jewel
 *Peak Jewel                      in  Peak Jewel
-Hills Bonus Reward               in  Crypts Life-Up
-Canyon Candle (Motte House)      in  Bell
-*Crypts Bonus                    in  Crypts Candle (After Crypt)
-Canyon Coin                      in  Crypts Coin
-Peak Bag (Before Apatu)          in  Crypts Candle (Skelvis)
-Magic Cloak                      in  Crypts Bag (Skelvis)
-Lair Bag (Lava Room)             in  River Life-Up
-*Fort Jewel                      in  Fort Jewel
-*Swamp Plant                     in  Winged Belt
-Enchanted Shoes                  in  Wallet Upgrade
-Fort Coin                        in  Infinite Soulfire
-*Funky Fungus                    in  Rope Upgrade
-Castle Bag (Bonus)               in  Forest Race 100 Rupees
-*Castle Key (Nodelki)            in  Peak Race 100 Rupees
-Forest Candle (Cypress)          in  Hills Race 100 Rupees
-Shield Ring                      in  Bomb Gauntlet
-Canyon Candle (First Room End)   in  Fort Bonus Reward
-Fort Bag (Dark Room)             in  Lair Bonus Reward
-                            [SPHERE 21]
-*Cleaver Shovel                  in  Peak Bag (After Apatu)
-Speedy Shoes                     in  Fort Bonus
+*Rope Ladder                     in  Crypts Life-Up
+Canyon Bag (After Checkpoint 3)  in  Bell
+Desert Candle (Pit)              in  Crypts Bonus
+Caves Candle (Second Dark Room)  in  Crypts Key
+*Forest Key                      in  River Life-Up
+Fort Candle (Dark Room)          in  Fort Key (First Room)
+Canyon Bag (After Zipline 2)     in  Fort Candle (Dark Room)
+Forest Bonus Reward              in  Fort Bag (Dark Room)
+Lair Bag (Lava Room)             in  Enchanted Shoes
+*River Coin                      in  Fort Coin
+River Candle (Last Room)         in  Fort Key (Top Room)
+*Hills Coin                      in  Fort Bag (Top Room 1)
+*Fort Key (Top Room)             in  Fort Bag (Top Room 2)
+*Fort Bonus                      in  Fort Bag (Top Room 3)
+River Key (Submarine)            in  Castle Bag (Entrance)
+Peak Bag (First Cave 2)          in  Castle Candle (Right Room)
+Canyon Bag (Motte House)         in  Castle Key (Nodelki)
+Enchanted Shoes                  in  Castle Candle (Top Room)
+*Silver Cricket                  in  Castle Bag (Top Room)
+Canyon Bag (First Room End)      in  Winged Belt
+Peak Bag (Before Apatu)          in  Castle Coin
+Lightning Sword                  in  Castle Key (Left Room)
+*Castle Bonus                    in  Castle Bag (Bonus)
+*Beach Key (Tork Cabin)          in  Castle Bonus
 *Castle Jewel                    in  Castle Jewel
-Volcano Candle (First Room)      in  Lamp Oil Upgrade
-Power Stone Upgrade              in  Snail Salt
-Hills Candle (Cave)              in  Backstep
-Swamp Coin                       in  Crypts Bonus Reward
-                            [SPHERE 22]
+*Peak Coin                       in  Lair Candle (Tree Trunk)
+Shield Ring                      in  Lair Candle (Tree Top)
+Backstep                         in  Lair Bonus
+River Candle (Boat)              in  Lair Bag (First Room)
+Bomb Upgrade                     in  Lair Coin
+Fort Bag (Top Room 3)            in  Lair Bag (Lava Room)
+Orange Rock                      in  Lair Bag (Final Room 1)
+*Lair Bonus                      in  Lair Bag (Final Room 2)
+Forest Candle (Tree)             in  Lair Bag (Final Room 3)
+*Fairy Dust                      in  Dungeon Key
+*Crypts Key                      in  Canteen
+Desert Bag (First Room 1)        in  Infinite Soulfire
+Fort Bag (Dark Room)             in  Caves Bonus Reward
+                            [SPHERE 19]
+Fort Bag (Dungeon 3)             in  Forest Bonus
+Lair Bonus Reward                in  Forest Candle (Tree)
+*Sword Wave                      in  Peak Bag (After Apatu)
+Cleaver Shovel                   in  Crypts Candle (After Crypt)
+*Crypts Bonus                    in  Crypts Coin
+Magic Cloak                      in  Crypts Candle (Skelvis)
+Castle Bag (Bonus)               in  Beach Plant
+Brown Rock                       in  Beach Bonus
+200 Rupees                       in  Fort Candle (Last Room)
+Caves Bag (Last Room)            in  Fort Bag (Last Room)
+*Fort Jewel                      in  Fort Jewel
+Desert Bag (Last Room)           in  Wallet Upgrade
+Canyon Bag (After Zipline 3)     in  Calendar
+Faramore Key (Well)              in  200 Rupees
+Rope                             in  Hills Race 100 Rupees
+Castle Bag (Entrance)            in  Fairy Dust
+Swamp Bag (First Room)           in  Backstep
+*Oil and Chains                  in  Smart Gun
+*Dungeon Key                     in  Funky Fungus
+Canyon Coin                      in  Soul Upgrade
+Lair Bag (Final Room 2)          in  Fort Bonus Reward
+Castle Bonus Reward              in  Castle Bonus Reward
+Lair Bag (Final Room 3)          in  Lair Bonus Reward
+                            [SPHERE 20]
+Beach Bag (First Room)           in  Fort Bag (Dungeon 1)
+Speedy Shoes                     in  Fort Bag (Dungeon 2)
+Crypts Bonus Reward              in  Fort Bag (Dungeon 3)
+Volcano Coin                     in  Fort Bag (Dungeon 4)
+Hills Bag (Barn)                 in  Sacred Oil
+Fort Bag (Top Room 1)            in  Fort Bonus
 Daimur                           in  Daimur
-Swamp Candle (First Room)        in  Purple Magic
-Caves Candle (First Dark Room)   in  Calendar
-*Compass                         in  Ogre Hair
+Lamp Oil Upgrade                 in  Purple Magic
+Crypts Coin                      in  Chainsword
+Faramore Candle (Cypress House)  in  Double Wave
+*Peak Key                        in  Crypts Bonus Reward

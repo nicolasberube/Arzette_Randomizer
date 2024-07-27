@@ -182,7 +182,7 @@ Fort_Jewel,obj_jof_4
 Castle_Jewel,obj_jof_5
 Bombs,obj_quest_bombs
 Sword_Wave,obj_quest_sword_wave
-Golden_Fly,obj_quest_golden_fly //Had to disable flying around
+Golden_Fly,obj_quest_golden_fly
 Magic_Armor,obj_quest_armor
 Silver_Cricket,obj_quest_silver_cricket
 Rope_Ladder,obj_quest_rope_ladder
@@ -232,18 +232,18 @@ Castle_Bonus,obj_bonus_scroll
 Lair_Bonus,obj_bonus_scroll
 ,
 "[BONUS REWARD] //Faramore, Volcano, and Castle don't drop rewards so should be removed from pool",
-Forest_Bonus_Reward,Forest Bonus Reward 25
-Caves_Bonus_Reward,Caves Bonus Reward 25
-Desert_Bonus_Reward,Desert Bonus Reward 30
-Canyon_Bonus_Reward,Canyon Bonus Reward 30
-Swamp_Bonus_Reward,Swamp Bonus Reward 30
-Peak_Bonus_Reward,Peak Bonus Reward 40
-Crypts_Bonus_Reward,Crypts Bonus Reward 50
-Beach_Bonus_Reward,Beach Bonus Reward 50
-River_Bonus_Reward,River Bonus Reward 50
-Hills_Bonus_Reward,Hills Bonus Reward 75
-Fort_Bonus_Reward,Fort Bonus Reward 75
-Lair_Bonus_Reward,Lair Bonus Reward 100
+Forest_Bonus_Reward,obj_quest_rubie_bag_25
+Caves_Bonus_Reward,obj_quest_rubie_bag_25
+Desert_Bonus_Reward,obj_quest_rubie_bag_30
+Canyon_Bonus_Reward,obj_quest_rubie_bag_30
+Swamp_Bonus_Reward,obj_quest_rubie_bag_30
+Peak_Bonus_Reward,obj_quest_rubie_bag_40
+Crypts_Bonus_Reward,obj_quest_rubie_bag_50
+Beach_Bonus_Reward,obj_quest_rubie_bag_50
+River_Bonus_Reward,obj_quest_rubie_bag_50
+Hills_Bonus_Reward,obj_quest_rubie_bag_75
+Fort_Bonus_Reward,obj_quest_rubie_bag_75
+Lair_Bonus_Reward,obj_quest_rubie_bag_100
 ,
 [ITEMS (Currently not in the randomisation pool)] //Rocks are coded based on world location,
 Default_Beacon,beacon_durridin

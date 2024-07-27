@@ -124,6 +124,8 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-Merge NPC pool and item pool so thw former can spawn in the latter (level_location except Jewel and Beacon) and vice-versa.
+Randomize Beacon locations.
+
+Merge NPC pool and item pool so the former can spawn in the latter (level_location except Jewel and Beacon) and vice-versa.
 
 We need to clean vanilla.csv (comments, useless rows like "Default_Beacon", etc.)

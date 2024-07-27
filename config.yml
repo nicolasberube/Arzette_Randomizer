@@ -18,4 +18,3 @@ item_pool:
   race_rewards: true
   jewels: false
   trading_sequence: 'included'
-enemy_spawn: false
