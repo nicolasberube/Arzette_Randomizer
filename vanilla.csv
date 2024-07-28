@@ -215,21 +215,21 @@ Magic_Cloak,obj_quest_magic_cloak
 Double_Wave,obj_quest_double_wave
 ,
 [BONUS SCROLLS] //Bonus scrolls are coded by world location and aren't individual,
-Faramore_Bonus,obj_bonus_scroll
-Forest_Bonus,obj_bonus_scroll
-Caves_Bonus,obj_bonus_scroll
-Desert_Bonus,obj_bonus_scroll
-Canyon_Bonus,obj_bonus_scroll
-Swamp_Bonus,obj_bonus_scroll
-Peak_Bonus,obj_bonus_scroll
-Crypts_Bonus,obj_bonus_scroll
-Volcano_Bonus,obj_bonus_scroll
-Beach_Bonus,obj_bonus_scroll
-River_Bonus,obj_bonus_scroll
-Hills_Bonus,obj_bonus_scroll
-Fort_Bonus,obj_bonus_scroll
-Castle_Bonus,obj_bonus_scroll
-Lair_Bonus,obj_bonus_scroll
+Faramore_Bonus,obj_bonus_scroll_1
+Forest_Bonus,obj_bonus_scroll_2
+Caves_Bonus,obj_bonus_scroll_3
+Desert_Bonus,obj_bonus_scroll_4
+Canyon_Bonus,obj_bonus_scroll_5
+Swamp_Bonus,obj_bonus_scroll_6
+Peak_Bonus,obj_bonus_scroll_7
+Crypts_Bonus,obj_bonus_scroll_8
+Volcano_Bonus,obj_bonus_scroll_9
+Beach_Bonus,obj_bonus_scroll_10
+River_Bonus,obj_bonus_scroll_11
+Hills_Bonus,obj_bonus_scroll_12
+Fort_Bonus,obj_bonus_scroll_13
+Castle_Bonus,obj_bonus_scroll_14
+Lair_Bonus,obj_bonus_scroll_15
 ,
 "[BONUS REWARD] //Faramore, Volcano, and Castle don't drop rewards so should be removed from pool",
 Forest_Bonus_Reward,obj_quest_rubie_bag_25_1
@@ -245,18 +245,21 @@ Hills_Bonus_Reward,obj_quest_rubie_bag_75_1
 Fort_Bonus_Reward,obj_quest_rubie_bag_75_2
 Lair_Bonus_Reward,obj_quest_rubie_bag_100
 ,
-[ITEMS (Currently not in the randomisation pool)] //Rocks are coded based on world location,
-Default_Beacon,beacon_durridin
-Daimur,obj_boss_daimur
+[ROCKS] //Rocks are coded based on world location,
 Orange_Rock,obj_quest_rock_orange
 Brown_Rock,obj_quest_rock_brown
 Gray_Rock,obj_quest_rock_grey
 Blue_Rock,obj_quest_rock_blue
+,
+[BEACONS],
 Forest_Beacon,beacon_durridin
 Desert_Beacon,beacon_anju_desert
 Swamp_Beacon,beacon_norin_swamp
 Beach_Beacon,beacon_badonc_beach
 Hills_Beacon,beacon_lichen_hills
+,
+[ITEMS (Currently not in the randomisation pool)] //Rocks are coded based on world location,
+Daimur,obj_boss_daimur
 Faramore_Bonus_Reward,obj_null
 Volcano_Bonus_Reward,obj_null
 Castle_Bonus_Reward,obj_null
