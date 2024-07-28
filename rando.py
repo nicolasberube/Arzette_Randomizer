@@ -1626,6 +1626,6 @@ class ArzetteCollectionState():
         return ret
 
 if __name__ == "__main__":
-    self = ArzetteWorld()
-    self.fill()
-    self.print(sphere_path="spheres.txt")
+    world = ArzetteWorld()
+    world.fill()
+    world.print(sphere_path="spheres.txt")
