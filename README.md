@@ -73,6 +73,12 @@ Includes the rupees rewards of the bonus minigame scrolls in the pool.
 ### race_rewards
 Includes the 100 rupees rewards of the Rudy races in the pool.
 
+### beacons
+Includes the beacons location in the pool. Not to be confused with level_order, which decides which level is unlocked by hitting the beacon.
+
+### jewels
+Includes the Faramore jewel shards in the pool. This means that beating the bosses might not be required, and you could find jewel shards anywhere.
+
 ### trading_sequence
 This variable can take many values, as explained here.
 
@@ -95,8 +101,6 @@ This would theoretically spawn random enemies instead of their vanilla placement
 # Logic rules game assumptions
 
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
-
-The trading sequence has been modified so you can hold multiple items from it at a time. If this is not the case, we can still include flag "excluded" and "vanilla" in the config file.
 
 An extra location for the Bombs has been coded in (preferably at the start of Forest or Faramore). Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
 
@@ -124,7 +128,15 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
+Deactivate item scrolls completely.
+
+NPC spawn rules are now True for everyone.
+
+Recheck logic for some ennemies that could be avoided.
+
 Randomize Beacon locations.
+
+Explain how quest items/jewels are spawned in the Readme.
 
 Merge NPC pool and item pool so the former can spawn in the latter (level_location except Jewel and Beacon) and vice-versa.
 

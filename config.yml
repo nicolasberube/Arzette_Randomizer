@@ -13,8 +13,9 @@ item_pool:
   rocks: true
   upgrades: true
   life_ups: true
-  bonus_scrolls: true
+  bonus_scrolls: false
   bonus_rewards: true
   race_rewards: true
+  beacons: true
   jewels: false
   trading_sequence: 'included'
