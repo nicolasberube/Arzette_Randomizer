@@ -651,7 +651,7 @@ class ArzetteWorld():
             state.has("Forest Key") or state.has("Griffin Boots"))
         
         add_rule(self.get_npc("Forest Rudy (End)"), lambda state:
-            state.has("Forest Key") or state.has("Griffin Boots"))
+            state.has("Forest Key"))
 
         # Caves Rules
         add_rule(self.get_npc("Caves Ellido"), lambda state:
@@ -885,6 +885,9 @@ class ArzetteWorld():
         add_rule(self.get_location("Magic Armor"), lambda state:
             state.has_group("candles", 20) and
             self.get_barrier(self.barrier_types["Gauntlet"]).access_rule(state))
+        add_rule(self.get_location("Sword Wave", "Forest Bag (Sword Wave)"), lambda state:
+            state.has("Lantern") and
+            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
         add_rule(self.get_location("Forest Bonus"), lambda state:
             state.has("Forest Key"))
@@ -1245,7 +1248,8 @@ class ArzetteWorld():
         # Hills Rules
         for item in ["Hills Candle (Cave)", "Lightning Sword"]:
             add_rule(self.get_location(item), lambda state:
-                state.has("Lantern") and state.has_group("magic") and
+                state.has_group("bombs") and state.has("Lantern") and
+                state.has_group("magic") and
                 (state.has("Blue Magic") or state.has("Griffin Boots") or
                  state.has("Winged Belt")) and
                  (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
