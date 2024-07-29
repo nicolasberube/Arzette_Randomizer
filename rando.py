@@ -653,7 +653,8 @@ class ArzetteWorld():
 
         add_rule(self.get_npc("Faramore Maki"), lambda state:
             ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
-             self.get_barrier(self.barrier_types["Blue"]).access_rule(state)) and
+             (self.get_barrier(self.barrier_types["Blue"]).access_rule(state) or
+              state.has("Winged Belt"))) or
             state.has("Griffin Boots"))
 
         add_rule(self.get_npc("Faramore Payop"), lambda state:
@@ -797,7 +798,8 @@ class ArzetteWorld():
         for item in ["Faramore Bonus", "Faramore Candle (Empty House)"]:
             add_rule(self.get_location(item), lambda state:
                 ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
-                 self.get_barrier(self.barrier_types["Blue"]).access_rule(state)) or
+                 (self.get_barrier(self.barrier_types["Blue"]).access_rule(state) or
+                  state.has("Winged Belt"))) or
                 state.has("Griffin Boots"))
 
         add_rule(self.get_location("Faramore Coin"), lambda state:
@@ -925,7 +927,8 @@ class ArzetteWorld():
                 "Swamp Bonus", "Swamp Beacon"]:
             add_rule(self.get_location(item), lambda state: state.has_group("magic"))
 
-        for item in ["Swamp Candle (First Room)", "Swamp Bag (First Room)"]:
+        for item in ["Swamp Candle (First Room)", "Swamp Bag (First Room)",
+                     "Swamp Candle (Frich House)"]:
             add_rule(self.get_location(item), lambda state:
                 state.has("Griffin Boots"))
 
