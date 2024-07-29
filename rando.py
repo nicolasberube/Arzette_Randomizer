@@ -267,6 +267,12 @@ all_locations = starting_locations + [
     location for locations in level_locations.values() for location in locations] + \
     [location for location in (
         list(default_npc_locations) + rock_locations + bonus_locations)]
+
+non_quest_locations = [
+    location for location in all_locations
+    if location not in list(default_npc_locations) + rock_locations]
+# We could remove bonus_locations to avoid NPC spawning after a Bonus, but let's have fun.
+
 all_npcs = (list(set(default_npc_locations.values())) + default_npc_locked + default_npc_fool)
 
 level_names = {
@@ -324,29 +330,25 @@ class ArzetteWorld():
 
     def fill(self, seed=None):
         # It is crucial to fill in order
-        # self.level_beacons -> self.barrier_types -> self.set_rules_barrier() ->
-        # self.set_rules_npc() -> self.npc_cache -> self.set_rules() ->
-        # self.location_cache
+        # self.level_beacons -> self.set_rules_barrier() + self.barrier_types ->
+        # self.set_rules() -> assign all quest NPCs in self.location_cache + self.npc_locations ->
+        # self.set_rules_quests() + rest of self.location_cache
         if seed == "vanilla":
             self.level_order = default_level_order
             self.level_beacons = {
                 level: f"{beacon} Beacon" for beacon, levels in self.level_order.items()
                 for level in levels}
 
-            self.barrier_cache = {name: ArzetteLocation() for name in default_barrier_types}
+            self.barrier_cache = {
+                name: ArzetteLocation() for name in default_barrier_types}
             self.set_rules_barrier()
             self.barrier_types = default_barrier_types
 
-            self.npc_cache = {name: ArzetteLocation() for name in all_npcs}
-            self.set_rules_npc()
-            for name in self.npc_cache:
-                self.npc_cache[name].item = name
-            self.npc_locations = default_npc_locations
-
-            self.location_cache = {name: ArzetteLocation() for name in all_locations}
-            self.set_rules()
+            self.location_cache = {
+                name: ArzetteLocation() for name in all_npcs+all_locations}
             for name in self.location_cache:
                 self.location_cache[name].item = name
+            self.npc_locations = default_npc_locations
             return
 
         if seed is None:
@@ -359,8 +361,6 @@ class ArzetteWorld():
         # This function causes some seed generation failures when your
         # starting level is Beach or Hills.
         level_type = self.config["level_order"].lower()
-        if level_type not in {"random", "faramore", "vanilla"}:
-            raise Exception(f"Config level_type {level_type} not recognised.")
         if level_type in {"random", "faramore"}:
             level_list = [level for levels in default_level_order.values()
                           for level in levels]
@@ -368,25 +368,40 @@ class ArzetteWorld():
                 level_list = [
                     level for level in level_list if level != "Faramore"]
             random.shuffle(level_list)
+
             level_order = {}
             beacons = ["Default"]
+            if self.config["item_pool"]["beacons"]:
+                beacons = list(default_level_order)
             while len(beacons):
                 beacon = beacons.pop(0)
-                for i_l, level in enumerate(level_list):
-                    if level in default_level_order and level != beacon:
-                        beacons.append(level)
-                        break
-                level_order[beacon] = [level_list.pop(i_l)]
+                if not self.config["item_pool"]["beacons"]:
+                    for i_l, level in enumerate(level_list):
+                        if level in default_level_order and level != beacon:
+                            beacons.append(level)
+                            break
+                    level_order[beacon] = [level_list.pop(i_l)]
+                else:
+                    level_order[beacon] = []
+
                 if level_type == "faramore" and beacon == "Default":
                     level_order[beacon].append("Faramore")
-                    continue
-                for _ in range(len(default_level_order[beacon])-1):
-                    if level_list[0] in default_level_order:
+                    n_unlocks = 0
+                else:
+                    n_unlocks = len(default_level_order[beacon])-1
+                if self.config["item_pool"]["beacons"]:
+                    n_unlocks += 1
+
+                for _ in range(n_unlocks):
+                    if (level_list[0] in default_level_order and
+                            not self.config["item_pool"]["beacons"]):
                         beacons.append(level_list[0])
                     level_order[beacon].append(level_list.pop(0))
             self.level_order = level_order
-        else:
+        elif level_type == "vanilla":
             self.level_order = default_level_order
+        else:
+            raise Exception(f"Config level_type {level_type} not recognised.")
         self.level_beacons = {
             level: f"{beacon} Beacon" for beacon, levels in self.level_order.items()
             for level in levels}
@@ -404,67 +419,13 @@ class ArzetteWorld():
         else:
             self.barrier_types = default_barrier_types
 
-        # Bonus scrolls randomisation
-        self.location_cache = {name: ArzetteLocation() for name in all_locations}
-        item_locked = []
-        scroll_locations = [item for item in all_locations if "Bonus" in item.split()
-                            and "Reward" not in item.split()]
-        # This function is still being implemented.
-        if self.config["item_pool"]["bonus_scrolls"]:
-            for item in scroll_locations:
-                level = item.split()[0]
-                possible_locations = [
-                    location for location in level_locations[level]
-                    if not any(word in location for word in {"Jewel", "Beacon"}) and
-                    location != "Hills Key"]
-                location = random.choice(possible_locations)
-                self.get_location(location).item = item
-        else:
-            item_locked += scroll_locations
-
-        # NPC randomisation
-        if self.config["npc"]["randomize"]:
-            npc_cache = {name: ArzetteLocation() for name in all_npcs}            
-            if self.config["npc"]["include_foolish"]:
-                npc_list = list(set(default_npc_locations.values())) + default_npc_fool
-                npc_locked = default_npc_locked
-            else:
-                npc_list = list(set(default_npc_locations.values()))
-                npc_locked = default_npc_locked + default_npc_fool
-            for npc in npc_locked:
-                npc_cache[npc].item = npc
-            random.shuffle(npc_list)
-            for npc in npc_cache:
-                if npc_cache[npc].item is not None:
-                    continue
-                npc_cache[npc].item = npc_list.pop(0)
-
-            npc_locations = {}
-            npc_to_location = {npc_cache[name].item: name for name in npc_cache}
-            for item, npc in default_npc_locations.items():
-                npc_locations[item] = npc_to_location[default_npc_locations[item]]
-            self.npc_cache = npc_cache
-            self.npc_locations = npc_locations
-        else:
-            self.npc_cache = {name: ArzetteLocation() for name in all_npcs}
-            for name in self.npc_cache:
-                self.npc_cache[name].item = name
-            self.npc_locations = default_npc_locations
-        self.set_rules_npc()
-
-        # Item randomisation
-
         # Set-up item pool based on settings
-        self.set_rules()
-
-        item_locked += ["Default Beacon", "Daimur"]
-        #item_locked += [item for item in all_locations if "Rock" in item.split()]
-        # item_locked += [item for item in all_locations if "Beacon" in item.split()]
-        # item_locked += [item for item in all_locations if "Jewel" in item.split()]
+        self.location_cache = {
+                name: ArzetteLocation() for name in all_npcs+all_locations}
+        item_locked = ["Default Beacon", "Daimur"]
         item_locked += ["Faramore Bonus Reward",
                         "Volcano Bonus Reward",
                         "Castle Bonus Reward"]
-
         item_list = []
         sub_item_lists = {
             "bags": [item for item in all_locations if "Bag" in item.split()],
@@ -500,7 +461,7 @@ class ArzetteWorld():
 
         # Locking items in location before trading_sequence
         for item in item_locked:
-            self.location_cache[item].item = item
+            self.get_location(item).item = item
 
         if trading_type == "vanilla":
             # Assuming you want to start later in the sequence
@@ -511,14 +472,58 @@ class ArzetteWorld():
         if trading_type != "included":
             if start_position != 0:
                 item_locked.append(trading_locations[0])
-                self.location_cache[trading_locations[start_position]].item = \
+                self.get_location(trading_locations[start_position]).item = \
                     trading_locations[0]
             for i_s, item in enumerate(trading_locations):
                 if i_s in {0, start_position}:
                     continue
                 item_locked.append(item)
-                self.location_cache[item].item = item
+                self.get_location(item).item = item
             item_list.append(trading_locations[start_position])
+
+        # Bonus scrolls randomisation
+        scroll_locations = [item for item in all_locations if "Bonus" in item.split()
+                            and "Reward" not in item.split()]
+        if self.config["item_pool"]["bonus_scrolls"]:
+            for item in scroll_locations:
+                level = item.split()[0]
+                possible_locations = [
+                    location for location in level_locations[level]
+                    if self.get_location(location).item is None]
+                location = random.choice(possible_locations)
+                self.get_location(location).item = item
+        else:
+            for item in scroll_locations:
+                self.get_location(item).item = item
+
+        # NPC randomisation
+        if self.config["item_pool"]["npc"]:
+            npc_list = list(set(default_npc_locations.values())) + default_npc_fool
+            npc_locked = default_npc_locked
+            for npc in npc_locked:
+                self.get_npc(npc).item = npc
+            npc_locs = [location for location in non_quest_locations
+                        if self.get_location(location).item is None]
+            random.shuffle(npc_locs)
+            npc_locs = npc_locs[:len(npc_list)]
+
+            for location, npc in zip(npc_locs, npc_list):
+                if self.get_location(location).item is not None:
+                    raise Exception(f"Location {location} already filled.")
+                self.get_location(location).item = npc
+
+            self.npc_locations = {}
+            npc_to_location = {self.get_location(name).item: name for name in npc_locs}
+            for item, npc in default_npc_locations.items():
+                self.npc_locations[item] = npc_to_location[npc]
+        else:
+            for name in all_npcs:
+                self.get_location(name).item = name
+            self.npc_locations = default_npc_locations
+
+        # Item randomisation
+        self.set_rules()
+        self.set_rules_quests()
 
         core_items = [name for name in all_locations
                       if name not in item_list+item_locked+scroll_locations]
@@ -527,7 +532,8 @@ class ArzetteWorld():
         location_list = [name for name, location in self.location_cache.items()
                         if location.item is None]
         if len(item_list) != len(location_list):
-            raise Exception("Something went wrong.")
+            raise Exception(
+                f"{len(item_list)} items and {len(location_list)} available locations.")
 
         # Randomise item pool
         # This function is not based on the Archipelago Fill.py functions. It is a homemade algorithm, but it works.
@@ -602,7 +608,7 @@ class ArzetteWorld():
         return self.location_cache[location_name]
 
     def get_npc(self, location_name):
-        return self.npc_cache[location_name]
+        return self.location_cache[location_name]
 
     def get_barrier(self, location_name):
         return self.barrier_cache[location_name]
@@ -625,9 +631,11 @@ class ArzetteWorld():
             state.has("Fatal Flute") and
             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
-    def set_rules_npc(self):
+    def set_rules(self):
+        # NPC LOCATIONS
+
         # Level Access Rules
-        for npc in self.npc_cache:
+        for npc in all_npcs:
             level = npc.split()[0]
             add_rule(self.get_npc(npc), lambda state, level=level:
                 state.has(self.level_beacons[level]))
@@ -653,8 +661,7 @@ class ArzetteWorld():
                 ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
                  self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
                 state.has("Griffin Boots"))
-        #add_rule(self.get_npc("Faramore Dewey"), lambda state:
-        #    self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
+        # Purple Magic requirement for Dewey has been deactivated in the mod.
 
         for npc in ["Faramore Denny", "Faramore Cypress"]:
             add_rule(self.get_npc(npc), lambda state: state.has("Griffin Boots"))
@@ -749,7 +756,8 @@ class ArzetteWorld():
         add_rule(self.get_npc("Hills Milbert"), lambda state:
             state.has("Hills Key") and state.has("Fatal Flute"))
 
-    def set_rules(self):
+        # NON QUEST ITEM LOCATIONS - not dependent on NPC
+
         # Level Access Rules
         for level, locations in self.level_locations.items():
             for item in locations:
@@ -758,36 +766,6 @@ class ArzetteWorld():
                 if level in ["Crypts", "Fort", "Castle", "Lair"]:
                     add_rule(self.get_location(item), lambda state:
                         state.has("Power Pendant"))
-
-        # Rocks Rules
-        for item in rock_locations:
-            add_rule(self.get_location(item), lambda state:
-                self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
-                self.get_npc(self.npc_locations["Rope"]).access_rule(state))
-
-        add_rule(self.get_location("Orange Rock"), lambda state:
-            state.has(self.level_beacons["Caves"]) and
-            state.has("Bombs") and
-            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
-
-        add_rule(self.get_location("Brown Rock"), lambda state:
-            state.has(self.level_beacons["Canyon"]) or
-            (state.has(self.level_beacons["Lair"]) and
-             state.has("Power Pendant") and state.has_group("magic") and
-             state.has_group("blue") and state.has("Lantern") and
-             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])) and
-             self.get_barrier(self.barrier_types["Purple"]).access_rule(state)))
-
-        add_rule(self.get_location("Gray Rock"), lambda state:
-            (state.has(self.level_beacons["Peak"]) and
-             self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
-            (state.has(self.level_beacons["Fort"]) and
-             state.has("Power Pendant")))
-
-        add_rule(self.get_location("Blue Rock"), lambda state:
-            state.has("Beach Key (First House)") and
-            self.get_barrier(self.barrier_types["Blue"]).access_rule(state) and
-            state.has_group("magic") and state.has_group("blue"))
 
         # Bonus Rewards Rules
         for item in [location for location in self.location_cache
@@ -805,67 +783,16 @@ class ArzetteWorld():
                     state.has("Griffin Boots"))  # Not 100% required but hard without it
 
         # Faramore Rules
-        add_rule(self.get_location("Rope Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
-            state.has_group("rocks", 4))
-        # Rope and unlocking Swamp requirement has been deactivated in the mod.
-
-        add_rule(self.get_location("Purple Magic"), lambda state:
-            self.get_npc(self.npc_locations["Purple Magic"]).access_rule(state) and
-            state.has_group("jewels", 5))
-
-        add_rule(self.get_location("Citizenship Papers"), lambda state:
-            self.get_npc(self.npc_locations["Citizenship Papers"]).access_rule(state) and
-            self.get_npc(self.npc_locations["Lantern"]).access_rule(state))
 
         add_rule(self.get_location("Faramore Key (Well)"), lambda state:
             state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)") or
             state.has("Griffin Boots"))
-
-        add_rule(self.get_location("Power Stone Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Power Stone Upgrade"]).access_rule(state) and
-            state.has("Bell"))
-        # Bomb Gauntlet and unlocking Castle requirement has been deactivated in the mod.
-
-        add_rule(self.get_location("Dungeon Key"), lambda state:
-            self.get_npc(self.npc_locations["Dungeon Key"]).access_rule(state))
-
-        add_rule(self.get_location("Chainsword"), lambda state:
-            self.get_npc(self.npc_locations["Chainsword"]).access_rule(state) and
-            state.has("Oil and Chains"))
-
-        add_rule(self.get_location("Canteen"), lambda state:
-            self.get_npc(self.npc_locations["Canteen"]).access_rule(state) and
-            state.has("Star Earrings"))
-
-        add_rule(self.get_location("Wallet Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Wallet Upgrade"]).access_rule(state) and
-            state.has("Silver Cricket"))
-        # Frich's first quest and unlocking Volcano requirement have been deactivated in the mod.
-
-        add_rule(self.get_location("Infinite Soulfire"), lambda state:
-            self.get_npc(self.npc_locations["Infinite Soulfire"]).access_rule(state) and
-            state.has_group("races", 3))
 
         for item in ["Faramore Bonus", "Faramore Candle (Empty House)"]:
             add_rule(self.get_location(item), lambda state:
                 ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
                  self.get_barrier(self.barrier_types["Blue"]).access_rule(state)) or
                 state.has("Griffin Boots"))
-
-        add_rule(self.get_location("Bomb Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Bomb Upgrade"]).access_rule(state) and
-            state.has("Compass"))
-        # Griffin Boots and unlocking Hills requirement have been deactivated in the mod.
-
-        add_rule(self.get_location("200 Rupees"), lambda state:
-            self.get_npc(self.npc_locations["200 Rupees"]).access_rule(state) and
-            state.has("Rope Ladder"))
-
-        add_rule(self.get_location("Lamp Oil Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Lamp Oil Upgrade"]).access_rule(state) and
-            state.has_group("plants", 3))
-        # Lantern and unlocking Swamp requirement have been deactivated in the mod.
 
         add_rule(self.get_location("Faramore Coin"), lambda state:
             ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
@@ -875,10 +802,6 @@ class ArzetteWorld():
             (state.has("Griffin Boots") and state.has("Winged Belt")) or
             self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
     
-        add_rule(self.get_location("Calendar"), lambda state:
-            self.get_npc(self.npc_locations["Calendar"]).access_rule(state) and
-            state.has("Castle Jewel"))
-
         add_rule(self.get_location("Faramore Candle (Cypress House)"), lambda state:
             state.has("Griffin Boots") and
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
@@ -913,20 +836,7 @@ class ArzetteWorld():
         add_rule(self.get_location("Forest Candle (Cypress)"), lambda state:
             state.has("Griffin Boots"))
 
-        add_rule(self.get_location("Lantern"), lambda state:
-            self.get_npc(self.npc_locations["Lantern"]).access_rule(state) and
-            state.has("Citizenship Papers"))
-
-        add_rule(self.get_location("Forest Race 100 Rupees"), lambda state:
-            self.get_npc(self.npc_locations["Forest Race 100 Rupees"]).access_rule(state) and
-            state.has_group("coins", 1) and
-            self.get_npc("Forest Rudy (Start)").access_rule(state) and
-            self.get_npc("Forest Rudy (End)").access_rule(state))
-
         # Caves Rules
-        add_rule(self.get_location("Rope"), lambda state:
-            self.get_npc(self.npc_locations["Rope"]).access_rule(state))
-
         for item in ["Silver Cricket", "Rope Ladder", "Caves Bag (Rope Ladder)",
                 "Caves Candle (First Dark Room)", "Caves Coin",
                 "Caves Candle (Second Dark Room)", "Caves Bonus", "Shield Ring",
@@ -956,10 +866,6 @@ class ArzetteWorld():
         add_rule(self.get_location("Caves Coin"), lambda state:
             state.has("Griffin Boots") or state.has("Winged Belt"))
 
-        add_rule(self.get_location("Snail Salt"), lambda state:
-            self.get_npc(self.npc_locations["Snail Salt"]).access_rule(state) and
-            state.has("Funky Fungus"))
-
         # Desert Rules
         add_rule(self.get_location("Desert Key"), lambda state:
             state.has_group("bombs") and
@@ -974,9 +880,6 @@ class ArzetteWorld():
         for item in ["Desert Candle (Last Room)", "Desert Life-Up",
                 "Desert Bag (Last Room)", "Desert Beacon"]:
             add_rule(self.get_location(item), lambda state: state.has("Desert Key"))
-
-        add_rule(self.get_location("Fairy Dust"), lambda state:
-            self.get_npc(self.npc_locations["Fairy Dust"]).access_rule(state))
 
         add_rule(self.get_location("Desert Candle (Last Room)"), lambda state:
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
@@ -1000,10 +903,6 @@ class ArzetteWorld():
         add_rule(self.get_location("Canyon Jewel"), lambda state:
             state.has_group("candles", 20) and state.has_group("magic"))
 
-        add_rule(self.get_location("Backstep"), lambda state:
-            self.get_npc(self.npc_locations["Backstep"]).access_rule(state))
-        # Defeating Cornrad requirement has been deactivated in the mod.
-
         for item in ["Canyon Key", "Canyon Bag (After Zipline 1)",
                 "Canyon Bag (After Zipline 2)", "Canyon Bag (After Zipline 3)",
                 "Canyon Coin", "Canyon Bag (Motte House)", "Canyon Candle (Motte House)"]:
@@ -1016,13 +915,6 @@ class ArzetteWorld():
             (self.get_barrier(self.barrier_types["Red"]).access_rule(state) or
              state.has("Griffin Boots")) and
             self.get_barrier(self.barrier_types["Blue"]).access_rule(state))
-
-        add_rule(self.get_location("Star Earrings"), lambda state:
-            self.get_npc(self.npc_locations["Star Earrings"]).access_rule(state))
-
-        add_rule(self.get_location("Smart Gun"), lambda state:
-            self.get_npc(self.npc_locations["Smart Gun"]).access_rule(state) and
-            state.has("Fairy Dust"))
 
         # Swamp Rules
         for item in ["Swamp Candle (First Room)", "Swamp Bag (First Room)", "Swamp Coin",
@@ -1058,10 +950,6 @@ class ArzetteWorld():
             state.has_group("bombs") and
             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
-        add_rule(self.get_location("Ogre Hair"), lambda state:
-            self.get_npc(self.npc_locations["Ogre Hair"]).access_rule(state) and
-            state.has("Cleaver Shovel"))
-
         # Peak Rules
         for item in ["Peak Candle (First Cave)", "Peak Bag (First Cave 1)",
                 "Peak Bag (First Cave 2)", "Peak Bonus", "Peak Coin", "Peak Key",
@@ -1086,20 +974,6 @@ class ArzetteWorld():
 
         add_rule(self.get_location("Peak Bag (After Apatu)"), lambda state:
             state.has("Peak Jewel"))
-
-        add_rule(self.get_location("Power Pendant"), lambda state:
-            self.get_npc(self.npc_locations["Power Pendant"]).access_rule(state) and
-            state.has("Crystal of Refraction"))
-
-        add_rule(self.get_location("Peak Race 100 Rupees"), lambda state:
-            self.get_npc(self.npc_locations["Peak Race 100 Rupees"]).access_rule(state) and
-            state.has_group("coins", 5) and
-            state.has(self.level_beacons["Peak"]) and
-            self.get_npc("Peak Rudy (Start)").access_rule(state) and
-            self.get_npc("Peak Rudy (End)").access_rule(state) and
-            state.has(self.level_beacons["Forest"]) and
-            self.get_npc("Forest Rudy (Start)").access_rule(state) and
-            self.get_npc("Forest Rudy (End)").access_rule(state))
 
         # Crypts Rules
         for item in ["Crypts Life-Up", "Bell", "Crypts Bonus", "Crypts Key",
@@ -1148,9 +1022,6 @@ class ArzetteWorld():
             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])) and
             self.get_barrier(self.barrier_types["Gauntlet"]).access_rule(state))
 
-        add_rule(self.get_location("Bomb Gauntlet"), lambda state:
-            self.get_npc(self.npc_locations["Bomb Gauntlet"]).access_rule(state))
-
         # Volcano Rules
         add_rule(self.get_location("Volcano Bonus"), lambda state:
             self.get_barrier(self.barrier_types["Gauntlet"]).access_rule(state))
@@ -1184,10 +1055,6 @@ class ArzetteWorld():
                (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))) and
              (state.has("Winged Belt") or state.has("Speedy Shoes"))))
 
-        add_rule(self.get_location("Speedy Shoes"), lambda state:
-            self.get_npc(self.npc_locations["Speedy Shoes"]).access_rule(state) and
-            state.has("Enchanted Shoes"))
-
         add_rule(self.get_location("Beach Candle (Tork Cabin)"), lambda state:
             state.has("Griffin Boots") or state.has("Winged Belt"))
 
@@ -1206,20 +1073,12 @@ class ArzetteWorld():
             state.has("Griffin Boots") or state.has("Smart Gun") or
             state.has("Sword Wave") or state.has("Winged Belt"))
 
-        add_rule(self.get_location("Magic Cloak"), lambda state:
-            self.get_npc(self.npc_locations["Magic Cloak"]).access_rule(state) and
-            state.has("Calendar"))
-
         # River Rules
         add_rule(self.get_location("River Bonus"), lambda state:
             state.has("River Key (Francine)"))
 
         add_rule(self.get_location("River Key (Francine)"), lambda state:
             state.has_group("magic"))
-
-        add_rule(self.get_location("Cleaver Shovel"), lambda state:
-            self.get_npc(self.npc_locations["Cleaver Shovel"]).access_rule(state) and
-            state.has("Snail Salt"))
 
         add_rule(self.get_location("River Candle (Boat)"), lambda state:
             state.has("Griffin Boots") or state.has("Winged Belt"))
@@ -1256,10 +1115,6 @@ class ArzetteWorld():
         add_rule(self.get_location("River Life-Up"), lambda state:
             state.has_group("candles", 20))
 
-        add_rule(self.get_location("Oil and Chains"), lambda state:
-            self.get_npc(self.npc_locations["Oil and Chains"]).access_rule(state) and
-            state.has("Ogre Hair"))
-
         # Hills Rules
         for item in ["Hills Candle (Cave)", "Lightning Sword"]:
             add_rule(self.get_location(item), lambda state:
@@ -1293,23 +1148,6 @@ class ArzetteWorld():
         for item in ["Hills Plant", "Hills Beacon"]:
             add_rule(self.get_location(item), lambda state:
                 state.has("Hills Key") and state.has("Fatal Flute"))
-
-        add_rule(self.get_location("Double Wave"), lambda state:
-            self.get_npc(self.npc_locations["Double Wave"]).access_rule(state) and
-            state.has("Sword Wave"))
-
-        add_rule(self.get_location("Hills Race 100 Rupees"), lambda state:
-            self.get_npc(self.npc_locations["Hills Race 100 Rupees"]).access_rule(state) and
-            state.has_group("coins", 10) and
-            state.has(self.level_beacons["Hills"]) and
-            self.get_npc("Hills Rudy (Start)").access_rule(state) and
-            self.get_npc("Hills Rudy (End)").access_rule(state) and
-            state.has(self.level_beacons["Peak"]) and
-            self.get_npc("Peak Rudy (Start)").access_rule(state) and
-            self.get_npc("Peak Rudy (End)").access_rule(state) and
-            state.has(self.level_beacons["Forest"]) and
-            self.get_npc("Forest Rudy (Start)").access_rule(state) and
-            self.get_npc("Forest Rudy (End)").access_rule(state))
 
         # Fort Rules
         for item in ["Fort Bag (Dungeon 1)", "Fort Bag (Dungeon 2)", "Fort Bag (Dungeon 3)",
@@ -1438,13 +1276,6 @@ class ArzetteWorld():
             self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
 
         # Lair Rules
-        add_rule(self.get_location("Funky Fungus"), lambda state:
-            self.get_npc(self.npc_locations["Funky Fungus"]).access_rule(state) and
-            state.has("Sacred Oil"))
-        add_rule(self.get_location("Soul Upgrade"), lambda state:
-            self.get_npc(self.npc_locations["Soul Upgrade"]).access_rule(state) and
-            state.has("Sacred Oil") and state.has("Smart Gun"))
-
         for item in ["Lair Candle (Tree Trunk)", "Lair Candle (Tree Top)"]:
             add_rule(self.get_location(item), lambda state:
                 state.has_group("bombs") and
@@ -1486,6 +1317,199 @@ class ArzetteWorld():
         add_rule(self.get_location("Daimur"), lambda state:
             state.has("Purple Magic") and state.has_group("jewels", 5))
 
+    def set_rules_quests(self):
+        # QUEST ITEM LOCATIONS - dependent on NPC
+
+        # Rocks Rules
+        for item in rock_locations:
+            add_rule(self.get_location(item), lambda state:
+                self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
+                self.get_npc(self.npc_locations["Rope"]).access_rule(state))
+
+        add_rule(self.get_location("Orange Rock"), lambda state:
+            state.has(self.level_beacons["Caves"]) and
+            state.has("Bombs") and
+            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
+
+        add_rule(self.get_location("Brown Rock"), lambda state:
+            state.has(self.level_beacons["Canyon"]) or
+            (state.has(self.level_beacons["Lair"]) and
+             state.has("Power Pendant") and state.has_group("magic") and
+             state.has_group("blue") and state.has("Lantern") and
+             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])) and
+             self.get_barrier(self.barrier_types["Purple"]).access_rule(state)))
+
+        add_rule(self.get_location("Gray Rock"), lambda state:
+            (state.has(self.level_beacons["Peak"]) and
+             self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
+            (state.has(self.level_beacons["Fort"]) and
+             state.has("Power Pendant")))
+
+        add_rule(self.get_location("Blue Rock"), lambda state:
+            state.has("Beach Key (First House)") and
+            self.get_barrier(self.barrier_types["Blue"]).access_rule(state) and
+            state.has_group("magic") and state.has_group("blue"))
+
+        # Faramore Rules
+        add_rule(self.get_location("Rope Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
+            state.has_group("rocks", 4))
+        # Rope and unlocking Swamp requirement has been deactivated in the mod.
+
+        add_rule(self.get_location("Purple Magic"), lambda state:
+            self.get_npc(self.npc_locations["Purple Magic"]).access_rule(state) and
+            state.has_group("jewels", 5))
+
+        add_rule(self.get_location("Citizenship Papers"), lambda state:
+            self.get_npc(self.npc_locations["Citizenship Papers"]).access_rule(state) and
+            self.get_npc(self.npc_locations["Lantern"]).access_rule(state))
+
+        add_rule(self.get_location("Power Stone Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Power Stone Upgrade"]).access_rule(state) and
+            state.has("Bell"))
+        # Bomb Gauntlet and unlocking Castle requirement has been deactivated in the mod.
+
+        add_rule(self.get_location("Dungeon Key"), lambda state:
+            self.get_npc(self.npc_locations["Dungeon Key"]).access_rule(state))
+
+        add_rule(self.get_location("Chainsword"), lambda state:
+            self.get_npc(self.npc_locations["Chainsword"]).access_rule(state) and
+            state.has("Oil and Chains"))
+
+        add_rule(self.get_location("Canteen"), lambda state:
+            self.get_npc(self.npc_locations["Canteen"]).access_rule(state) and
+            state.has("Star Earrings"))
+
+        add_rule(self.get_location("Wallet Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Wallet Upgrade"]).access_rule(state) and
+            state.has("Silver Cricket"))
+        # Frich's first quest and unlocking Volcano requirement have been deactivated in the mod.
+
+        add_rule(self.get_location("Infinite Soulfire"), lambda state:
+            self.get_npc(self.npc_locations["Infinite Soulfire"]).access_rule(state) and
+            state.has_group("races", 3))
+
+        add_rule(self.get_location("Bomb Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Bomb Upgrade"]).access_rule(state) and
+            state.has("Compass"))
+        # Griffin Boots and unlocking Hills requirement have been deactivated in the mod.
+
+        add_rule(self.get_location("200 Rupees"), lambda state:
+            self.get_npc(self.npc_locations["200 Rupees"]).access_rule(state) and
+            state.has("Rope Ladder"))
+
+        add_rule(self.get_location("Lamp Oil Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Lamp Oil Upgrade"]).access_rule(state) and
+            state.has_group("plants", 3))
+        # Lantern and unlocking Swamp requirement have been deactivated in the mod.
+
+        add_rule(self.get_location("Calendar"), lambda state:
+            self.get_npc(self.npc_locations["Calendar"]).access_rule(state) and
+            state.has("Castle Jewel"))
+
+        # Forest Rules
+        add_rule(self.get_location("Lantern"), lambda state:
+            self.get_npc(self.npc_locations["Lantern"]).access_rule(state) and
+            state.has("Citizenship Papers"))
+
+        add_rule(self.get_location("Forest Race 100 Rupees"), lambda state:
+            self.get_npc(self.npc_locations["Forest Race 100 Rupees"]).access_rule(state) and
+            state.has_group("coins", 1) and
+            self.get_npc("Forest Rudy (Start)").access_rule(state) and
+            self.get_npc("Forest Rudy (End)").access_rule(state))
+
+        # Caves Rules
+        add_rule(self.get_location("Rope"), lambda state:
+            self.get_npc(self.npc_locations["Rope"]).access_rule(state))
+
+        add_rule(self.get_location("Snail Salt"), lambda state:
+            self.get_npc(self.npc_locations["Snail Salt"]).access_rule(state) and
+            state.has("Funky Fungus"))
+
+        # Desert Rules
+        add_rule(self.get_location("Fairy Dust"), lambda state:
+            self.get_npc(self.npc_locations["Fairy Dust"]).access_rule(state))
+
+        # Canyon Rules
+        add_rule(self.get_location("Backstep"), lambda state:
+            self.get_npc(self.npc_locations["Backstep"]).access_rule(state))
+        # Defeating Cornrad requirement has been deactivated in the mod.
+
+        add_rule(self.get_location("Star Earrings"), lambda state:
+            self.get_npc(self.npc_locations["Star Earrings"]).access_rule(state))
+
+        add_rule(self.get_location("Smart Gun"), lambda state:
+            self.get_npc(self.npc_locations["Smart Gun"]).access_rule(state) and
+            state.has("Fairy Dust"))
+
+        # Swamp Rules
+        add_rule(self.get_location("Ogre Hair"), lambda state:
+            self.get_npc(self.npc_locations["Ogre Hair"]).access_rule(state) and
+            state.has("Cleaver Shovel"))
+
+        # Peak Rules
+        add_rule(self.get_location("Power Pendant"), lambda state:
+            self.get_npc(self.npc_locations["Power Pendant"]).access_rule(state) and
+            state.has("Crystal of Refraction"))
+
+        add_rule(self.get_location("Peak Race 100 Rupees"), lambda state:
+            self.get_npc(self.npc_locations["Peak Race 100 Rupees"]).access_rule(state) and
+            state.has_group("coins", 5) and
+            state.has(self.level_beacons["Peak"]) and
+            self.get_npc("Peak Rudy (Start)").access_rule(state) and
+            self.get_npc("Peak Rudy (End)").access_rule(state) and
+            state.has(self.level_beacons["Forest"]) and
+            self.get_npc("Forest Rudy (Start)").access_rule(state) and
+            self.get_npc("Forest Rudy (End)").access_rule(state))
+
+        # Crypts Rules
+        add_rule(self.get_location("Bomb Gauntlet"), lambda state:
+            self.get_npc(self.npc_locations["Bomb Gauntlet"]).access_rule(state))
+
+        # Beach Rules
+        add_rule(self.get_location("Speedy Shoes"), lambda state:
+            self.get_npc(self.npc_locations["Speedy Shoes"]).access_rule(state) and
+            state.has("Enchanted Shoes"))
+
+        add_rule(self.get_location("Magic Cloak"), lambda state:
+            self.get_npc(self.npc_locations["Magic Cloak"]).access_rule(state) and
+            state.has("Calendar"))
+
+        # River Rules
+        add_rule(self.get_location("Cleaver Shovel"), lambda state:
+            self.get_npc(self.npc_locations["Cleaver Shovel"]).access_rule(state) and
+            state.has("Snail Salt"))
+
+        add_rule(self.get_location("Oil and Chains"), lambda state:
+            self.get_npc(self.npc_locations["Oil and Chains"]).access_rule(state) and
+            state.has("Ogre Hair"))
+
+        # Hills Rules
+        add_rule(self.get_location("Double Wave"), lambda state:
+            self.get_npc(self.npc_locations["Double Wave"]).access_rule(state) and
+            state.has("Sword Wave"))
+
+        add_rule(self.get_location("Hills Race 100 Rupees"), lambda state:
+            self.get_npc(self.npc_locations["Hills Race 100 Rupees"]).access_rule(state) and
+            state.has_group("coins", 10) and
+            state.has(self.level_beacons["Hills"]) and
+            self.get_npc("Hills Rudy (Start)").access_rule(state) and
+            self.get_npc("Hills Rudy (End)").access_rule(state) and
+            state.has(self.level_beacons["Peak"]) and
+            self.get_npc("Peak Rudy (Start)").access_rule(state) and
+            self.get_npc("Peak Rudy (End)").access_rule(state) and
+            state.has(self.level_beacons["Forest"]) and
+            self.get_npc("Forest Rudy (Start)").access_rule(state) and
+            self.get_npc("Forest Rudy (End)").access_rule(state))
+
+        # Lair Rules
+        add_rule(self.get_location("Funky Fungus"), lambda state:
+            self.get_npc(self.npc_locations["Funky Fungus"]).access_rule(state) and
+            state.has("Sacred Oil"))
+        add_rule(self.get_location("Soul Upgrade"), lambda state:
+            self.get_npc(self.npc_locations["Soul Upgrade"]).access_rule(state) and
+            state.has("Sacred Oil") and state.has("Smart Gun"))
+
     def sweep(self, extra_items=None):
         if extra_items is None:
             extra_items = []
@@ -1496,7 +1520,7 @@ class ArzetteWorld():
         collected_items = []
         while collection_flag:
             collection_flag = False
-            for name in all_locations:
+            for name in all_locations+all_npcs:
                 location = self.get_location(name)
                 if (location.can_reach(state) and location.item is not None and
                         location.item not in collected_items):
@@ -1533,16 +1557,7 @@ class ArzetteWorld():
                 raise Exception(f"Multiple key {key}")
             value = variable_dictionary[f"{barrier}_Barrier"]
             location_dict[key] = value
-        for name in all_npcs:
-            key = name.replace(" ", "_")
-            npc = self.get_npc(name).item
-            if npc is None:
-                raise Exception(f"NPC {name} not assigned")
-            value = variable_dictionary[npc.replace(" ", "_")]
-            if key in location_dict:
-                raise Exception(f"Multiple key {key}")
-            location_dict[key] = value
-        for location in all_locations:
+        for location in all_npcs+all_locations:
             if location == "Default Beacon":
                 continue
             key = location.replace(" ", "_")
@@ -1550,6 +1565,8 @@ class ArzetteWorld():
             if item is None:
                 raise Exception(f"Location {location} not assigned")
             value = variable_dictionary[item.replace(" ", "_")]
+            if key in location_dict:
+                raise Exception(f"Multiple key {key}")
             location_dict[key] = value
 
         output = []
@@ -1585,7 +1602,7 @@ class ArzetteWorld():
         while True:
             collected_items = [collect["item"] for sphere in all_spheres for collect in sphere]
             current_sphere = []
-            for name in all_locations:
+            for name in all_npcs+all_locations:
                 location = self.get_location(name)
                 if (location.can_reach(state) and location.item not in collected_items):
                     current_sphere.append(
@@ -1594,7 +1611,7 @@ class ArzetteWorld():
             for collect in current_sphere:
                 test_state = state.copy()
                 test_state.collect(collect["item"])
-                test_sphere = [name for name in all_locations
+                test_sphere = [name for name in all_npcs+all_locations
                                if (self.get_location(name).can_reach(test_state) and
                                    self.get_location(name).item not in collected_items)]
                 if len(test_sphere) > len(current_sphere):
@@ -1654,5 +1671,7 @@ class ArzetteCollectionState():
 
 if __name__ == "__main__":
     world = ArzetteWorld()
+    self = world
+    seed = 0
     world.fill()
     world.print(sphere_path="spheres.txt")

@@ -39,15 +39,12 @@ Will randomize the different barrier types. In other words, all barriers of a ce
 
 ## NPC
 
-### randomize
-Each NPC location will also be randomized. NPC locations can only be randomized within other NPC locations. We could probably include the possibility to spawn an NPC at any item location in the future, though. This would require separating locations in the world from locations as rewards. Doing this would also enable bonus_scolls inclusion in the item_pool options.
-
-### include_foolish
-Include the useless (the ones that don't give out any item) NPC locations in the pool. Activating this will put a lot of progression NPCs in Faramore.
-
 ## item_pool
 
 Those options decide which item types to include in the item pool to randomize.
+
+### npc
+Include NPCs in the pool. NPCs cannot spawn from other NPCs (quest item locations) or by hitting rocks (rocks locations).
 
 ### bags
 Include bags in the pool
@@ -138,10 +135,11 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-Bonus scroll implementation.
+Group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code.
 
-Merge NPC pool and item pool so the former can spawn in the latter (level_location except Jewel and Beacon) and vice-versa.
-
-Recheck logic for some enemies that could be avoided.
+Add options to the logic, mainly:
+- tricky jumps requirements
+- check some enemy requirements, mainly the colored enemies
+- lantern requirements
 
 Explain how to start the randomizer.
