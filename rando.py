@@ -653,14 +653,17 @@ class ArzetteWorld():
 
         add_rule(self.get_npc("Faramore Maki"), lambda state:
             ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
-             self.get_barrier(self.barrier_types["Blue"]).access_rule(state)) or
+             self.get_barrier(self.barrier_types["Blue"]).access_rule(state)) and
             state.has("Griffin Boots"))
 
-        for npc in ["Faramore Payop", "Faramore Dewey"]:
-            add_rule(self.get_npc(npc), lambda state:
-                ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
-                 self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
-                state.has("Griffin Boots"))
+        add_rule(self.get_npc("Faramore Payop"), lambda state:
+            ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
+                self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
+            state.has("Griffin Boots"))
+
+        add_rule(self.get_npc("Faramore Dewey"), lambda state:
+            self.get_barrier(self.barrier_types["Purple"]).access_rule(state) and
+            state.has("Griffin Boots"))
         # Purple Magic requirement for Dewey has been deactivated in the mod.
 
         for npc in ["Faramore Denny", "Faramore Cypress"]:
@@ -685,7 +688,8 @@ class ArzetteWorld():
 
         # Desert Rules
         add_rule(self.get_npc("Desert Fairy"), lambda state:
-            state.has("Desert Key"))
+            state.has("Desert Key") and state.has("Lantern") and
+            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
         # Canyon Rules
         add_rule(self.get_npc("Canyon Crowdee"), lambda state:
@@ -709,7 +713,9 @@ class ArzetteWorld():
         # Peak Rules
         add_rule(self.get_npc("Peak Ciclena"), lambda state:
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
-            state.has_group("magic") and state.has("Peak Key"))
+            state.has_group("magic") and state.has("Peak Key") and
+            state.has("Lantern") and
+            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
         add_rule(self.get_npc("Peak Rudy (End)"), lambda state:
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
@@ -795,11 +801,7 @@ class ArzetteWorld():
                 state.has("Griffin Boots"))
 
         add_rule(self.get_location("Faramore Coin"), lambda state:
-            ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
-             self.get_barrier(self.barrier_types["Red"]).access_rule(state)) or
-            state.has("Griffin Boots"))
-        add_rule(self.get_location("Faramore Coin"), lambda state:
-            (state.has("Griffin Boots") and state.has("Winged Belt")) or
+            state.has("Griffin Boots") and
             self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
     
         add_rule(self.get_location("Faramore Candle (Cypress House)"), lambda state:
@@ -958,7 +960,14 @@ class ArzetteWorld():
             add_rule(self.get_location(item), lambda state:
                 self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
                 state.has_group("magic"))
-        
+
+        for item in ["Peak Coin", "Peak Key",
+                "Peak Candle (Ciclena Cave)", "Peak Bag (Before Apatu)",
+                "Peak Jewel", "Peak Bag (After Apatu)"]:
+            add_rule(self.get_location(item), lambda state:
+                state.has("Lantern") and
+                (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
+
         add_rule(self.get_location("Peak Candle (First Cave)"), lambda state:
             self.get_barrier(self.barrier_types["Blue"]).access_rule(state))
 

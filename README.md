@@ -29,10 +29,10 @@ This variable can take many values, as explained here.
 Each beacon will still unlock the same number of levels. However, the unlocked levels will be random. The two levels that are unlocked at the start of the game will also be randomized. Be careful that activating this might lock the store away for a while, and force the player to farm bags to get power stones.
 
 #### faramore
-Each beacon will still unlock the same number of levels. However, the unlocked levels will be random. One of the two levels that are unlocked at the start of the game will also be randomized, Faramore being always unlocked. This helps with giving the player early access to the store.
+Each beacon will still unlock the same number of levels. However, the unlocked levels will be random. One of the two levels that are unlocked at the start of the game will also be randomized, Faramore being always unlocked. This helps with giving the player early access to the store to avoid farming bags.
 
 #### vanilla
-Each beacon will unlock the same levels. Note that depending on the beacon flag, those beacon could be at a random location.
+Each beacon will unlock the same levels. Note that depending on the beacons flag, those beacon could be at a random location.
 
 ## barrier_types
 Will randomize the different barrier types. In other words, all barriers of a certain type will be changed to another type.
@@ -72,7 +72,6 @@ Include life-ups (extra hearts) in the pool.
 
 ### bonus_scrolls
 Includes the bonus minigame scrolls location in the pool. The scrolls will only spawn in open locations, not as quest rewards - even though they probably could be given as quest rewards without crashing with the current game mod. Also, each bonus scroll is automatically linked to the level they are in, so there will be one and only one bonus scroll per level.
-This function is still being developed and should not be activated.
 
 ### bonus_rewards
 Includes the rupees rewards of the bonus minigame scrolls in the pool.
@@ -102,9 +101,6 @@ Activating the vanilla flag will lock all items in the trading sequence to their
 
 In other words, talking to Alven once will give you random item. Finding the Fort Findula Dungeon Key will kickstart the trading sequence, which will always lead to the Chainsword in the end.
 
-## enemy_spawn
-This would theoretically spawn random enemies instead of their vanilla placement. This is not currently implemented since the logic rules include red/blue enemies placement.
-
 # Logic rules game assumptions
 
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
@@ -120,8 +116,6 @@ All items can now be collected in the world. This includes NPC quest rewards, je
 NPC spawn rules are deactivated. Some NPCs need a prerequisite to spawn - Cypress in Faramore needing the lantern, Fairy needing to hit the switches. Those have been deactivated, and every NPC should spawn by default.
 
 NPC requirements are local. For example, normally, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomized location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
-
-Enemy spawns are not randomized for now.
 
 
 # Logic rules caveats
