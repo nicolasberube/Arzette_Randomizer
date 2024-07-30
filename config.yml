@@ -17,3 +17,7 @@ item_pool:
   beacons: true
   jewels: false
   trading_sequence: "included"
+logic:
+  tricky_jumps: true
+  no_lantern: true
+  damage_boost: false

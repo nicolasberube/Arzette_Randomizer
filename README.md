@@ -101,6 +101,20 @@ Activating the vanilla flag will lock all items in the trading sequence to their
 
 In other words, talking to Alven once will give you random item. Finding the Fort Findula Dungeon Key will kickstart the trading sequence, which will always lead to the Chainsword in the end.
 
+## logic
+
+### tricky_jumps
+
+Will permit some tricky jumps and techniques in logic. Nothing too hard, but maybe hard to find.
+
+### no_lantern
+
+Will permit going through dark rooms and dark bonus rooms without the lantern in logic.
+
+### damage_boost
+
+Will permit damage boosting to an extent. Deactivating this means you could do logic without taking any damage. This is not implemented yet.
+
 # Logic rules game assumptions
 
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
@@ -130,11 +144,11 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-Group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions.
+A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better.
 
 Add options to the logic, mainly:
-- tricky jumps requirements
+- tricky jumps requirements (done)
+- lantern requirements (done)
 - check some enemy requirements, mainly the colored enemies
-- lantern requirements
 
 Explain how to start the randomizer.
