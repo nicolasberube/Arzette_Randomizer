@@ -113,7 +113,7 @@ Will permit going through dark rooms and dark bonus rooms without the lantern in
 
 ### damage_boost
 
-Will permit damage boosting to an extent. Deactivating this means you could do logic without taking any damage. This is not implemented yet.
+Will permit damage boosting to an extent where it would be possible in casual mode with health drops. Deactivating this means you could do logic without taking any damage. This is not implemented yet.
 
 # Logic rules game assumptions
 
@@ -146,9 +146,11 @@ For the objects, we assume that going to their location allows for their collect
 
 A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better.
 
+Use sub function for logic (bombs, flute, pterodactyl). Enemy logic for NPC is still missing, must group them with their respective location.
+
 Add options to the logic, mainly:
 - tricky jumps requirements (done)
 - lantern requirements (done)
-- check some enemy requirements, mainly the colored enemies
+- check some enemy requirements, mainly the colored enemies (ongoing)
 
 Explain how to start the randomizer.
