@@ -270,8 +270,7 @@ all_locations = starting_locations + [
 
 non_quest_locations = [
     location for location in all_locations
-    if location not in list(default_npc_locations) + rock_locations]
-# We could remove bonus_locations to avoid NPC spawning after a Bonus, but let's have fun.
+    if location not in list(default_npc_locations) + rock_locations + bonus_locations]
 
 all_npcs = (list(set(default_npc_locations.values())) + default_npc_locked + default_npc_fool)
 
@@ -481,27 +480,25 @@ class ArzetteWorld():
                 self.get_location(item).item = item
             item_list.append(trading_locations[start_position])
 
-        # Bonus scrolls randomisation
+        # NPC + Bonus scrolls randomisation
         scroll_locations = [item for item in all_locations if "Bonus" in item.split()
                             and "Reward" not in item.split()]
-        if self.config["item_pool"]["bonus_scrolls"]:
-            for item in scroll_locations:
-                level = item.split()[0]
-                possible_locations = [
-                    location for location in level_locations[level]
-                    if self.get_location(location).item is None]
-                location = random.choice(possible_locations)
-                self.get_location(location).item = item
-        else:
-            for item in scroll_locations:
-                self.get_location(item).item = item
-
-        # NPC randomisation
+        npc_list = []
         if self.config["item_pool"]["npc"]:
-            npc_list = list(set(default_npc_locations.values())) + default_npc_fool
+            npc_list += list(set(default_npc_locations.values())) + default_npc_fool
             npc_locked = default_npc_locked
             for npc in npc_locked:
                 self.get_npc(npc).item = npc
+        else:
+            for name in all_npcs:
+                self.get_location(name).item = name
+            self.npc_locations = default_npc_locations
+        if self.config["item_pool"]["bonus_scrolls"]:
+            npc_list += scroll_locations
+        else:
+            for item in scroll_locations:
+                self.get_location(item).item = item
+        if len(npc_list) > 0:
             npc_locs = [location for location in non_quest_locations
                         if self.get_location(location).item is None]
             random.shuffle(npc_locs)
@@ -516,10 +513,6 @@ class ArzetteWorld():
             npc_to_location = {self.get_location(name).item: name for name in npc_locs}
             for item, npc in default_npc_locations.items():
                 self.npc_locations[item] = npc_to_location[npc]
-        else:
-            for name in all_npcs:
-                self.get_location(name).item = name
-            self.npc_locations = default_npc_locations
 
         # Item randomisation
         self.set_rules()
@@ -699,6 +692,7 @@ class ArzetteWorld():
         for npc in ["Canyon Motte", "Canyon Odie"]:
             add_rule(self.get_npc(npc), lambda state:
                 state.has_group("bombs") and state.has("Canyon Key") and
+                state.has("Lantern") and
                 (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
         add_rule(self.get_npc("Canyon Odie"), lambda state:
             self.get_barrier(self.barrier_types["Red"]).access_rule(state) or
@@ -773,21 +767,6 @@ class ArzetteWorld():
                 if level in ["Crypts", "Fort", "Castle", "Lair"]:
                     add_rule(self.get_location(item), lambda state:
                         state.has("Power Pendant"))
-
-        # Bonus Rewards Rules
-        for item in [location for location in self.location_cache
-                if "Bonus" in location.split() and "Reward" in location.split()]:
-            level = item.split()[0]
-            parent = f"{level} Bonus"
-            add_rule(self.get_location(item), lambda state, parent=parent:
-                state.has(parent))
-            if level in ["Desert", "Swamp", "Fort"]:
-                add_rule(self.get_location(item), lambda state:
-                    state.has("Lantern") and
-                    (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
-            if level in ["Hills"]:
-                add_rule(self.get_location(item), lambda state:
-                    state.has("Griffin Boots"))  # Not 100% required but hard without it
 
         # Faramore Rules
 
@@ -1044,7 +1023,8 @@ class ArzetteWorld():
                 state.has_group("magic"))
 
         add_rule(self.get_location("Volcano Coin"), lambda state:
-            state.has("Griffin Boots") or state.has("Winged Belt"))
+            state.has("Griffin Boots") or state.has("Winged Belt") or
+            state.has("Backstep"))
 
         # Beach Rules
         add_rule(self.get_location("Beach Key (First House)"), lambda state:
@@ -1522,6 +1502,21 @@ class ArzetteWorld():
             self.get_npc(self.npc_locations["Soul Upgrade"]).access_rule(state) and
             state.has("Sacred Oil") and state.has("Smart Gun"))
 
+        # Bonus Rewards Rules
+        for item in [location for location in self.location_cache
+                if "Bonus" in location.split() and "Reward" in location.split()]:
+            level = item.split()[0]
+            parent = f"{level} Bonus"
+            add_rule(self.get_location(item), lambda state, parent=parent:
+                self.get_location(parent).access_rule(state))
+            if level in ["Desert", "Swamp", "Fort"]:
+                add_rule(self.get_location(item), lambda state:
+                    state.has("Lantern") and
+                    (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
+            if level in ["Hills"]:
+                add_rule(self.get_location(item), lambda state:
+                    state.has("Griffin Boots"))  # Not 100% required but hard without it
+
     def sweep(self, extra_items=None):
         if extra_items is None:
             extra_items = []
@@ -1683,7 +1678,5 @@ class ArzetteCollectionState():
 
 if __name__ == "__main__":
     world = ArzetteWorld()
-    self = world
-    seed = 0
     world.fill()
     world.print(sphere_path="spheres.txt")

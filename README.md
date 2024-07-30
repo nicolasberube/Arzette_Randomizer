@@ -117,6 +117,7 @@ NPC spawn rules are deactivated. Some NPCs need a prerequisite to spawn - Cypres
 
 NPC requirements are local. For example, normally, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomized location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
 
+Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls).
 
 # Logic rules caveats
 
@@ -129,7 +130,7 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-Group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code.
+Group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions.
 
 Add options to the logic, mainly:
 - tricky jumps requirements
