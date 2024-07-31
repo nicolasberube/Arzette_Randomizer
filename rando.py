@@ -1319,8 +1319,7 @@ class ArzetteWorld():
         # Rocks Rules
         for item in rock_locations:
             add_rule(self.get_location(item), lambda state:
-                self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state) and
-                self.get_npc(self.npc_locations["Rope"]).access_rule(state))
+                self.get_npc(self.npc_locations["Rope Upgrade"]).access_rule(state))
 
         add_rule(self.get_location("Orange Rock"), lambda state:
             state.has(self.level_beacons["Caves"]) and

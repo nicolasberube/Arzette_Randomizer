@@ -1,22 +1,6 @@
 # Arzette Randomizer
 
-This is a proof of concept of a randomizer for Arzette: The Jewel of Faramore. For now, it only experiments with the logic of the items and locations, and assigns them adequately for the game to still be beatable. This code will produce a .txt file that include the locations and items assignment.
-
-The first section is the level order unlock.
-The key is the level containing the beacon.
-The value is a list of the levels that will be unlocked by hitting the beacon in the level in the key.
-
-The second section is the barrier types assignement.
-The key (barrier type on the left) is the location of the barriers in the vanilla game.
-The value (barrier type on the right) is the replacement, meaning that this is the barrier type that is replacing the barrier in the key.
-
-The third section is the NPC location assignment.
-The key (NPC on the left) is the location, meaning that this is where you would find the NPC in the vanilla game.
-The value (NPC on the right) is the item, meaning that this is the NPC you will see if you go to this location.
-
-The fourth section is the item location assignment.
-The key (item on the left) is the location, meaning that this is where you would find the item in the vanilla game.
-The value (item on the right) is the item, meaning that this is the item you will get if you go to this location.
+This is a proof of concept of a randomizer for Arzette: The Jewel of Faramore. It generates a .csv that would ideally be used as an input by a modified build of the game. It can also generate a .txt files that identifies checks in order and helps with debugging or getting unstuck.
 
 Note that the code is *not* currently Archipelago compatible. I tried my best to make a possible future Achipelago port as smooth as possible, while still keeping the code as simple as possible and not relying on the Archipelago libraries. I guess by doing so, I upheld Larry David's quote of "A good compromise is when both parties are dissatisfied".
 
@@ -113,7 +97,7 @@ Will permit going through dark rooms and dark bonus rooms without the lantern in
 
 ### damage_boost
 
-Will permit damage boosting to an extent where it would be possible in casual mode with health drops. Deactivating this means you could do logic without taking any damage. This is not implemented yet.
+Will permit damage boosting to an extent where it would be possible in casual mode with health drops. Deactivating this means you could do logic without taking any damage.
 
 # Logic rules game assumptions
 
@@ -133,7 +117,7 @@ NPC requirements are local. For example, normally, Cypress needs 3 plants to giv
 
 Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls).
 
-# Logic rules caveats
+# Logic rules coding caveats
 
 Since NPC, the Hills Keys and quest items (Plants, Rocks, Compass and Bell) have local requirements, we cannot implement a logic rule to their location before they are assigned.
 
@@ -144,6 +128,6 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.).
+A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
 
-Explain how to start the randomizer.
+Explain how to start the randomizer and generate .csv file.
