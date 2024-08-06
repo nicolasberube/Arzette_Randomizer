@@ -1521,7 +1521,10 @@ class ArzetteWorld():
                     self.config["logic"]["no_lantern"]))
             if level in ["Hills"]:
                 add_rule(self.get_location(item), lambda state:
-                    state.has("Griffin Boots"))  # Not 100% required but hard without it
+                    state.has("Griffin Boots") or
+                    (state.has("Fatal Flute") and
+                      (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))) or
+                    self.config["logic"]["tricky_jumps"])
 
     def sweep(self, extra_items=None):
         if extra_items is None:
