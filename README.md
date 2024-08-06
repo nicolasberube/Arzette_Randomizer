@@ -37,7 +37,7 @@ Include bags in the pool
 Include keys in the pool. This does not include quest items like the Fort Findula Dungeon Key. This also does not include the Key in Lichen Hills.
 
 ### hills_key
-Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. Note that empty locations could also be NPCs with their own spawn rules.
+Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
 
 ### candles
 Include candles in the pool.
@@ -99,15 +99,17 @@ Will permit going through dark rooms and dark bonus rooms without the lantern in
 
 Will permit damage boosting to an extent where it would be possible in casual mode with health drops. Deactivating this means you could do logic without taking any damage.
 
-# Logic rules game assumptions
+# Game mod assumptions
+
+Here are a list of the main modifications of the vanilla game to allow for a randomizer mod.
 
 Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
 
-An extra location for the Bombs has been coded in (preferably at the start of Forest or Faramore). Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
+An extra location for the Bombs has been coded in at the start of Forest. Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
 
-All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate location and test it. A modification of the key sprites had been done to accomodate this.
+All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this.
 
-All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game.
+All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game. However, the trading quest menu will be glitched, so one has to remember which item have been collected - unless using the "vanilla" or "excluded" option for trading_sequence.
 
 All items can now be collected in the world. This includes NPC quest rewards, jewel shards, and rocks, which now spawn next to their spawner instead of in Arzette's inventory.
 
@@ -115,11 +117,13 @@ NPC spawn rules are deactivated. Some NPCs need a prerequisite to spawn - Cypres
 
 NPC requirements are local. For example, normally, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomized location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
 
-Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls).
+NPC requirements have been locked behind an appropriate order activation. For example, if you already have rocks before talking to Faramore Munhum, the rock quest will still be activated appropriately instead of being already completed. If you already have the Sacred Oil and Chains before talking to Alven, he will give you his first item (Fort Findula Dungeon Key in vanilla) before the Chainsword reward. If you already have 250 souls, Zazie will still ask for Sacred Oil before activating the souls quest, and so on.
+
+Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls). This might create glitches.
 
 # Logic rules coding caveats
 
-Since NPC, the Hills Keys and quest items (Plants, Rocks, Compass and Bell) have local requirements, we cannot implement a logic rule to their location before they are assigned.
+Since NPCs, the Hills Keys and quest items (Plants, Rocks, Compass and Bell) have local requirements, we cannot implement a logic rule to their location before they are assigned.
 
 For the NPC, we do their assignment first, which will then dictate the rule for the location of interacting with them. This is mandatory since we cannot know the logic rules of an NPC interaction location before knowing where this NPC is.
 

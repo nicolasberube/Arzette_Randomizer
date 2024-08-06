@@ -1119,10 +1119,6 @@ class ArzetteWorld():
         add_rule(self.get_location("Enchanted Shoes"), lambda state:
             self.get_barrier(self.barrier_types["Flute"]).access_rule(state))
 
-        for item in ["Enchanted Shoes", "Fort Coin", "Fort Key (Top Room)"]:
-            add_rule(self.get_location(item), lambda state:
-                state.has_group("blue"))
-
         for item in ["Enchanted Shoes", "Fort Coin", "Fort Key (Top Room)",
                 "Fort Bag (Top Room 1)", "Fort Bag (Top Room 2)", "Fort Bag (Top Room 3)",
                 "Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
@@ -1146,6 +1142,11 @@ class ArzetteWorld():
         for item in ["Fort Jewel", "Fort Bonus"]:
             add_rule(self.get_location(item), lambda state:
                  state.has_group("candles", 20))
+            add_rule(self.get_location(item), lambda state:
+                (state.has_group("magic") and state.has_group("blue")) or
+                self.config["logic"]["damage_boost"] or
+                (state.has("Fatal Flute") and
+                (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))))
 
         add_rule(self.get_location("Fort Bonus"), lambda state:
             state.has("Fort Jewel"))
@@ -1649,6 +1650,9 @@ class ArzetteWorld():
                 location = collect["location"]
                 if location in self.npc_locations:
                     location += f"->{self.npc_locations[location]}"
+                if "Bonus Reward" in location:
+                    source = location.split()[0] + " Bonus"
+                    location += f"->{self.get_location(source).item}"
                 if collect["expander"]:
                     output.append(f"*{item:31s} in  {location}")
                 else:
