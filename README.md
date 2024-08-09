@@ -1,10 +1,10 @@
 # Arzette Randomizer
 
-This is a randomizer for Arzette: The Jewel of Faramore. It generates a .csv that is used as an input by a modified build of the game. It also generates a .txt file that identifies checks in order and helps with debugging or getting unstuck.
+This is a randomizer for Arzette: The Jewel of Faramore. It includes both patched game files to modify the game, and a program that generates a .csv that is used as an input by a modified build of the game. It also generates a .txt file that identifies checks in order and helps with debugging or getting unstuck. 
 
 Note that the code is *not* currently Archipelago compatible. I tried my best to make a possible future Achipelago port as smooth as possible, while still keeping the code as simple as possible and not relying on the Archipelago libraries. I guess by doing so, I upheld Larry David's quote of "A good compromise is when both parties are dissatisfied".
 
-Download the latest release on this page. You can view installation instructions here: [Link TBD]
+Download the latest release on this page. Instructions are there and in the readme, or you can view detailed installation instructions here: (https://www.seedyeyesoftware.com/games/arzette/arzette-rando)
 
 # Configuration options
 
@@ -141,4 +141,11 @@ For the objects, we assume that going to their location allows for their collect
 
 A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
 
-Explain how to start the randomizer and generate .csv file.
+Flesh out credits more. : )
+
+# CREDITS
+
+Randomizer Logic & Program Development - Lightmopp
+Randomizer Logic - JustCallMeGio
+Testing - Dynomation
+Game Modification - Dopply
