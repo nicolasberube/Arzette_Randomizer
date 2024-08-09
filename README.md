@@ -142,3 +142,5 @@ For the objects, we assume that going to their location allows for their collect
 A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
 
 Explain how to start the randomizer and generate .csv file.
+
+Implement Canteen as the alternative to damage_boost option.
