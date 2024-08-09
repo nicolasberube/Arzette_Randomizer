@@ -270,7 +270,9 @@ all_locations = starting_locations + [
 
 non_quest_locations = [
     location for location in all_locations
-    if location not in list(default_npc_locations) + rock_locations + bonus_locations]
+    if location not in list(default_npc_locations) + rock_locations + bonus_locations
+    and "Jewel" not in location.split()
+    and location not in {"Desert Candle (Last Room)", "Swamp Plant", "River Key (Submarine)"}]
 
 all_npcs = (list(set(default_npc_locations.values())) + default_npc_locked + default_npc_fool)
 
@@ -1664,9 +1666,7 @@ class ArzetteWorld():
             for collect in sphere:
                 item = collect["item"]
                 location = collect["location"]
-                if location in self.npc_locations:
-                    if "Race 100 Rupees" in location:
-                        continue
+                if location in self.npc_locations and "Race 100 Rupees" not in location:
                     location += f"-> {self.npc_locations[location]}"
                 if "Bonus Reward" in location:
                     source = location.split()[0] + " Bonus"

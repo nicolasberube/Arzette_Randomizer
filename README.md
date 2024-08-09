@@ -36,7 +36,7 @@ Include bags in the pool
 Include keys in the pool. This does not include quest items like the Fort Findula Dungeon Key. This also does not include the Key in Lichen Hills.
 
 ### hills_key
-Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
+Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. The only other empty location would be the Shield Ring if you already collected the Reflector Ring. Also, the item placed in the Lichen Hills key location will be invisible, and won't be made visible with the Flute.
 
 ### candles
 Include candles in the pool.
@@ -105,6 +105,26 @@ Will create a spoiler.txt file that organizes all checks in collection order to 
 ## seed
 
 If not null, will use it as the seed for the randomizer. If null, will take a random seed, which will be printed in spoiler.txt.
+
+# Miscellaneous
+
+- The NPC's head icons are there to represent their inventory upgrade rewards
+- Rudy races need to be activated by visiting his cave in Faramore - wether he is in the cave or not
+- The Forest Rudy Race can be completed by taking the shortcut with the Griffin Boots, and by going in and out of a sub area (tree or golden fly cave)
+
+Here are the acronym for the keys
+- FT: Faramore Town
+- DF: Durridin Forest
+- AD: Anju Desert
+- CC: Creece Canyon
+- NS: Norin Swamp
+- CH: Chillinax Peaks
+- BC: Boanjale Crypts
+- BB: Badonc Beach
+- RR: Ryha River
+- LH: Lichen Hills
+- FF: Fort Findula
+- DC: Dennys Castle
 
 # Game mod assumptions
 
