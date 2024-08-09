@@ -1,8 +1,10 @@
 # Arzette Randomizer
 
-This is a proof of concept of a randomizer for Arzette: The Jewel of Faramore. It generates a .csv that would ideally be used as an input by a modified build of the game. It can also generate a .txt files that identifies checks in order and helps with debugging or getting unstuck.
+This is a randomizer for Arzette: The Jewel of Faramore. It generates a .csv that is used as an input by a modified build of the game. It also generates a .txt file that identifies checks in order and helps with debugging or getting unstuck.
 
 Note that the code is *not* currently Archipelago compatible. I tried my best to make a possible future Achipelago port as smooth as possible, while still keeping the code as simple as possible and not relying on the Archipelago libraries. I guess by doing so, I upheld Larry David's quote of "A good compromise is when both parties are dissatisfied".
+
+Download the latest release on this page. You can view installation instructions here: [Link TBD]
 
 # Configuration options
 
@@ -106,25 +108,25 @@ If not null, will use it as the seed for the randomizer. If null, will take a ra
 
 # Game mod assumptions
 
-Here are a list of the main modifications of the vanilla game to allow for a randomizer mod.
+Here are a list of the main modifications of the vanilla game to allow for a randomizer mod:
 
-Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
+- Daimur has been modified to only take damage if you have collected the 5 Jewel Shards and has the Purple Magic, as opposed to the default vanilla game that only requires Purple Magic.
 
-An extra location for the Bombs has been coded in at the start of Forest. Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
+- An extra location for the Bombs has been coded in at the start of Forest. Bombs cannot spawn in the shop nor in item bags until the Bombs have been collected first at their assigned location.
 
-All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this.
+- All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this.
 
-All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game. However, the trading quest menu will be glitched, so one has to remember which item have been collected - unless using the "vanilla" or "excluded" option for trading_sequence.
+- All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game. However, the trading quest menu will be glitched, so one has to remember which item have been collected - unless using the "vanilla" or "excluded" option for trading_sequence.
 
-All items can now be collected in the world. This includes NPC quest rewards, jewel shards, and rocks, which now spawn next to their spawner instead of in Arzette's inventory.
+- All items can now be collected in the world. This includes NPC quest rewards, jewel shards, and rocks, which now spawn next to their spawner instead of in Arzette's inventory.
 
-NPC spawn rules are deactivated. Some NPCs need a prerequisite to spawn - Cypress in Faramore needing the lantern, Fairy needing to hit the switches. Those have been deactivated, and every NPC should spawn by default.
+- NPC spawn rules are deactivated. Some NPCs need a prerequisite to spawn - Cypress in Faramore needing the lantern, Fairy needing to hit the switches. Those have been deactivated, and every NPC should spawn by default.
 
-NPC requirements are local. For example, normally, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomized location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
+- NPC requirements are local. For example, normally, Cypress needs 3 plants to give the Lamp Oil Upgrade in Faramore. If Cypress' randomized location is now in Caves, then he will be there, but still ask for 3 plants to give an item.
 
-NPC requirements have been locked behind an appropriate order activation. For example, if you already have rocks before talking to Faramore Munhum, the rock quest will still be activated appropriately instead of being already completed. If you already have the Sacred Oil and Chains before talking to Alven, he will give you his first item (Fort Findula Dungeon Key in vanilla) before the Chainsword reward. If you already have 250 souls, Zazie will still ask for Sacred Oil before activating the souls quest, and so on.
+- NPC requirements have been locked behind an appropriate order activation. For example, if you already have rocks before talking to Faramore Munhum, the rock quest will still be activated appropriately instead of being already completed. If you already have the Sacred Oil and Chains before talking to Alven, he will give you his first item (Fort Findula Dungeon Key in vanilla) before the Chainsword reward. If you already have 250 souls, Zazie will still ask for Sacred Oil before activating the souls quest, and so on.
 
-Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls). This might create glitches.
+- Faramore NPC that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls). This might create glitches.
 
 # Logic rules coding caveats
 
