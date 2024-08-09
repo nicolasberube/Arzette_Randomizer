@@ -323,11 +323,12 @@ class ArzetteWorld():
         "bags": {location for location in all_locations if "Bag" in location.split()},
     }
 
-    def __init__(self, config_path="config.yml"):
+    def __init__(self, config_path="./config.yml"):
         with open(config_path, "r") as file:
             self.config = yaml.safe_load(file)
 
-    def fill(self, seed=None):
+    def fill(self):
+        seed = self.config['seed']
         # It is crucial to fill in order
         # self.level_beacons -> self.set_rules_barrier() + self.barrier_types ->
         # self.set_rules() -> assign all quest NPCs in self.location_cache + self.npc_locations ->
@@ -1546,8 +1547,11 @@ class ArzetteWorld():
                     collection_flag = True
         return state
 
-    def print(self, save_path="randomizer.csv", sphere_path=None):
-        with open("vanilla.csv", "r") as csvfile:
+    def print(self, save_path="./randomizer.csv"):
+        sphere_path = ""
+        if self.config["spoiler"]:
+            sphere_path="./spoiler.txt"
+        with open("./vanilla.csv", "r") as csvfile:
             vanilla_output = [row for row in csv.reader(csvfile, delimiter=",")]
 
         variable_dictionary = {}
@@ -1689,7 +1693,7 @@ class ArzetteCollectionState():
         ret.prog_items = copy.deepcopy(self.prog_items)
         return ret
 
-if __name__ == "__main__":
+if __name__ in "__main__":
     world = ArzetteWorld()
     world.fill()
-    world.print(sphere_path="spheres.txt")
+    world.print()

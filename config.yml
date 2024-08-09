@@ -21,3 +21,5 @@ logic:
   tricky_jumps: true
   no_lantern: true
   damage_boost: false
+spoiler: true
+seed: null

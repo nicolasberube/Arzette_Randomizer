@@ -7,7 +7,7 @@ Note that the code is *not* currently Archipelago compatible. I tried my best to
 # Configuration options
 
 ## level_order
-This variable can take many values, as explained here.
+This string variable can take the following values:
 
 #### random
 Each beacon will still unlock the same number of levels. However, the unlocked levels will be random. The two levels that are unlocked at the start of the game will also be randomized. Be careful that activating this might lock the store away for a while, and force the player to farm bags to get power stones.
@@ -21,10 +21,7 @@ Each beacon will unlock the same levels. Note that depending on the beacons flag
 ## barrier_types
 Will randomize the different barrier types. In other words, all barriers of a certain type will be changed to another type.
 
-## NPC
-
 ## item_pool
-
 Those options decide which item types to include in the item pool to randomize.
 
 ### npc
@@ -70,7 +67,7 @@ Includes the beacons location in the pool. Not to be confused with level_order, 
 Includes the Faramore jewel shards in the pool. This means that beating the bosses might not be required, and you could find jewel shards anywhere.
 
 ### trading_sequence
-This variable can take many values, as explained here.
+This string variable can take the following values:
 
 #### excluded
 This means that the trading sequence will only put the Fort Findula Dungeon Key, the Sacred Oil and Refined Chains and the Chainsword in the pool. The locations that will be put in the pool are both the moose Alven's interaction (the first one being always present, and the second being when offered the Sacred Oil and Chains), as well as the vanilla Sacred Oil location at the end of the Fort Findula Dungeon.
@@ -98,6 +95,14 @@ Will permit going through dark rooms and dark bonus rooms without the lantern in
 ### damage_boost
 
 Will permit damage boosting to an extent where it would be possible in casual mode with health drops. Deactivating this means you could do logic without taking any damage.
+
+## spoiler
+
+Will create a spoiler.txt file that organizes all checks in collection order to help you if you're stuck.
+
+## seed
+
+If not null, will use it as the seed for the randomizer. If null, will take a random seed, which will be printed in spoiler.txt.
 
 # Game mod assumptions
 
