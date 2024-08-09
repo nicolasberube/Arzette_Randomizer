@@ -145,7 +145,7 @@ Flesh out credits more. : )
 
 # CREDITS
 
-Randomizer Logic & Program Development - Lightmopp
-Randomizer Logic - JustCallMeGio
-Testing - Dynomation
-Game Modification - Dopply
+- Randomizer Logic & Program Development - Lightmopp
+- Randomizer Logic - JustCallMeGio
+- Testing - Dynomation
+- Game Modification - Dopply
