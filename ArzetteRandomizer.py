@@ -331,7 +331,7 @@ class ArzetteWorld():
             self.config = yaml.safe_load(file)
 
     def fill(self):
-        seed = self.config['seed']
+        seed = self.config["seed"]
         # It is crucial to fill in order
         # self.level_beacons -> self.set_rules_barrier() + self.barrier_types ->
         # self.set_rules() -> assign all quest NPCs in self.location_cache + self.npc_locations ->
@@ -935,7 +935,7 @@ class ArzetteWorld():
             (self.get_barrier(self.barrier_types["Blue"]).access_rule(state) or
              (state.has_group("candles", 20) and state.has("Griffin Boots"))))
 
-        for item in ["Crypts Bonus", "Crypts Key", "Crypts Bag (Crypt)"
+        for item in ["Crypts Bonus", "Crypts Key", "Crypts Bag (Crypt)",
                 "Crypts Candle (After Crypt)", "Crypts Coin",
                 "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
             add_rule(self.get_location(item), lambda state:
@@ -1588,7 +1588,7 @@ class ArzetteWorld():
                 level = level_names[level].lower().replace(" ", "_")
                 level_unlocks[f"{beacon}_{i_u+1}"] = f"world_{level}_unlocked"
 
-        location_dict = {}
+        location_dict = {"seed": self.seed}
         for name, barrier in self.barrier_types.items():
             key = f"{name}_Barrier"
             if key in location_dict:
