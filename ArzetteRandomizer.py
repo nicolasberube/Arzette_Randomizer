@@ -102,6 +102,7 @@ level_locations = {
         "Bell",
         "Crypts Bonus",
         "Crypts Key",
+        "Crypts Bag (Crypt)",
         "Crypts Candle (After Crypt)",
         "Crypts Coin",
         "Crypts Candle (Skelvis)",
@@ -914,7 +915,7 @@ class ArzetteWorld():
 
         # Crypts Rules
         for item in ["Crypts Life-Up", "Bell", "Crypts Bonus", "Crypts Key",
-                "Crypts Candle (After Crypt)", "Crypts Coin",
+                "Crypts Bag (Crypt)", "Crypts Candle (After Crypt)", "Crypts Coin",
                 "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)",
                 "Crypts Skelvis"]:
             add_rule(self.get_location(item), lambda state:
@@ -934,7 +935,7 @@ class ArzetteWorld():
             (self.get_barrier(self.barrier_types["Blue"]).access_rule(state) or
              (state.has_group("candles", 20) and state.has("Griffin Boots"))))
 
-        for item in ["Crypts Bonus", "Crypts Key",
+        for item in ["Crypts Bonus", "Crypts Key", "Crypts Bag (Crypt)"
                 "Crypts Candle (After Crypt)", "Crypts Coin",
                 "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
             add_rule(self.get_location(item), lambda state:
@@ -1093,8 +1094,10 @@ class ArzetteWorld():
                   (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))) or
                  self.config["logic"]["damage_boost"]) and
                 (state.has("Griffin Boots") or state.has("Winged Belt")))
-        add_rule(self.get_location("Hills Candle (Music Shrine)"), lambda state:
-            state.has("Griffin Boots"))
+
+        for item in ["Hills Candle (Music Shrine)", "Hills Key"]:
+            add_rule(self.get_location(item), lambda state:
+                state.has("Griffin Boots"))
 
         add_rule(self.get_location("Hills Coin"), lambda state:
             self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
