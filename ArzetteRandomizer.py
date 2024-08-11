@@ -1055,7 +1055,9 @@ class ArzetteWorld():
             add_rule(self.get_location(item), lambda state:
                 ((state.has("Lantern") and
                   (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))) or
-                self.config["logic"]["no_lantern"]))
+                self.config["logic"]["no_lantern"]) and
+                (state.has_group("bombs") and
+                 (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))))
 
         for item in ["Blue Magic", "River Bag (Last Room)",
                      "River Candle (Last Room)", "River Life-Up", "River Morgh"]:
