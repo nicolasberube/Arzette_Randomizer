@@ -694,9 +694,13 @@ class ArzetteWorld():
         # Forest Rules
         for item in ["Forest Coin", "Forest Bag (Sword Wave)", "Golden Fly", "Sword Wave",
                 "Forest Bag (Last Room)", "Forest Beacon", "Forest Jewel", "Magic Armor",
-                "Forest Cypress", "Forest Rudy (End)"]:
+                "Forest Cypress"]:
             add_rule(self.get_location(item), lambda state:
                 state.has("Forest Key") or state.has("Griffin Boots"))
+        add_rule(self.get_location("Forest Rudy (End)"), lambda state:
+            state.has("Forest Key") or
+            (state.has("Griffin Boots") and self.config["logic"]["tricky_jumps"]))
+
         add_rule(self.get_location("Golden Fly"), lambda state:
             state.has_group("bombs") and
             (state.has_group("bags") or state.has(self.level_beacons["Faramore"])) and
@@ -752,8 +756,12 @@ class ArzetteWorld():
 
         # Desert Rules
         add_rule(self.get_location("Desert Key"), lambda state:
-            state.has_group("bombs") and
-            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
+            (state.has_group("bombs") and
+             (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))) or
+            (((state.has("Griffin Boots")) or
+              (state.has("Winged Belt") and state.has("Speedy Shoes"))) and
+             self.get_barrier(self.barrier_types["Red"]).access_rule(state) and
+             self.config["logic"]["tricky_jumps"]))
 
         for item in ["Desert Key", "Desert Candle (Last Room)", "Desert Life-Up",
                 "Desert Bag (Last Room)", "Desert Beacon", "Desert Fairy"]:
@@ -973,7 +981,8 @@ class ArzetteWorld():
         for item in ["Volcano Candle (First Room)", "Volcano Coin",
                 "Volcano Candle (Last Room)", "Crystal of Refraction"]:
             add_rule(self.get_location(item), lambda state:
-                state.has_group("magic") or self.config["logic"]["tricky_jumps"])
+                state.has_group("magic") or self.config["logic"]["tricky_jumps"] or
+                self.config["logic"]["damage_boost"])
 
         add_rule(self.get_location("Volcano Coin"), lambda state:
             state.has("Griffin Boots") or state.has("Winged Belt") or

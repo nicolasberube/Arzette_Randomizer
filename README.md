@@ -88,7 +88,16 @@ In other words, talking to Alven once will give you random item. Finding the For
 
 ### tricky_jumps
 
-Will permit some tricky jumps and techniques in logic. Nothing too hard, but maybe hard to find.
+Will permit some tricky jumps and techniques in logic:
+- The top left of Faramore Town can be accessed with the winged belt from the top middle part
+- The Forest Rudy Race can be completed by first entering the tree sub area, and then taking the shortcut with the Griffin Boots
+- The Desert Key can be grabbed from the right
+- The Desert Beacon can be accessed without breaking the barrier with the Griffin Boots
+- The Volcano can be completed without magic without taking damage
+- The Volcano Coin can be reached with a precise Backstep from a higher ledge
+- The left beacon on the Beach to access the second Beach Key (to Tork's Cabin) can be hit with a bomb
+- The right beacon on the Beach to access the second Beach Key (to Tork's Cabin) can be reached without Griffin Boots with a precise jump if you have the Speedy Shoes.
+- The Hills Bonus room (hit the targets) can actually be completed without the Griffin Boots, if the only target you can hit spawns early.
 
 ### no_lantern
 
@@ -110,7 +119,6 @@ If not null, will use it as the seed for the randomizer. If null, will take a ra
 
 - The NPC's head icons are there to represent their inventory upgrade rewards
 - Rudy races need to be activated by visiting his cave in Faramore - wether he is in the cave or not
-- The Forest Rudy Race can be completed by taking the shortcut with the Griffin Boots, and by going in and out of a sub area (tree or golden fly cave)
 
 Here are the acronym for the keys
 - FT: Faramore Town
@@ -156,14 +164,15 @@ For the NPC, we do their assignment first, which will then dictate the rule for 
 
 For the objects, we assume that going to their location allows for their collection without considering their spawning equirements - which will be the case for Archipelago anyway. To fix this, we include the spawning requirements in *every* logic rules that expect to have those items in the collection state. This won't be Archipelago compatible - since if those item are in another world, they won't care about your spawning requirements unless such requirements are an item in itself - but even then it would only make the logic stricter than necessary.
 
+# Known bugs
+
+- Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 
 # TODO
 
 A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
 
 Implement Canteen as the alternative to damage_boost option.
-
-Flesh out credits more. : )
 
 # CREDITS
 
