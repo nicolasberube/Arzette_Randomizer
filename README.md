@@ -119,6 +119,7 @@ If not null, will use it as the seed for the randomizer. If null, will take a ra
 
 - The NPC's head icons are there to represent their inventory upgrade rewards
 - Rudy races need to be activated by visiting his cave in Faramore - wether he is in the cave or not
+- The rock quest can be activated - meaning you can start collecting the items in the 4 rocks locations - either by talking to Faramore Munhum or by collecting a rock from elsehwere.
 
 Here are the acronym for the keys
 - FT: Faramore Town
