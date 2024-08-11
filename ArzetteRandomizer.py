@@ -1368,7 +1368,8 @@ class ArzetteWorld():
              ((state.has("Lantern") and
                   (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))) or
                 self.config["logic"]["no_lantern"]) and
-             self.get_barrier(self.barrier_types["Purple"]).access_rule(state)))
+             self.get_barrier(self.barrier_types["Purple"]).access_rule(state)) or
+            state.has("Lair Bonus"))
 
         add_rule(self.get_location("Gray Rock"), lambda state:
             (state.has(self.level_beacons["Peak"]) and
