@@ -665,9 +665,7 @@ class ArzetteWorld():
         for npc in ["Faramore Kari Quest", "Faramore Barnabuss"]:
             add_rule(self.get_npc(npc), lambda state:
                  state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)") or
-                 (state.has("Griffin Boots") and
-                  (self.get_barrier(self.barrier_types["Red"]).access_rule(state) or
-                   self.get_barrier(self.barrier_types["Blue"]).access_rule(state))))
+                 state.has("Griffin Boots"))
 
         add_rule(self.get_npc("Faramore Payop"), lambda state:
             ((state.has("Faramore Key (Well)") or state.has("Faramore Key (Tavern)")) and
@@ -1289,9 +1287,9 @@ class ArzetteWorld():
             state.has_group("candles", 20) and
             state.has("Castle Key (Nodelki)"))
 
-        add_rule(self.get_location("Castle Bonus"), lambda state:
-            (state.has("Griffin Boots") or state.has("Winged Belt")) and
-            self.get_barrier(self.barrier_types["Purple"]).access_rule(state))
+        for item in ["Castle Bag (Bonus)", "Castle Bonus"]:
+            add_rule(self.get_location("Castle Bonus"), lambda state:
+                state.has("Castle Key (Left Room)"))
 
         # Lair Rules
         for item in ["Lair Candle (Tree Trunk)", "Lair Candle (Tree Top)"]:
@@ -1537,7 +1535,8 @@ class ArzetteWorld():
             state.has("Sacred Oil"))
         add_rule(self.get_location("Soul Upgrade"), lambda state:
             self.get_npc(self.npc_locations["Soul Upgrade"]).access_rule(state) and
-            state.has("Sacred Oil") and state.has("Smart Gun"))
+            state.has("Sacred Oil") and
+            (state.has("Smart Gun") or state.has("Infinite Soulfire")))
 
         # Bonus Rewards Rules
         for item in [location for location in all_locations
