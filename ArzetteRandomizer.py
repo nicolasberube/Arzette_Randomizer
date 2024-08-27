@@ -1025,7 +1025,7 @@ class ArzetteWorld():
 
         add_rule(self.get_location("Beach Candle (Cave)"), lambda state:
             self.get_barrier(self.barrier_types["Flute"]).access_rule(state) and
-            state.has("Griffin Boots") or state.has("Winged Belt"))
+            (state.has("Griffin Boots") or state.has("Winged Belt")))
 
         add_rule(self.get_location("Fatal Flute"), lambda state:
             state.has_group("bombs") and
