@@ -95,7 +95,7 @@ class TradingSequence(Choice):
     """
 Determine how the Chainsword trading sequence is randomized:
 Vanilla: All items except the Dungeon Key will be in their vanilla locations, including the Chainsword.
-Excluded: The Dungeon Key, the Sacred Oil, the Refined Chains, and the Chainsword will be shuffled. The rest of the trade quest will be avoided entirely, including Zazie's Soul Upgrade.
+Excluded: The Dungeon Key, the Sacred Oil & Refined Chains, and the Chainsword items will be shuffled, as well as the locations for the Dungeon Key, the Sacred Oil and the Chainsword. The rest of the trade quest will be avoided entirely, including Zazie's Soul Upgrade.
 Included: Every item in the Chainsword trading sequence is added to the item and location pools.
     """
     internal_name = "trading_sequence"
