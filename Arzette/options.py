@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import (DefaultOnToggle, Toggle, Choice)
+from Options import (DefaultOnToggle, Toggle, Choice, PerGameCommonOptions, OptionGroup)
 
 class LevelOrder(Choice):
     """
@@ -119,4 +119,53 @@ class DamageBoost(Toggle):
     """When eneabled, you may be expected to damage boost to an extent that may be possible in casual mode with health drops. When disabled, you can do all things logically without taking damage."""
     internal_name = "damage_boost"
     display_name = "Damage Boosting"
-    
+
+@dataclass
+class ArzetteOptions(PerGameCommonOptions):
+    level_order = LevelOrder
+    shuffle_barrier_types = ShuffleBarrierTypes
+    shuffle_npcs = ShuffleNPCs
+    shuffle_bags = ShuffleBags
+    shuffle_keys = ShuffleKeys
+    shuffle_hills_key = ShuffleHillsKey
+    shuffle_candles = ShuffleCandles
+    shuffle_coins = ShuffleCoins
+    shuffle_plants = ShufflePlants
+    shuffle_upgrades = ShuffleUpgrades
+    shuffle_life_ups = ShuffleLifeUps
+    shuffle_bonus_scrolls = ShuffleBonusScrolls
+    shuffle_bonus_rewards = ShuffleBonusScrollRewards
+    shuffle_race_rewards = ShuffleRaceRewards
+    shuffle_beacons = ShuffleBeacons
+    shuffle_jewels = ShuffleJewels
+    trading_sequence = TradingSequence
+    tricky_jumps = TrickyJumps
+    no_lantern = NoLantern
+    damage_boost = DamageBoost
+
+arzette_option_groups = [
+    OptionGroup("Logic Options", [
+        TrickyJumps,
+        NoLantern,
+        DamageBoost
+    ]),
+    OptionGroup("Shuffle Options", [
+        LevelOrder,
+        ShuffleKeys,
+        ShuffleHillsKey,
+        ShuffleBags,
+        ShuffleCandles,
+        ShuffleCoins,
+        ShuffleUpgrades,
+        ShufflePlants,
+        ShuffleLifeUps,
+        ShuffleBonusScrollRewards,
+        ShuffleRaceRewards,
+        ShuffleBeacons,
+        ShuffleJewels,
+        ShuffleNPCs,
+        ShuffleBonusScrolls,
+        ShuffleBarrierTypes,
+        TradingSequence
+    ]),
+]
