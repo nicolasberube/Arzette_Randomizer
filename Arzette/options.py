@@ -103,7 +103,7 @@ Included: Every item in the Chainsword trading sequence is added to the item and
     option_vanilla = 0
     option_excluded = 1
     option_included = 2
-    default = 1
+    default = 2
 
 class TrickyJumps(Toggle):
     """When enabled, some jumps and movement techniques that are much more difficult than usual may be considered in logic."""
