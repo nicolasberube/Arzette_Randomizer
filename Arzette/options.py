@@ -116,7 +116,7 @@ class NoLantern(Toggle):
     display_name = "No Lantern"
 
 class DamageBoost(Toggle):
-    """When eneabled, you may be expected to damage boost to an extent that may be possible in casual mode with health drops. When disabled, you can do all things logically without taking damage."""
+    """When enabled, you may be expected to damage boost to an extent that will be possible in casual mode with health drops. When disabled, you can do all things logically without taking damage."""
     internal_name = "damage_boost"
     display_name = "Damage Boosting"
 
