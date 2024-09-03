@@ -1,9 +1,16 @@
 from typing import TYPE_CHECKING
+from .locations import rock_locations, all_locations
 
 from worlds.generic.Rules import set_rule, forbid_item, add_rule
 from BaseClasses import CollectionState
 if TYPE_CHECKING:
     from . import ArzetteWorld
+
+# This supposes that the world class has barrier_types and level_beacons attributes
+# This also supposes that NPCs are items
+# Maybe treat those as events instead of functions?
+# Rock items has multiple parent regions, how does that work?
+# Level access rules (i.e. region rules) are *not* implemented
 
 def has_color(color, state: CollectionState, world: "ArzetteWorld"):
     if color == "Red":
@@ -44,9 +51,6 @@ def can_pass_boarfoon(color: str, state: CollectionState, world: "ArzetteWorld")
 def can_pass_poulture(color: str, state: CollectionState, world: "ArzetteWorld"):
     return (has_color(color, state, world) or state.has("Fatal Flute", world.player) or
             has_cloak(state, world) or world.options.damage_boost)
-
-# This supposes that the world class has barrier_types and level_beacons attributes
-# Maybe treat those as events instead of functions?
 
 def set_location_rules(world: "ArzetteWorld") -> None:
     player = world.player
@@ -121,7 +125,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             "Caves Candle (Second Dark Room)", "Caves Bonus", "Shield Ring",
             "Caves Bag (Last Room)", "Caves Ellido"]:
         add_rule(world.get_location(item), lambda state:
-            has_bombs(state, world))
+            state.has("Bombs", player) and has_shop(state, world))
 
     for item in ["Caves Candle (First Dark Room)", "Caves Coin",
             "Caves Candle (Second Dark Room)", "Caves Bonus", "Shield Ring",
@@ -365,7 +369,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     add_rule(world.get_location("Beach Key (Tork Cabin)"), lambda state:
         state.has("Griffin Boots", player) or
         ((state.has_group("magic", player) or
-          (state.has("Bombs", player) and options.tricky_jumps)) and
+          (state.has("Bombs", player) and has_shop(state, world) and options.tricky_jumps)) and
          (state.has("Winged Belt", player) or
           (state.has("Speedy Shoes", player) and options.tricky_jumps))))
 
@@ -623,3 +627,232 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     # The jewels rule is not in vanilla game and should be added
     add_rule(world.get_location("Daimur"), lambda state:
         state.has("Purple Magic", player) and state.has_group("jewels", player, 5))
+
+
+    # Locations depending on NPC locations
+
+    # Faramore Rules
+    add_rule(world.get_location("Rope Upgrade"), lambda state:
+        state.has("Faramore Munhum", player) and
+        state.has_group("rocks", player, 4))
+    # Rope and unlocking Swamp requirement has been deactivated in the mod.
+
+    add_rule(world.get_location("Purple Magic"), lambda state:
+        state.has("Faramore Yukeen", player) and
+        state.has_group("jewels", player, 5))
+
+    add_rule(world.get_location("Citizenship Papers"), lambda state:
+        state.has("Faramore Covenplate", player) and
+        state.has("Forest Cypress", player))
+
+    add_rule(world.get_location("Power Stone Upgrade"), lambda state:
+        state.has("Faramore Kari Quest", player) and
+        state.has("Bell", player))
+    # Bomb Gauntlet and unlocking Castle requirement has been deactivated in the mod.
+
+    add_rule(world.get_location("Dungeon Key"), lambda state:
+        state.has("Faramore Alven", player))
+
+    add_rule(world.get_location("Chainsword"), lambda state:
+        state.has("Faramore Alven", player) and
+        state.has("Oil and Chains", player))
+
+    add_rule(world.get_location("Canteen"), lambda state:
+        state.has("Faramore Brinda", player) and
+        state.has("Star Earrings", player))
+
+    add_rule(world.get_location("Wallet Upgrade"), lambda state:
+        state.has("Faramore Frich", player) and
+        state.has("Silver Cricket", player))
+    # Frich's first quest and unlocking Volcano requirement have been deactivated in the mod.
+
+    add_rule(world.get_location("Infinite Soulfire"), lambda state:
+        state.has("Faramore Rudy", player) and
+        state.has(world.level_beacons["Faramore"], player) and
+        state.has_group("Bombs", player) and
+        state.has_group("coins", player, 10) and
+        state.has("Smart Gun", player) and
+        state.has(world.level_beacons["Forest"], player) and
+        state.has("Forest Rudy (Start)", player) and
+        state.has("Forest Rudy (End)", player) and
+        state.has(world.level_beacons["Peak"]) and
+        state.has("Peak Rudy (Start)", player) and
+        state.has("Peak Rudy (End)", player) and
+        state.has(world.level_beacons["Hills"], player) and
+        state.has("Hills Rudy (Start)", player) and
+        state.has("Hills Rudy (End)", player))
+
+    add_rule(world.get_location("Bomb Upgrade"), lambda state:
+        state.has("Faramore Barnabuss", player) and
+        state.has("Compass", player))
+    # Griffin Boots and unlocking Hills requirement have been deactivated in the mod.
+
+    add_rule(world.get_location("200 Rupees"), lambda state:
+        state.has("Faramore Dewey", player) and
+        state.has("Rope Ladder", player))
+
+    add_rule(world.get_location("Lamp Oil Upgrade"), lambda state:
+        state.has("Faramore Cypress", player) and
+        state.has_group("plants", player, 3))
+    # Lantern and unlocking Swamp requirement have been deactivated in the mod.
+
+    add_rule(world.get_location("Calendar"), lambda state:
+        state.has("Faramore Denny", player) and
+        state.has("Castle Jewel", player))
+
+    # Forest Rules
+    add_rule(world.get_location("Lantern"), lambda state:
+        state.has("Forest Cypress", player) and
+        state.has("Citizenship Papers", player))
+
+    add_rule(world.get_location("Forest Race 100 Rupees"), lambda state:
+        state.has(world.level_beacons["Faramore"], player) and
+        state.has_group("Bombs", player) and
+        state.has_group("coins", player, 1) and
+        state.has(world.level_beacons["Forest"], player) and
+        state.has("Forest Rudy (Start)", player) and
+        state.has("Forest Rudy (End)", player))
+
+    # Caves Rules
+    add_rule(world.get_location("Rope"), lambda state:
+        state.has("Caves Munhum", player))
+
+    add_rule(world.get_location("Snail Salt"), lambda state:
+        state.has("Caves Ellido", player) and
+        state.has("Funky Fungus", player))
+
+    # Desert Rules
+    add_rule(world.get_location("Fairy Dust"), lambda state:
+        state.has("Desert Fairy", player))
+
+    # Canyon Rules
+    add_rule(world.get_location("Backstep"), lambda state:
+        state.has("Canyon Crowdee", player))
+    # Defeating Cornrad requirement has been deactivated in the mod.
+
+    add_rule(world.get_location("Star Earrings"), lambda state:
+        state.has("Canyon Odie", player))
+
+    add_rule(world.get_location("Smart Gun"), lambda state:
+        state.has("Canyon Motte", player) and
+        state.has("Fairy Dust", player))
+
+    # Swamp Rules
+    add_rule(world.get_location("Ogre Hair"), lambda state:
+        state.has("Swamp Glubbert", player) and
+        state.has("Cleaver Shovel", player))
+
+    # Peak Rules
+    add_rule(world.get_location("Power Pendant"), lambda state:
+        state.has("Peak Ciclena", player) and
+        state.has("Crystal of Refraction", player))
+
+    add_rule(world.get_location("Peak Race 100 Rupees"), lambda state:
+        state.has(world.level_beacons["Faramore"], player) and
+        state.has_group("Bombs", player) and
+        state.has_group("coins", player, 5) and
+        state.has(world.level_beacons["Forest"], player) and
+        state.has("Forest Rudy (Start)", player) and
+        state.has("Forest Rudy (End)", player) and
+        state.has(world.level_beacons["Peak"], player) and
+        state.has("Peak Rudy (Start)", player) and
+        state.has("Peak Rudy (End)", player))
+
+    # Crypts Rules
+    add_rule(world.get_location("Bomb Gauntlet"), lambda state:
+        state.has("Crypts Skelvis", player))
+
+    # Beach Rules
+    add_rule(world.get_location("Speedy Shoes"), lambda state:
+        state.has("Beach Fleetus", player) and
+        state.has("Enchanted Shoes", player))
+
+    add_rule(world.get_location("Magic Cloak"), lambda state:
+        state.has("Beach Tork", player) and
+        state.has("Calendar", player))
+
+    # River Rules
+    add_rule(world.get_location("Cleaver Shovel"), lambda state:
+        state.has("River Francine", player) and
+        state.has("Snail Salt", player))
+
+    add_rule(world.get_location("Oil and Chains"), lambda state:
+        state.has("River Morgh", player) and
+        state.has("Ogre Hair", player))
+
+    # Hills Rules
+    add_rule(world.get_location("Double Wave"), lambda state:
+        state.has("Hills Milbert", player) and
+        state.has("Sword Wave", player))
+
+    add_rule(world.get_location("Hills Race 100 Rupees"), lambda state:
+        state.has(world.level_beacons["Faramore"], player) and
+        state.has_group("Bombs", player) and
+        state.has_group("coins", player, 10) and
+        state.has("Smart Gun", player) and
+        state.has(world.level_beacons["Forest"], player) and
+        state.has("Forest Rudy (Start)", player) and
+        state.has("Forest Rudy (End)", player) and
+        state.has(world.level_beacons["Peak"], player) and
+        state.has("Peak Rudy (Start)", player) and
+        state.has("Peak Rudy (End)", player) and
+        state.has(world.level_beacons["Hills"], player) and
+        state.has("Hills Rudy (Start)", player) and
+        state.has("Hills Rudy (End)", player))
+
+    # Lair Rules
+    add_rule(world.get_location("Funky Fungus"), lambda state:
+        state.has("Lair Zazie", player) and
+        state.has("Sacred Oil", player))
+    add_rule(world.get_location("Soul Upgrade"), lambda state:
+        state.has("Lair Zazie", player) and
+        state.has("Sacred Oil", player) and
+        (state.has("Smart Gun", player) or
+         state.has("Infinite Soulfire", player)))
+
+    # Bonus Rewards Rules
+    for item in [location for location in all_locations
+            if "Bonus" in location.split() and "Reward" in location.split()]:
+        level = item.split()[0]
+        parent = f"{level} Bonus"
+        add_rule(world.get_location(item), lambda state, parent=parent:
+            state.has(parent, player))
+        if level in ["Desert", "Swamp", "Fort"]:
+            add_rule(world.get_location(item), lambda state:
+                has_lantern(state, world))
+        if level in ["Hills"]:
+            add_rule(world.get_location(item), lambda state:
+                state.has("Griffin Boots", player) or
+                (state.has("Fatal Flute", player) and has_shop(state, world)) or
+                 options.tricky_jumps)
+
+    # Rocks Rules
+    for item in rock_locations:
+        add_rule(world.get_location(item), lambda state:
+            state.has("Faramore Munhum", player) or state.has_group("rocks", player))
+
+    add_rule(world.get_location("Orange Rock"), lambda state:
+        state.has(world.level_beacons["Caves"], player) and
+        state.has("Bombs", player) and has_shop(state, world))
+
+    add_rule(world.get_location("Brown Rock"), lambda state:
+        state.has(world.level_beacons["Canyon"], player) or
+        (state.has(world.level_beacons["Lair"], player) and
+         state.has("Power Pendant", player) and
+         (can_pass_poulture("Blue", state, world) or
+          (state.has("Griffin Boots", player) and
+           state.has("Winged Belt", player) and
+           has_barrier("Flute", state, world))) and
+         has_lantern(state, world) and
+         has_barrier("Purple", state, world)) or
+        state.has("Lair Bonus", player))
+
+    add_rule(world.get_location("Gray Rock"), lambda state:
+        (state.has(world.level_beacons["Peak"], player) and
+         has_barrier("Red", state, world)) or
+        (state.has(world.level_beacons["Fort"], player) and
+         state.has("Power Pendant", player)))
+
+    add_rule(world.get_location("Blue Rock"), lambda state:
+        state.has("Beach Key (First House)", player) and
+        has_barrier("Blue", state, world))

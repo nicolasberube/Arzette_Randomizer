@@ -1384,8 +1384,7 @@ class ArzetteWorld():
 
         add_rule(self.get_location("Blue Rock"), lambda state:
             state.has("Beach Key (First House)") and
-            self.get_barrier(self.barrier_types["Blue"]).access_rule(state) and
-            state.has_group("magic") and state.has_group("blue"))
+            self.get_barrier(self.barrier_types["Blue"]).access_rule(state))
 
         # Faramore Rules
         add_rule(self.get_location("Rope Upgrade"), lambda state:
