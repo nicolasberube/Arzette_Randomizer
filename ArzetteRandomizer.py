@@ -860,6 +860,7 @@ class ArzetteWorld():
         for item in ["Griffin Boots", "Swamp Plant", "Swamp Bonus"]:
             add_rule(self.get_location(item), lambda state:
                 state.has("Swamp Key (Griffin Boots)") or
+                state.has("Griffin Boots") or
                 self.get_barrier(self.barrier_types["Red"]).access_rule(state))
 
         add_rule(self.get_location("Swamp Beacon"), lambda state:
@@ -1066,10 +1067,8 @@ class ArzetteWorld():
                 (state.has_group("bombs") and
                  (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))))
 
-        for item in ["Blue Magic", "River Bag (Last Room)",
-                     "River Candle (Last Room)", "River Life-Up", "River Morgh"]:
-            add_rule(self.get_location(item), lambda state:
-                self.get_barrier(self.barrier_types["Red"]).access_rule(state))
+        add_rule(self.get_location("Blue Magic"), lambda state:
+            self.get_barrier(self.barrier_types["Red"]).access_rule(state))
 
         for item in ["River Bag (Last Room)",
                      "River Candle (Last Room)", "River Life-Up", "River Morgh"]:
@@ -1085,7 +1084,8 @@ class ArzetteWorld():
             add_rule(self.get_location(item), lambda state:
                 state.has_group("bombs") and
                 (state.has("Lantern") or self.config["logic"]["no_lantern"]) and
-                (state.has_group("magic") or state.has("Griffin Boots") or
+                ((state.has_group("magic") and state.has_group("blue")) or
+                 state.has("Griffin Boots") or
                  state.has("Winged Belt") or state.has("Magic Cloak") or
                  self.config["logic"]["damage_boost"]) and
                  (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
@@ -1292,19 +1292,21 @@ class ArzetteWorld():
                 state.has("Castle Key (Left Room)"))
 
         # Lair Rules
-        for item in ["Lair Candle (Tree Trunk)", "Lair Candle (Tree Top)"]:
-            add_rule(self.get_location(item), lambda state:
-                state.has_group("bombs") and
-                (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
+        add_rule(self.get_location("Lair Candle (Tree Trunk)"), lambda state:
+            state.has_group("bombs") and
+            (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))
 
         add_rule(self.get_location("Lair Candle (Tree Top)"), lambda state:
             state.has("Griffin Boots") and
-            (self.get_barrier(self.barrier_types["Flute"]).access_rule(state) or
+            ((state.has_group("bombs") and
+              (state.has_group("bags") or state.has(self.level_beacons["Faramore"])) and
+              self.get_barrier(self.barrier_types["Flute"]).access_rule(state)) or
              (self.get_barrier(self.barrier_types["Purple"]).access_rule(state) and
-              state.has("Speedy Shoes") and state.has("Winged Belt"))) and
-            (self.config["logic"]["damage_boost"] or state.has_group("magic") or
-             ((state.has("Fatal Flute") or state.has("Magic Cloak")) and
-              (state.has_group("bags") or state.has(self.level_beacons["Faramore"])))))
+              state.has("Speedy Shoes") and state.has("Winged Belt") and
+              (self.config["logic"]["damage_boost"] or state.has_group("magic") or
+               ((state.has("Fatal Flute") or state.has("Magic Cloak")) and
+                (state.has_group("bags") or state.has(self.level_beacons["Faramore"]))))
+             )))
 
         for item in ["Lair Bonus",
             "Lair Bag (First Room)", "Lair Coin", "Lair Bag (Lava Room)",
