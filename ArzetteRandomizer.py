@@ -334,8 +334,8 @@ class ArzetteWorld():
         seed = self.config["seed"]
         # It is crucial to fill in order
         # self.level_beacons -> self.set_rules_barrier() + self.barrier_types ->
-        # self.set_rules() -> assign all quest NPCs in self.location_cache + self.npc_locations ->
-        # self.set_rules_quests() + rest of self.location_cache
+        # assign all quest NPCs in self.location_cache + self.npc_locations ->
+        # self.set_rules() -> self.set_rules_quests() + rest of self.location_cache
         if seed == "vanilla":
             self.seed = seed
             self.level_order = default_level_order

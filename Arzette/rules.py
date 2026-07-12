@@ -321,7 +321,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location("Crypts Coin"), lambda state:
         has_barrier("Flute", state, world) and
-        world.barrier_types["Flute"] == "Flute")
+                    world.barrier_types["Flute"] == "Flute")
 
     for item in ["Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
         add_rule(world.get_location(item), lambda state:

@@ -4,15 +4,15 @@ from Options import (DefaultOnToggle, Toggle, Choice, PerGameCommonOptions, Opti
 class LevelOrder(Choice):
     """
 Determines which levels are unlocked with beacons.
-Random: Each beacon will unlock 2 or 3 random levels.
-Faramore: As random, but Faramore Town is guaranteed to be one of your starting levels.
+Randomize: Each beacon will unlock 2 or 3 random levels.
+Faramore: As randomize, but Faramore Town is guaranteed to be one of your starting levels.
 Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations.
     """
     internal_name = "level_order"
     display_name = "Level Order"
     option_vanilla = 0
     option_faramore = 1
-    option_random = 2
+    option_randomize = 2
     default = 1
 
 class ShuffleBarrierTypes(Toggle):
@@ -122,26 +122,26 @@ class DamageBoost(Toggle):
 
 @dataclass
 class ArzetteOptions(PerGameCommonOptions):
-    level_order = LevelOrder
-    shuffle_barrier_types = ShuffleBarrierTypes
-    shuffle_npcs = ShuffleNPCs
-    shuffle_bags = ShuffleBags
-    shuffle_keys = ShuffleKeys
-    shuffle_hills_key = ShuffleHillsKey
-    shuffle_candles = ShuffleCandles
-    shuffle_coins = ShuffleCoins
-    shuffle_plants = ShufflePlants
-    shuffle_upgrades = ShuffleUpgrades
-    shuffle_life_ups = ShuffleLifeUps
-    shuffle_bonus_scrolls = ShuffleBonusScrolls
-    shuffle_bonus_rewards = ShuffleBonusScrollRewards
-    shuffle_race_rewards = ShuffleRaceRewards
-    shuffle_beacons = ShuffleBeacons
-    shuffle_jewels = ShuffleJewels
-    trading_sequence = TradingSequence
-    tricky_jumps = TrickyJumps
-    no_lantern = NoLantern
-    damage_boost = DamageBoost
+    level_order: LevelOrder
+    shuffle_barrier_types: ShuffleBarrierTypes
+    shuffle_npcs: ShuffleNPCs
+    shuffle_bags: ShuffleBags
+    shuffle_keys: ShuffleKeys
+    shuffle_hills_key: ShuffleHillsKey
+    shuffle_candles: ShuffleCandles
+    shuffle_coins: ShuffleCoins
+    shuffle_plants: ShufflePlants
+    shuffle_upgrades: ShuffleUpgrades
+    shuffle_life_ups: ShuffleLifeUps
+    shuffle_bonus_scrolls: ShuffleBonusScrolls
+    shuffle_bonus_rewards: ShuffleBonusScrollRewards
+    shuffle_race_rewards: ShuffleRaceRewards
+    shuffle_beacons: ShuffleBeacons
+    shuffle_jewels: ShuffleJewels
+    trading_sequence: TradingSequence
+    tricky_jumps: TrickyJumps
+    no_lantern: NoLantern
+    damage_boost: DamageBoost
 
 arzette_option_groups = [
     OptionGroup("Logic Options", [

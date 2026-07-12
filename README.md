@@ -36,7 +36,7 @@ Include bags in the pool
 Include keys in the pool. This does not include quest items like the Fort Findula Dungeon Key. This also does not include the Key in Lichen Hills.
 
 ### hills_key
-Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. Once would need to know every location check in the game, and play the Flute next to them if they are empty. The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
+Include the key to the barn from Lichen Hills in the pool. This key is treated differently since you need to play the Fatal Flute to spawn the Key. However, you cannot know where the key is before playing the Flute. One would need to know every location check in the game, and play the Flute next to them if they are empty. The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
 
 ### candles
 Include candles in the pool.
@@ -163,7 +163,7 @@ Since NPCs, the Hills Keys and quest items (Plants, Rocks, Compass and Bell) hav
 
 For the NPC, we do their assignment first, which will then dictate the rule for the location of interacting with them. This is mandatory since we cannot know the logic rules of an NPC interaction location before knowing where this NPC is.
 
-For the objects, we assume that going to their location allows for their collection without considering their spawning equirements - which will be the case for Archipelago anyway. To fix this, we include the spawning requirements in *every* logic rules that expect to have those items in the collection state. This won't be Archipelago compatible - since if those item are in another world, they won't care about your spawning requirements unless such requirements are an item in itself - but even then it would only make the logic stricter than necessary.
+For the objects, we assume that going to their location allows for their collection without considering their spawning requirements - which will be the case for Archipelago anyway. To fix this, we include the spawning requirements in *every* logic rules that expect to have those items in the collection state. This won't be Archipelago compatible - since if those item are in another world, they won't care about your spawning requirements unless such requirements are an item in itself - but even then it would only make the logic stricter than necessary.
 
 # Known bugs
 
@@ -171,7 +171,7 @@ For the objects, we assume that going to their location allows for their collect
 
 # TODO
 
-A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One work by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
+A lot of terrible code stems from iterating on the design, especially the treatment of NPCs. We need to group set_rules() and set_rules_quests() in a single function, as well as get_npc() and get_location(). Also, comment the code and split up functions into digestable chunks. This would also mean harmonizing the way npcs and bonus scrolls work. One works by checking the parent's access state through a dictionary, the other by treating the spawner as a collected item. Obviously the second way is better. We should also use sub function for common logic check (item refills for bombs and fatal flute, colored poulture and boarfoon combat, etc.), or maybe implement the Archipelago Region class to simplify this?
 
 Implement Canteen as the alternative to damage_boost option.
 

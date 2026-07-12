@@ -1,6 +1,6 @@
 starting_locations = ["Default Beacon"]
 rock_locations = ["Orange Rock", "Brown Rock", "Gray Rock", "Blue Rock"]
-level_locations = {
+per_level_locations = {
     "Faramore": [
         "Faramore Key (Well)",
         "Faramore Key (Tavern)",
@@ -191,7 +191,40 @@ level_locations = {
         "Daimur"
     ]
 }
-bonus_locations = [f"{level} Bonus Reward" for level in level_locations]
+all_level_locations = [
+    location
+    for locations in per_level_locations.values()
+    for location in locations]
+
+reward_locations = [f"{level} Bonus Reward" for level in per_level_locations]
+
+default_level_order = {
+    "Default": ["Faramore", "Forest"],
+    "Forest": ["Caves", "Desert", "Canyon"],
+    "Desert": ["Swamp", "Peak", "Crypts"],
+    "Swamp": ["Volcano", "Beach", "River"],
+    "Beach": ["Hills", "Fort"],
+    "Hills": ["Castle", "Lair"]
+}
+
+level_locations = []
+for beacon, unlocks in default_level_order.items():
+    if beacon != "Default":
+        beacon = f"{beacon}_Beacon"
+    for i_u in range(len(unlocks)):
+        level_locations.append(f"{beacon}_{i_u+1}")
+
+default_npc_fool = [
+    "Faramore Boru",  # blacksmith help
+    "Faramore Kari",  # bell quest dude
+    "Faramore Univor",  # guard
+    "Faramore Salvik",  # drunk dude
+    "Faramore Maki",  # baker
+    "Faramore Payop",  # librarian
+    "Volcano Joe",  # radical
+    "River Barnabuss"  # sailor
+]
+
 default_npc_locations = {
     "Purple Magic": "Faramore Yukeen",
     "Citizenship Papers": "Faramore Covenplate",
@@ -227,7 +260,21 @@ default_npc_locations = {
     "Funky Fungus": "Lair Zazie",
     "Soul Upgrade": "Lair Zazie"
 }
-all_locations = starting_locations + [
-    location for locations in level_locations.values() for location in locations] + \
-    [location for location in (
-        list(default_npc_locations) + rock_locations + bonus_locations)]
+
+default_npc_locked = [
+    "Faramore Mortar", "Swamp Frich", "Forest Rudy (Start)", "Forest Rudy (End)",
+    "Peak Rudy (Start)", "Peak Rudy (End)", "Hills Rudy (Start)", "Hills Rudy (End)"]
+
+trading_locations = [
+    "Sacred Oil", "Funky Fungus", "Snail Salt",
+    "Cleaver Shovel", "Ogre Hair", "Oil and Chains", "Chainsword"]
+
+all_locations = (
+    starting_locations +
+    all_level_locations +
+    list(default_npc_locations) +
+    list(set(default_npc_locations.values())) +
+    default_npc_fool + default_npc_locked +
+    rock_locations + reward_locations +
+    level_locations)
+all_locations = [location.replace(" ", "_") for location in all_locations]
