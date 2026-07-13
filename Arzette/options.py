@@ -16,13 +16,12 @@ Vanilla: Each beacon will unlock its normal levels. Note that beacon locations m
     default = 1
 
 class ShuffleBarrierTypes(Toggle):
-    """When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another.
-    """
+    """When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another."""
     internal_name = "shuffle_barrier_types"
     display_name = "Shuffle Barrier Types"
 
 class ShuffleNPCs(Toggle):
-    """Include NPCs in the item and location pools. NPCs are always local, and can never spawn from other NPCs or from hitting rocks."""
+    """Include NPCs in the item and location pools. NPCs are always local, and always spawn in the open."""
     internal_name = "shuffle_npcs"
     display_name = "Shuffle NPCs"
 
@@ -82,7 +81,7 @@ class ShuffleRaceRewards(Toggle):
     display_name = "Shuffle Race Rewards"
 
 class ShuffleBeacons(DefaultOnToggle):
-    """Include the Sacred Beacons in the item and location pools."""
+    """Include the Sacred Beacons in the item and location pools. Sacred Beacons are always local, and will still unlock levels when hit."""
     internal_name = "shuffle_beacons"
     display_name = "Shuffle Beacons"
 

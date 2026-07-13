@@ -278,3 +278,14 @@ all_locations = (
     rock_locations + reward_locations +
     level_locations)
 all_locations = [location.replace(" ", "_") for location in all_locations]
+
+non_spawner_locations = (
+    starting_locations +
+    list(default_npc_locations) +
+    default_npc_locked +
+    rock_locations +
+    reward_locations +
+    level_locations +
+    [location for location in all_level_locations if "Jewel" in location.split()] +
+    ["Desert Candle (Last Room)", "Swamp Plant", "River Key (Submarine)"])
+non_spawner_locations = [location.replace(" ", "_") for location in non_spawner_locations]

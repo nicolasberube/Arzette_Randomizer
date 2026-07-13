@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from . import ArzetteWorld
 
 # This supposes that the world class has barrier_types and level_beacons attributes
-# This also supposes that NPCs are items
+# This also supposes that NPCs are items -> this cannot work
 # Maybe treat those as events instead of functions?
 # Rock items has multiple parent regions, how does that work?
 # Level access rules (i.e. region rules) are *not* implemented

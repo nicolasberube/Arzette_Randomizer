@@ -11,52 +11,52 @@ class ItemData(NamedTuple):
     default_location: str
 
 bag_table = {
-    "obj_item_bag_1":                  ItemData(2793883000, 1, ItemClassification.progression, "Forest_Bag_(First_Room_1)"),
-	"obj_item_bag_2":                  ItemData(2793883001, 1, ItemClassification.progression, "Forest_Bag_(First_Room_2)"),
-	"obj_item_bag_3":                  ItemData(2793883002, 1, ItemClassification.progression, "Forest_Bag_(Sword_Wave)"),
-	"obj_item_bag_4":                  ItemData(2793883003, 1, ItemClassification.progression, "Forest_Bag_(Last_Room)"),
-	"obj_item_bag_5":                  ItemData(2793883004, 1, ItemClassification.progression, "Caves_Bag_(Rope_Ladder)"),
-	"obj_item_bag_6":                  ItemData(2793883005, 1, ItemClassification.progression, "Caves_Bag_(Last_Room)"),
-	"obj_item_bag_7":                  ItemData(2793883006, 1, ItemClassification.progression, "Desert_Bag_(First_Room_1)"),
-	"obj_item_bag_8":                  ItemData(2793883007, 1, ItemClassification.progression, "Desert_Bag_(First_Room_2)"),
-	"obj_item_bag_9":                  ItemData(2793883008, 1, ItemClassification.progression, "Desert_Bag_(Last_Room)"),
-	"obj_item_bag_10":                 ItemData(2793883009, 1, ItemClassification.progression, "Canyon_Bag_(Before_Checkpoint)"),
-	"obj_item_bag_11":                 ItemData(2793883010, 1, ItemClassification.progression, "Canyon_Bag_(After_Checkpoint_1)"),
-	"obj_item_bag_12":                 ItemData(2793883011, 1, ItemClassification.progression, "Canyon_Bag_(After_Checkpoint_2)"),
-	"obj_item_bag_13":                 ItemData(2793883012, 1, ItemClassification.progression, "Canyon_Bag_(After_Checkpoint_3)"),
-	"obj_item_bag_14":                 ItemData(2793883013, 1, ItemClassification.progression, "Canyon_Bag_(First_Room_End)"),
-	"obj_item_bag_15":                 ItemData(2793883014, 1, ItemClassification.progression, "Canyon_Bag_(After_Zipline_1)"),
-	"obj_item_bag_16":                 ItemData(2793883015, 1, ItemClassification.progression, "Canyon_Bag_(After_Zipline_2)"),
-	"obj_item_bag_17":                 ItemData(2793883016, 1, ItemClassification.progression, "Canyon_Bag_(After_Zipline_3)"),
-	"obj_item_bag_18":                 ItemData(2793883017, 1, ItemClassification.progression, "Canyon_Bag_(Motte_House)"),
-	"obj_item_bag_19":                 ItemData(2793883018, 1, ItemClassification.progression, "Swamp_Bag_(First_Room)"),
-	"obj_item_bag_20":                 ItemData(2793883019, 1, ItemClassification.progression, "Peak_Bag_(First_Cave_1)"),
-	"obj_item_bag_21":                 ItemData(2793883020, 1, ItemClassification.progression, "Peak_Bag_(First_Cave_2)"),
-	"obj_item_bag_22":                 ItemData(2793883021, 1, ItemClassification.progression, "Peak_Bag_(Before_Apatu)"),
-	"obj_item_bag_23":                 ItemData(2793883022, 1, ItemClassification.progression, "Peak_Bag_(After_Apatu)"),
-	"obj_item_bag_24":                 ItemData(2793883023, 1, ItemClassification.progression, "Crypts_Bag_(Skelvis)"),
-	"obj_item_bag_25":                 ItemData(2793883024, 1, ItemClassification.progression, "Beach_Bag_(First_Room)"),
-	"obj_item_bag_26":                 ItemData(2793883025, 1, ItemClassification.progression, "River_Bag_(Last_Room)"),
-	"obj_item_bag_27":                 ItemData(2793883026, 1, ItemClassification.progression, "Hills_Bag_(Barn)"),
-	"obj_item_bag_28":                 ItemData(2793883027, 1, ItemClassification.progression, "Hills_Bag_(Music_Shrine)"),
-	"obj_item_bag_29":                 ItemData(2793883028, 1, ItemClassification.progression, "Fort_Bag_(Dungeon_1)"),
-	"obj_item_bag_30":                 ItemData(2793883029, 1, ItemClassification.progression, "Fort_Bag_(Dungeon_2)"),
-	"obj_item_bag_31":                 ItemData(2793883030, 1, ItemClassification.progression, "Fort_Bag_(Dungeon_3)"),
-	"obj_item_bag_32":                 ItemData(2793883031, 1, ItemClassification.progression, "Fort_Bag_(Dungeon_4)"),
-	"obj_item_bag_33":                 ItemData(2793883032, 1, ItemClassification.progression, "Fort_Bag_(Dark_Room)"),
-	"obj_item_bag_34":                 ItemData(2793883033, 1, ItemClassification.progression, "Fort_Bag_(Top_Room_1)"),
-	"obj_item_bag_35":                 ItemData(2793883034, 1, ItemClassification.progression, "Fort_Bag_(Top_Room_2)"),
-	"obj_item_bag_36":                 ItemData(2793883035, 1, ItemClassification.progression, "Fort_Bag_(Top_Room_3)"),
-	"obj_item_bag_37":                 ItemData(2793883036, 1, ItemClassification.progression, "Fort_Bag_(Last_Room)"),
-	"obj_item_bag_38":                 ItemData(2793883037, 1, ItemClassification.progression, "Castle_Bag_(Entrance)"),
-	"obj_item_bag_39":                 ItemData(2793883038, 1, ItemClassification.progression, "Castle_Bag_(Top_Room)"),
-	"obj_item_bag_40":                 ItemData(2793883039, 1, ItemClassification.progression, "Castle_Bag_(Bonus)"),
-	"obj_item_bag_41":                 ItemData(2793883040, 1, ItemClassification.progression, "Lair_Bag_(First_Room)"),
-	"obj_item_bag_42":                 ItemData(2793883041, 1, ItemClassification.progression, "Lair_Bag_(Lava_Room)"),
-	"obj_item_bag_43":                 ItemData(2793883042, 1, ItemClassification.progression, "Lair_Bag_(Final_Room_1)"),
-	"obj_item_bag_44":                 ItemData(2793883043, 1, ItemClassification.progression, "Lair_Bag_(Final_Room_2)"),
-	"obj_item_bag_45":                 ItemData(2793883044, 1, ItemClassification.progression, "Lair_Bag_(Final_Room_3)"),
-	"obj_item_bag_46":                 ItemData(2793883045, 1, ItemClassification.progression, "Crypts_Bag_(Crypt)")
+    "obj_item_bag_1":                  ItemData(2793883000, 1, ItemClassification.filler, "Forest_Bag_(First_Room_1)"),
+	"obj_item_bag_2":                  ItemData(2793883001, 1, ItemClassification.filler, "Forest_Bag_(First_Room_2)"),
+	"obj_item_bag_3":                  ItemData(2793883002, 1, ItemClassification.filler, "Forest_Bag_(Sword_Wave)"),
+	"obj_item_bag_4":                  ItemData(2793883003, 1, ItemClassification.filler, "Forest_Bag_(Last_Room)"),
+	"obj_item_bag_5":                  ItemData(2793883004, 1, ItemClassification.filler, "Caves_Bag_(Rope_Ladder)"),
+	"obj_item_bag_6":                  ItemData(2793883005, 1, ItemClassification.filler, "Caves_Bag_(Last_Room)"),
+	"obj_item_bag_7":                  ItemData(2793883006, 1, ItemClassification.filler, "Desert_Bag_(First_Room_1)"),
+	"obj_item_bag_8":                  ItemData(2793883007, 1, ItemClassification.filler, "Desert_Bag_(First_Room_2)"),
+	"obj_item_bag_9":                  ItemData(2793883008, 1, ItemClassification.filler, "Desert_Bag_(Last_Room)"),
+	"obj_item_bag_10":                 ItemData(2793883009, 1, ItemClassification.filler, "Canyon_Bag_(Before_Checkpoint)"),
+	"obj_item_bag_11":                 ItemData(2793883010, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_1)"),
+	"obj_item_bag_12":                 ItemData(2793883011, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_2)"),
+	"obj_item_bag_13":                 ItemData(2793883012, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_3)"),
+	"obj_item_bag_14":                 ItemData(2793883013, 1, ItemClassification.filler, "Canyon_Bag_(First_Room_End)"),
+	"obj_item_bag_15":                 ItemData(2793883014, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_1)"),
+	"obj_item_bag_16":                 ItemData(2793883015, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_2)"),
+	"obj_item_bag_17":                 ItemData(2793883016, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_3)"),
+	"obj_item_bag_18":                 ItemData(2793883017, 1, ItemClassification.filler, "Canyon_Bag_(Motte_House)"),
+	"obj_item_bag_19":                 ItemData(2793883018, 1, ItemClassification.filler, "Swamp_Bag_(First_Room)"),
+	"obj_item_bag_20":                 ItemData(2793883019, 1, ItemClassification.filler, "Peak_Bag_(First_Cave_1)"),
+	"obj_item_bag_21":                 ItemData(2793883020, 1, ItemClassification.filler, "Peak_Bag_(First_Cave_2)"),
+	"obj_item_bag_22":                 ItemData(2793883021, 1, ItemClassification.filler, "Peak_Bag_(Before_Apatu)"),
+	"obj_item_bag_23":                 ItemData(2793883022, 1, ItemClassification.filler, "Peak_Bag_(After_Apatu)"),
+	"obj_item_bag_24":                 ItemData(2793883023, 1, ItemClassification.filler, "Crypts_Bag_(Skelvis)"),
+	"obj_item_bag_25":                 ItemData(2793883024, 1, ItemClassification.filler, "Beach_Bag_(First_Room)"),
+	"obj_item_bag_26":                 ItemData(2793883025, 1, ItemClassification.filler, "River_Bag_(Last_Room)"),
+	"obj_item_bag_27":                 ItemData(2793883026, 1, ItemClassification.filler, "Hills_Bag_(Barn)"),
+	"obj_item_bag_28":                 ItemData(2793883027, 1, ItemClassification.filler, "Hills_Bag_(Music_Shrine)"),
+	"obj_item_bag_29":                 ItemData(2793883028, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_1)"),
+	"obj_item_bag_30":                 ItemData(2793883029, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_2)"),
+	"obj_item_bag_31":                 ItemData(2793883030, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_3)"),
+	"obj_item_bag_32":                 ItemData(2793883031, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_4)"),
+	"obj_item_bag_33":                 ItemData(2793883032, 1, ItemClassification.filler, "Fort_Bag_(Dark_Room)"),
+	"obj_item_bag_34":                 ItemData(2793883033, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_1)"),
+	"obj_item_bag_35":                 ItemData(2793883034, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_2)"),
+	"obj_item_bag_36":                 ItemData(2793883035, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_3)"),
+	"obj_item_bag_37":                 ItemData(2793883036, 1, ItemClassification.filler, "Fort_Bag_(Last_Room)"),
+	"obj_item_bag_38":                 ItemData(2793883037, 1, ItemClassification.filler, "Castle_Bag_(Entrance)"),
+	"obj_item_bag_39":                 ItemData(2793883038, 1, ItemClassification.filler, "Castle_Bag_(Top_Room)"),
+	"obj_item_bag_40":                 ItemData(2793883039, 1, ItemClassification.filler, "Castle_Bag_(Bonus)"),
+	"obj_item_bag_41":                 ItemData(2793883040, 1, ItemClassification.filler, "Lair_Bag_(First_Room)"),
+	"obj_item_bag_42":                 ItemData(2793883041, 1, ItemClassification.filler, "Lair_Bag_(Lava_Room)"),
+	"obj_item_bag_43":                 ItemData(2793883042, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_1)"),
+	"obj_item_bag_44":                 ItemData(2793883043, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_2)"),
+	"obj_item_bag_45":                 ItemData(2793883044, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_3)"),
+	"obj_item_bag_46":                 ItemData(2793883045, 1, ItemClassification.filler, "Crypts_Bag_(Crypt)")
 }
 key_table = {
 	"key_faramore_2":                  ItemData(2793883046, 1, ItemClassification.progression, "Faramore_Key_(Well)"),
@@ -137,25 +137,25 @@ plant_table = {
 }
 
 upgrade_table = {
-	"obj_quest_upgrade_power_stones":  ItemData(2793883112, 1, ItemClassification.progression, "Power_Stone_Upgrade"),
-	"obj_quest_upgrade_wallet":        ItemData(2793883113, 1, ItemClassification.progression, "Wallet_Upgrade"),
-	"obj_quest_upgrade_bombs":         ItemData(2793883114, 1, ItemClassification.progression, "Bomb_Upgrade"),
-	"obj_quest_upgrade_lamp_oil":      ItemData(2793883115, 1, ItemClassification.progression, "Lamp_Oil_Upgrade"),
-	"obj_quest_upgrade_ropes":         ItemData(2793883116, 1, ItemClassification.progression, "Rope_Upgrade"),
-	"obj_quest_upgrade_soul_bag":      ItemData(2793883117, 1, ItemClassification.progression, "Soul_Upgrade"),
-	"obj_quest_infinite_soulfire":     ItemData(2793883118, 1, ItemClassification.progression, "Infinite_Soulfire")
+	"obj_quest_upgrade_power_stones":  ItemData(2793883112, 1, ItemClassification.useful, "Power_Stone_Upgrade"),
+	"obj_quest_upgrade_wallet":        ItemData(2793883113, 1, ItemClassification.useful, "Wallet_Upgrade"),
+	"obj_quest_upgrade_bombs":         ItemData(2793883114, 1, ItemClassification.useful, "Bomb_Upgrade"),
+	"obj_quest_upgrade_lamp_oil":      ItemData(2793883115, 1, ItemClassification.useful, "Lamp_Oil_Upgrade"),
+	"obj_quest_upgrade_ropes":         ItemData(2793883116, 1, ItemClassification.useful, "Rope_Upgrade"),
+	"obj_quest_upgrade_soul_bag":      ItemData(2793883117, 1, ItemClassification.useful, "Soul_Upgrade"),
+	"obj_quest_infinite_soulfire":     ItemData(2793883118, 1, ItemClassification.useful, "Infinite_Soulfire")
 }
 
 life_table = {
-	"obj_lifeup_1":                    ItemData(2793883119, 1, ItemClassification.progression, "Desert_Life-Up"),
-	"obj_lifeup_2":                    ItemData(2793883120, 1, ItemClassification.progression, "Crypts_Life-Up"),
-	"obj_lifeup_3":                    ItemData(2793883121, 1, ItemClassification.progression, "River_Life-Up")
+	"obj_lifeup_1":                    ItemData(2793883119, 1, ItemClassification.useful, "Desert_Life-Up"),
+	"obj_lifeup_2":                    ItemData(2793883120, 1, ItemClassification.useful, "Crypts_Life-Up"),
+	"obj_lifeup_3":                    ItemData(2793883121, 1, ItemClassification.useful, "River_Life-Up")
 }
 
 race_table = {
-	"obj_quest_race_reward_1":         ItemData(2793883122, 1, ItemClassification.progression, "Forest_Race_100_Rupees"),
-	"obj_quest_race_reward_2":         ItemData(2793883123, 1, ItemClassification.progression, "Peak_Race_100_Rupees"),
-	"obj_quest_race_reward_3":         ItemData(2793883124, 1, ItemClassification.progression, "Hills_Race_100_Rupees")
+	"obj_quest_race_reward_1":         ItemData(2793883122, 1, ItemClassification.filler, "Forest_Race_100_Rupees"),
+	"obj_quest_race_reward_2":         ItemData(2793883123, 1, ItemClassification.filler, "Peak_Race_100_Rupees"),
+	"obj_quest_race_reward_3":         ItemData(2793883124, 1, ItemClassification.filler, "Hills_Race_100_Rupees")
 }
 
 trading_table = {
@@ -199,18 +199,18 @@ quest_table = {
 	"obj_quest_citizenship":           ItemData(2793883156, 1, ItemClassification.progression, "Citizenship_Papers"),
 	"obj_quest_canteen":               ItemData(2793883157, 1, ItemClassification.progression, "Canteen"),
 	"obj_quest_beach_calendar":        ItemData(2793883158, 1, ItemClassification.progression, "Calendar"),
-	"obj_quest_dewey_reward":          ItemData(2793883159, 1, ItemClassification.progression, "200_Rupees"),
+	"obj_quest_dewey_reward":          ItemData(2793883159, 1, ItemClassification.filler, "200_Rupees"),
 	"obj_quest_lantern":               ItemData(2793883160, 1, ItemClassification.progression, "Lantern"),
-	"obj_quest_esc_rope":              ItemData(2793883161, 1, ItemClassification.progression, "Rope"),
+	"obj_quest_esc_rope":              ItemData(2793883161, 1, ItemClassification.useful, "Rope"),
 	"obj_quest_fairy_dust":            ItemData(2793883162, 1, ItemClassification.progression, "Fairy_Dust"),
-	"obj_quest_backstep":              ItemData(2793883163, 1, ItemClassification.progression, "Backstep"),
+	"obj_quest_backstep":              ItemData(2793883163, 1, ItemClassification.useful, "Backstep"),
 	"obj_quest_gun":                   ItemData(2793883164, 1, ItemClassification.progression, "Smart_Gun"),
 	"obj_quest_star_earrings":         ItemData(2793883165, 1, ItemClassification.progression, "Star_Earrings"),
 	"obj_quest_pendant":               ItemData(2793883166, 1, ItemClassification.progression, "Power_Pendant"),
 	"obj_quest_pg":                    ItemData(2793883167, 1, ItemClassification.progression, "Bomb_Gauntlet"),
 	"obj_quest_speedy_shoes":          ItemData(2793883168, 1, ItemClassification.progression, "Speedy_Shoes"),
 	"obj_quest_magic_cloak":           ItemData(2793883169, 1, ItemClassification.progression, "Magic_Cloak"),
-	"obj_quest_double_wave":           ItemData(2793883170, 1, ItemClassification.progression, "Double_Wave")
+	"obj_quest_double_wave":           ItemData(2793883170, 1, ItemClassification.useful, "Double_Wave")
 }
 
 rock_table = {
@@ -239,29 +239,29 @@ scroll_table = {
 }
 
 reward_table = {
-	"obj_quest_rubie_bag_25_1":        ItemData(2793883190, 1, ItemClassification.progression, "Forest_Bonus_Reward"),
-	"obj_quest_rubie_bag_25_2":        ItemData(2793883191, 1, ItemClassification.progression, "Caves_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_1":        ItemData(2793883192, 1, ItemClassification.progression, "Desert_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_2":        ItemData(2793883193, 1, ItemClassification.progression, "Canyon_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_3":        ItemData(2793883194, 1, ItemClassification.progression, "Swamp_Bonus_Reward"),
-	"obj_quest_rubie_bag_40":          ItemData(2793883195, 1, ItemClassification.progression, "Peak_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_1":        ItemData(2793883196, 1, ItemClassification.progression, "Crypts_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_2":        ItemData(2793883197, 1, ItemClassification.progression, "Beach_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_3":        ItemData(2793883198, 1, ItemClassification.progression, "River_Bonus_Reward"),
-	"obj_quest_rubie_bag_75_1":        ItemData(2793883199, 1, ItemClassification.progression, "Hills_Bonus_Reward"),
-	"obj_quest_rubie_bag_75_2":        ItemData(2793883200, 1, ItemClassification.progression, "Fort_Bonus_Reward"),
-	"obj_quest_rubie_bag_100":         ItemData(2793883201, 1, ItemClassification.progression, "Lair_Bonus_Reward")
+	"obj_quest_rubie_bag_25_1":        ItemData(2793883190, 1, ItemClassification.filler, "Forest_Bonus_Reward"),
+	"obj_quest_rubie_bag_25_2":        ItemData(2793883191, 1, ItemClassification.filler, "Caves_Bonus_Reward"),
+	"obj_quest_rubie_bag_30_1":        ItemData(2793883192, 1, ItemClassification.filler, "Desert_Bonus_Reward"),
+	"obj_quest_rubie_bag_30_2":        ItemData(2793883193, 1, ItemClassification.filler, "Canyon_Bonus_Reward"),
+	"obj_quest_rubie_bag_30_3":        ItemData(2793883194, 1, ItemClassification.filler, "Swamp_Bonus_Reward"),
+	"obj_quest_rubie_bag_40":          ItemData(2793883195, 1, ItemClassification.filler, "Peak_Bonus_Reward"),
+	"obj_quest_rubie_bag_50_1":        ItemData(2793883196, 1, ItemClassification.filler, "Crypts_Bonus_Reward"),
+	"obj_quest_rubie_bag_50_2":        ItemData(2793883197, 1, ItemClassification.filler, "Beach_Bonus_Reward"),
+	"obj_quest_rubie_bag_50_3":        ItemData(2793883198, 1, ItemClassification.filler, "River_Bonus_Reward"),
+	"obj_quest_rubie_bag_75_1":        ItemData(2793883199, 1, ItemClassification.filler, "Hills_Bonus_Reward"),
+	"obj_quest_rubie_bag_75_2":        ItemData(2793883200, 1, ItemClassification.filler, "Fort_Bonus_Reward"),
+	"obj_quest_rubie_bag_100":         ItemData(2793883201, 1, ItemClassification.filler, "Lair_Bonus_Reward")
 }
 
 npc_table = {
-	"npc_boru":                        ItemData(2793883202, 1, ItemClassification.progression, "Faramore_Boru"),
-	"npc_univor":                      ItemData(2793883203, 1, ItemClassification.progression, "Faramore_Univor"),
-	"npc_salvik":                      ItemData(2793883204, 1, ItemClassification.progression, "Faramore_Salvik"),
-	"npc_maki":                        ItemData(2793883205, 1, ItemClassification.progression, "Faramore_Maki"),
-	"npc_payop":                       ItemData(2793883206, 1, ItemClassification.progression, "Faramore_Payop"),
+	"npc_boru":                        ItemData(2793883202, 1, ItemClassification.filler, "Faramore_Boru"),
+	"npc_univor":                      ItemData(2793883203, 1, ItemClassification.filler, "Faramore_Univor"),
+	"npc_salvik":                      ItemData(2793883204, 1, ItemClassification.filler, "Faramore_Salvik"),
+	"npc_maki":                        ItemData(2793883205, 1, ItemClassification.filler, "Faramore_Maki"),
+	"npc_payop":                       ItemData(2793883206, 1, ItemClassification.filler, "Faramore_Payop"),
 	"npc_yukeen":                      ItemData(2793883207, 1, ItemClassification.progression, "Faramore_Yukeen"),
 	"npc_mayor":                       ItemData(2793883208, 1, ItemClassification.progression, "Faramore_Covenplate"),
-	"npc_kari":                        ItemData(2793883209, 1, ItemClassification.progression, "Faramore_Kari"),
+	"npc_kari":                        ItemData(2793883209, 1, ItemClassification.filler, "Faramore_Kari"),
 	"npc_kari_quest":                  ItemData(2793883210, 1, ItemClassification.progression, "Faramore_Kari_Quest"),
 	"npc_alven":                       ItemData(2793883211, 1, ItemClassification.progression, "Faramore_Alven"),
 	"npc_brinda":                      ItemData(2793883212, 1, ItemClassification.progression, "Faramore_Brinda"),
@@ -284,12 +284,12 @@ npc_table = {
 	"npc_skelvis":                     ItemData(2793883229, 1, ItemClassification.progression, "Crypts_Skelvis"),
 	"npc_fleetus":                     ItemData(2793883230, 1, ItemClassification.progression, "Beach_Fleetus"),
 	"npc_tork":                        ItemData(2793883231, 1, ItemClassification.progression, "Beach_Tork"),
-	"npc_barnabuss":                   ItemData(2793883232, 1, ItemClassification.progression, "River_Barnabuss"),
+	"npc_barnabuss":                   ItemData(2793883232, 1, ItemClassification.filler, "River_Barnabuss"),
 	"npc_francine":                    ItemData(2793883233, 1, ItemClassification.progression, "River_Francine"),
 	"npc_morgh":                       ItemData(2793883234, 1, ItemClassification.progression, "River_Morgh"),
 	"npc_milbert":                     ItemData(2793883235, 1, ItemClassification.progression, "Hills_Milbert"),
 	"npc_zazie":                       ItemData(2793883236, 1, ItemClassification.progression, "Lair_Zazie"),
-	"npc_joe":                         ItemData(2793883237, 1, ItemClassification.progression, "Volcano_Joe")}
+	"npc_joe":                         ItemData(2793883237, 1, ItemClassification.filler, "Volcano_Joe")}
 
 locked_npc_table = {
 	"npc_mortar":                      ItemData(2793883238, 1, ItemClassification.progression, "Faramore_Mortar"),
@@ -327,7 +327,7 @@ level_table = {
 
 other_table = {
 	"obj_boss_daimur":                 ItemData(2793883263, 1, ItemClassification.progression, "Daimur"),
-	"obj_null":                        ItemData(2793883264, 3, ItemClassification.progression, "")
+	"obj_null":                        ItemData(2793883264, 3, ItemClassification.filler, "")
 }
 
 # Forest_Rudy_(Start)
