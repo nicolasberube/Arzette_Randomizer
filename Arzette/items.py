@@ -5,404 +5,376 @@ class ArzetteItem(Item):
     game: str = "Arzette"
 
 class ItemData(NamedTuple):
-    btid: int | None
-    qty: int
+    arzid: int | None
     type: ItemClassification
-    default_location: str
 
-bag_table = {
-    "obj_item_bag_1":                  ItemData(2793883000, 1, ItemClassification.filler, "Forest_Bag_(First_Room_1)"),
-	"obj_item_bag_2":                  ItemData(2793883001, 1, ItemClassification.filler, "Forest_Bag_(First_Room_2)"),
-	"obj_item_bag_3":                  ItemData(2793883002, 1, ItemClassification.filler, "Forest_Bag_(Sword_Wave)"),
-	"obj_item_bag_4":                  ItemData(2793883003, 1, ItemClassification.filler, "Forest_Bag_(Last_Room)"),
-	"obj_item_bag_5":                  ItemData(2793883004, 1, ItemClassification.filler, "Caves_Bag_(Rope_Ladder)"),
-	"obj_item_bag_6":                  ItemData(2793883005, 1, ItemClassification.filler, "Caves_Bag_(Last_Room)"),
-	"obj_item_bag_7":                  ItemData(2793883006, 1, ItemClassification.filler, "Desert_Bag_(First_Room_1)"),
-	"obj_item_bag_8":                  ItemData(2793883007, 1, ItemClassification.filler, "Desert_Bag_(First_Room_2)"),
-	"obj_item_bag_9":                  ItemData(2793883008, 1, ItemClassification.filler, "Desert_Bag_(Last_Room)"),
-	"obj_item_bag_10":                 ItemData(2793883009, 1, ItemClassification.filler, "Canyon_Bag_(Before_Checkpoint)"),
-	"obj_item_bag_11":                 ItemData(2793883010, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_1)"),
-	"obj_item_bag_12":                 ItemData(2793883011, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_2)"),
-	"obj_item_bag_13":                 ItemData(2793883012, 1, ItemClassification.filler, "Canyon_Bag_(After_Checkpoint_3)"),
-	"obj_item_bag_14":                 ItemData(2793883013, 1, ItemClassification.filler, "Canyon_Bag_(First_Room_End)"),
-	"obj_item_bag_15":                 ItemData(2793883014, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_1)"),
-	"obj_item_bag_16":                 ItemData(2793883015, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_2)"),
-	"obj_item_bag_17":                 ItemData(2793883016, 1, ItemClassification.filler, "Canyon_Bag_(After_Zipline_3)"),
-	"obj_item_bag_18":                 ItemData(2793883017, 1, ItemClassification.filler, "Canyon_Bag_(Motte_House)"),
-	"obj_item_bag_19":                 ItemData(2793883018, 1, ItemClassification.filler, "Swamp_Bag_(First_Room)"),
-	"obj_item_bag_20":                 ItemData(2793883019, 1, ItemClassification.filler, "Peak_Bag_(First_Cave_1)"),
-	"obj_item_bag_21":                 ItemData(2793883020, 1, ItemClassification.filler, "Peak_Bag_(First_Cave_2)"),
-	"obj_item_bag_22":                 ItemData(2793883021, 1, ItemClassification.filler, "Peak_Bag_(Before_Apatu)"),
-	"obj_item_bag_23":                 ItemData(2793883022, 1, ItemClassification.filler, "Peak_Bag_(After_Apatu)"),
-	"obj_item_bag_24":                 ItemData(2793883023, 1, ItemClassification.filler, "Crypts_Bag_(Skelvis)"),
-	"obj_item_bag_25":                 ItemData(2793883024, 1, ItemClassification.filler, "Beach_Bag_(First_Room)"),
-	"obj_item_bag_26":                 ItemData(2793883025, 1, ItemClassification.filler, "River_Bag_(Last_Room)"),
-	"obj_item_bag_27":                 ItemData(2793883026, 1, ItemClassification.filler, "Hills_Bag_(Barn)"),
-	"obj_item_bag_28":                 ItemData(2793883027, 1, ItemClassification.filler, "Hills_Bag_(Music_Shrine)"),
-	"obj_item_bag_29":                 ItemData(2793883028, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_1)"),
-	"obj_item_bag_30":                 ItemData(2793883029, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_2)"),
-	"obj_item_bag_31":                 ItemData(2793883030, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_3)"),
-	"obj_item_bag_32":                 ItemData(2793883031, 1, ItemClassification.filler, "Fort_Bag_(Dungeon_4)"),
-	"obj_item_bag_33":                 ItemData(2793883032, 1, ItemClassification.filler, "Fort_Bag_(Dark_Room)"),
-	"obj_item_bag_34":                 ItemData(2793883033, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_1)"),
-	"obj_item_bag_35":                 ItemData(2793883034, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_2)"),
-	"obj_item_bag_36":                 ItemData(2793883035, 1, ItemClassification.filler, "Fort_Bag_(Top_Room_3)"),
-	"obj_item_bag_37":                 ItemData(2793883036, 1, ItemClassification.filler, "Fort_Bag_(Last_Room)"),
-	"obj_item_bag_38":                 ItemData(2793883037, 1, ItemClassification.filler, "Castle_Bag_(Entrance)"),
-	"obj_item_bag_39":                 ItemData(2793883038, 1, ItemClassification.filler, "Castle_Bag_(Top_Room)"),
-	"obj_item_bag_40":                 ItemData(2793883039, 1, ItemClassification.filler, "Castle_Bag_(Bonus)"),
-	"obj_item_bag_41":                 ItemData(2793883040, 1, ItemClassification.filler, "Lair_Bag_(First_Room)"),
-	"obj_item_bag_42":                 ItemData(2793883041, 1, ItemClassification.filler, "Lair_Bag_(Lava_Room)"),
-	"obj_item_bag_43":                 ItemData(2793883042, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_1)"),
-	"obj_item_bag_44":                 ItemData(2793883043, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_2)"),
-	"obj_item_bag_45":                 ItemData(2793883044, 1, ItemClassification.filler, "Lair_Bag_(Final_Room_3)"),
-	"obj_item_bag_46":                 ItemData(2793883045, 1, ItemClassification.filler, "Crypts_Bag_(Crypt)")
-}
-key_table = {
-	"key_faramore_2":                  ItemData(2793883046, 1, ItemClassification.progression, "Faramore_Key_(Well)"),
-	"key_faramore_1":                  ItemData(2793883047, 1, ItemClassification.progression, "Faramore_Key_(Tavern)"),
-	"key_durridin":                    ItemData(2793883048, 1, ItemClassification.progression, "Forest_Key"),
-	"key_anju":                        ItemData(2793883049, 1, ItemClassification.progression, "Desert_Key"),
-	"key_creece":                      ItemData(2793883050, 1, ItemClassification.progression, "Canyon_Key"),
-	"key_norin":                       ItemData(2793883051, 1, ItemClassification.progression, "Swamp_Key_(Frich_House)"),
-	"key_norin_2":                     ItemData(2793883052, 1, ItemClassification.progression, "Swamp_Key_(Griffin_Boots)"),
-	"key_chillinax":                   ItemData(2793883053, 1, ItemClassification.progression, "Peak_Key"),
-	"key_boanjale":                    ItemData(2793883054, 1, ItemClassification.progression, "Crypts_Key"),
-	"key_badonc":                      ItemData(2793883055, 1, ItemClassification.progression, "Beach_Key_(First_House)"),
-	"key_badonc_2":                    ItemData(2793883056, 1, ItemClassification.progression, "Beach_Key_(Tork_Cabin)"),
-	"key_ryha":                        ItemData(2793883057, 1, ItemClassification.progression, "River_Key_(Francine)"),
-	"key_ryha_2":                      ItemData(2793883058, 1, ItemClassification.progression, "River_Key_(Submarine)"),
-	"key_lichen":                      ItemData(2793883059, 1, ItemClassification.progression, "Hills_Key"),
-	"key_findula_1":                   ItemData(2793883060, 1, ItemClassification.progression, "Fort_Key_(First_Room)"),
-	"key_findula_2":                   ItemData(2793883061, 1, ItemClassification.progression, "Fort_Key_(Top_Room)"),
-	"key_denny_2":                     ItemData(2793883062, 1, ItemClassification.progression, "Castle_Key_(Nodelki)"),
-	"key_denny_1":                     ItemData(2793883063, 1, ItemClassification.progression, "Castle_Key_(Left_Room)")
+bag_items = {
+	"Forest Bag (First Room 1)":       ItemData(2793883008, ItemClassification.filler),
+	"Forest Bag (First Room 2)":       ItemData(2793883009, ItemClassification.filler),
+	"Forest Bag (Sword Wave)":         ItemData(2793883015, ItemClassification.filler),
+	"Forest Bag (Last Room)":          ItemData(2793883018, ItemClassification.filler),
+	"Caves Bag (Rope Ladder)":         ItemData(2793883024, ItemClassification.filler),
+	"Caves Bag (Last Room)":           ItemData(2793883029, ItemClassification.filler),
+	"Desert Bag (First Room 1)":       ItemData(2793883032, ItemClassification.filler),
+	"Desert Bag (First Room 2)":       ItemData(2793883033, ItemClassification.filler),
+	"Desert Bag (Last Room)":          ItemData(2793883040, ItemClassification.filler),
+	"Canyon Bag (Before Checkpoint)":  ItemData(2793883043, ItemClassification.filler),
+	"Canyon Bag (After Checkpoint 1)": ItemData(2793883044, ItemClassification.filler),
+	"Canyon Bag (After Checkpoint 2)": ItemData(2793883045, ItemClassification.filler),
+	"Canyon Bag (After Checkpoint 3)": ItemData(2793883046, ItemClassification.filler),
+	"Canyon Bag (First Room End)":     ItemData(2793883047, ItemClassification.filler),
+	"Canyon Bag (After Zipline 1)":    ItemData(2793883051, ItemClassification.filler),
+	"Canyon Bag (After Zipline 2)":    ItemData(2793883052, ItemClassification.filler),
+	"Canyon Bag (After Zipline 3)":    ItemData(2793883053, ItemClassification.filler),
+	"Canyon Bag (Motte House)":        ItemData(2793883055, ItemClassification.filler),
+	"Swamp Bag (First Room)":          ItemData(2793883058, ItemClassification.filler),
+	"Peak Bag (First Cave 1)":         ItemData(2793883068, ItemClassification.filler),
+	"Peak Bag (First Cave 2)":         ItemData(2793883069, ItemClassification.filler),
+	"Peak Bag (Before Apatu)":         ItemData(2793883074, ItemClassification.filler),
+	"Peak Bag (After Apatu)":          ItemData(2793883076, ItemClassification.filler),
+	"Crypts Bag (Crypt)":              ItemData(2793883081, ItemClassification.filler),
+	"Crypts Bag (Skelvis)":            ItemData(2793883085, ItemClassification.filler),
+	"Beach Bag (First Room)":          ItemData(2793883091, ItemClassification.filler),
+	"River Bag (Last Room)":           ItemData(2793883107, ItemClassification.filler),
+	"Hills Bag (Barn)":                ItemData(2793883114, ItemClassification.filler),
+	"Hills Bag (Music Shrine)":        ItemData(2793883116, ItemClassification.filler),
+	"Fort Bag (Dungeon 1)":            ItemData(2793883120, ItemClassification.filler),
+	"Fort Bag (Dungeon 2)":            ItemData(2793883121, ItemClassification.filler),
+	"Fort Bag (Dungeon 3)":            ItemData(2793883122, ItemClassification.filler),
+	"Fort Bag (Dungeon 4)":            ItemData(2793883123, ItemClassification.filler),
+	"Fort Bag (Dark Room)":            ItemData(2793883127, ItemClassification.filler),
+	"Fort Bag (Top Room 1)":           ItemData(2793883131, ItemClassification.filler),
+	"Fort Bag (Top Room 2)":           ItemData(2793883132, ItemClassification.filler),
+	"Fort Bag (Top Room 3)":           ItemData(2793883133, ItemClassification.filler),
+	"Fort Bag (Last Room)":            ItemData(2793883135, ItemClassification.filler),
+	"Castle Bag (Entrance)":           ItemData(2793883139, ItemClassification.filler),
+	"Castle Bag (Top Room)":           ItemData(2793883143, ItemClassification.filler),
+	"Castle Bag (Bonus)":              ItemData(2793883147, ItemClassification.filler),
+	"Lair Bag (First Room)":           ItemData(2793883153, ItemClassification.filler),
+	"Lair Bag (Lava Room)":            ItemData(2793883155, ItemClassification.filler),
+	"Lair Bag (Final Room 1)":         ItemData(2793883156, ItemClassification.filler),
+	"Lair Bag (Final Room 2)":         ItemData(2793883157, ItemClassification.filler),
+	"Lair Bag (Final Room 3)":         ItemData(2793883158, ItemClassification.filler)
 }
 
-candle_table = {
-	"obj_sacred_candle_24":            ItemData(2793883064, 1, ItemClassification.progression, "Faramore_Candle_(Empty_House)"),
-	"obj_sacred_candle_25":            ItemData(2793883065, 1, ItemClassification.progression, "Faramore_Candle_(Cypress_House)"),
-	"obj_sacred_candle_1":             ItemData(2793883066, 1, ItemClassification.progression, "Forest_Candle_(Tree)"),
-	"obj_sacred_candle_2":             ItemData(2793883067, 1, ItemClassification.progression, "Forest_Candle_(Cypress)"),
-	"obj_sacred_candle_5":             ItemData(2793883068, 1, ItemClassification.progression, "Caves_Candle_(First_Dark_Room)"),
-	"obj_sacred_candle_26":            ItemData(2793883069, 1, ItemClassification.progression, "Caves_Candle_(Second_Dark_Room)"),
-	"obj_sacred_candle_3":             ItemData(2793883070, 1, ItemClassification.progression, "Desert_Candle_(Pit)"),
-	"obj_sacred_candle_4":             ItemData(2793883071, 1, ItemClassification.progression, "Desert_Candle_(Last_Room)"),
-	"obj_sacred_candle_6":             ItemData(2793883072, 1, ItemClassification.progression, "Canyon_Candle_(First_Room_End)"),
-	"obj_sacred_candle_7":             ItemData(2793883073, 1, ItemClassification.progression, "Canyon_Candle_(Motte_House)"),
-	"obj_sacred_candle_8":             ItemData(2793883074, 1, ItemClassification.progression, "Swamp_Candle_(First_Room)"),
-	"obj_sacred_candle_27":            ItemData(2793883075, 1, ItemClassification.progression, "Swamp_Candle_(Frich_House)"),
-	"obj_sacred_candle_9":             ItemData(2793883076, 1, ItemClassification.progression, "Peak_Candle_(First_Cave)"),
-	"obj_sacred_candle_10":            ItemData(2793883077, 1, ItemClassification.progression, "Peak_Candle_(Ciclena_Cave)"),
-	"obj_sacred_candle_28":            ItemData(2793883078, 1, ItemClassification.progression, "Crypts_Candle_(After_Crypt)"),
-	"obj_sacred_candle_11":            ItemData(2793883079, 1, ItemClassification.progression, "Crypts_Candle_(Skelvis)"),
-	"obj_sacred_candle_12":            ItemData(2793883080, 1, ItemClassification.progression, "Volcano_Candle_(First_Room)"),
-	"obj_sacred_candle_29":            ItemData(2793883081, 1, ItemClassification.progression, "Volcano_Candle_(Last_Room)"),
-	"obj_sacred_candle_14":            ItemData(2793883082, 1, ItemClassification.progression, "Beach_Candle_(Tork_Cabin)"),
-	"obj_sacred_candle_13":            ItemData(2793883083, 1, ItemClassification.progression, "Beach_Candle_(Cave)"),
-	"obj_sacred_candle_15":            ItemData(2793883084, 1, ItemClassification.progression, "River_Candle_(Boat)"),
-	"obj_sacred_candle_16":            ItemData(2793883085, 1, ItemClassification.progression, "River_Candle_(Last_Room)"),
-	"obj_sacred_candle_30":            ItemData(2793883086, 1, ItemClassification.progression, "Hills_Candle_(Cave)"),
-	"obj_sacred_candle_17":            ItemData(2793883087, 1, ItemClassification.progression, "Hills_Candle_(Music_Shrine)"),
-	"obj_sacred_candle_18":            ItemData(2793883088, 1, ItemClassification.progression, "Fort_Candle_(Dark_Room)"),
-	"obj_sacred_candle_19":            ItemData(2793883089, 1, ItemClassification.progression, "Fort_Candle_(Last_Room)"),
-	"obj_sacred_candle_20":            ItemData(2793883090, 1, ItemClassification.progression, "Castle_Candle_(Right_Room)"),
-	"obj_sacred_candle_21":            ItemData(2793883091, 1, ItemClassification.progression, "Castle_Candle_(Top_Room)"),
-	"obj_sacred_candle_22":            ItemData(2793883092, 1, ItemClassification.progression, "Lair_Candle_(Tree_Trunk)"),
-	"obj_sacred_candle_23":            ItemData(2793883093, 1, ItemClassification.progression, "Lair_Candle_(Tree_Top)")
+key_items = {
+	"Faramore Key (Well)":             ItemData(2793883001, ItemClassification.progression),
+	"Faramore Key (Tavern)":           ItemData(2793883002, ItemClassification.progression),
+	"Forest Key":                      ItemData(2793883010, ItemClassification.progression),
+	"Desert Key":                      ItemData(2793883037, ItemClassification.progression),
+	"Canyon Key":                      ItemData(2793883050, ItemClassification.progression),
+	"Swamp Key (Frich House)":         ItemData(2793883060, ItemClassification.progression),
+	"Swamp Key (Griffin Boots)":       ItemData(2793883062, ItemClassification.progression),
+	"Peak Key":                        ItemData(2793883072, ItemClassification.progression),
+	"Crypts Key":                      ItemData(2793883080, ItemClassification.progression),
+	"Beach Key (First House)":         ItemData(2793883092, ItemClassification.progression),
+	"Beach Key (Tork Cabin)":          ItemData(2793883094, ItemClassification.progression),
+	"River Key (Francine)":            ItemData(2793883101, ItemClassification.progression),
+	"River Key (Submarine)":           ItemData(2793883104, ItemClassification.progression),
+	"Hills Key":                       ItemData(2793883115, ItemClassification.progression),
+	"Fort Key (First Room)":           ItemData(2793883125, ItemClassification.progression),
+	"Fort Key (Top Room)":             ItemData(2793883130, ItemClassification.progression),
+	"Castle Key (Nodelki)":            ItemData(2793883141, ItemClassification.progression),
+	"Castle Key (Left Room)":          ItemData(2793883146, ItemClassification.progression)
 }
 
-coin_table = {
-	"obj_hidden_coin_faramore":        ItemData(2793883094, 1, ItemClassification.progression, "Faramore_Coin"),
-	"obj_hidden_coin_durridin":        ItemData(2793883095, 1, ItemClassification.progression, "Forest_Coin"),
-	"obj_hidden_coin_cogwyn":          ItemData(2793883096, 1, ItemClassification.progression, "Caves_Coin"),
-	"obj_hidden_coin_anju":            ItemData(2793883097, 1, ItemClassification.progression, "Desert_Coin"),
-	"obj_hidden_coin_creece":          ItemData(2793883098, 1, ItemClassification.progression, "Canyon_Coin"),
-	"obj_hidden_coin_norin":           ItemData(2793883099, 1, ItemClassification.progression, "Swamp_Coin"),
-	"obj_hidden_coin_chillinax":       ItemData(2793883100, 1, ItemClassification.progression, "Peak_Coin"),
-	"obj_hidden_coin_boanjale":        ItemData(2793883101, 1, ItemClassification.progression, "Crypts_Coin"),
-	"obj_hidden_coin_sprigum":         ItemData(2793883102, 1, ItemClassification.progression, "Volcano_Coin"),
-	"obj_hidden_coin_badonc":          ItemData(2793883103, 1, ItemClassification.progression, "Beach_Coin"),
-	"obj_hidden_coin_ryha":            ItemData(2793883104, 1, ItemClassification.progression, "River_Coin"),
-	"obj_hidden_coin_lichen":          ItemData(2793883105, 1, ItemClassification.progression, "Hills_Coin"),
-	"obj_hidden_coin_findula":         ItemData(2793883106, 1, ItemClassification.progression, "Fort_Coin"),
-	"obj_hidden_coin_denny":           ItemData(2793883107, 1, ItemClassification.progression, "Castle_Coin"),
-	"obj_hidden_coin_daimur":          ItemData(2793883108, 1, ItemClassification.progression, "Lair_Coin")
+candle_items = {
+	"Faramore Candle (Empty House)":   ItemData(2793883004, ItemClassification.progression),
+	"Faramore Candle (Cypress House)": ItemData(2793883005, ItemClassification.progression),
+	"Forest Candle (Tree)":            ItemData(2793883012, ItemClassification.progression),
+	"Forest Candle (Cypress)":         ItemData(2793883013, ItemClassification.progression),
+	"Caves Candle (First Dark Room)":  ItemData(2793883025, ItemClassification.progression),
+	"Caves Candle (Second Dark Room)": ItemData(2793883027, ItemClassification.progression),
+	"Desert Candle (Pit)":             ItemData(2793883035, ItemClassification.progression),
+	"Desert Candle (Last Room)":       ItemData(2793883038, ItemClassification.progression),
+	"Canyon Candle (First Room End)":  ItemData(2793883048, ItemClassification.progression),
+	"Canyon Candle (Motte House)":     ItemData(2793883056, ItemClassification.progression),
+	"Swamp Candle (First Room)":       ItemData(2793883057, ItemClassification.progression),
+	"Swamp Candle (Frich House)":      ItemData(2793883061, ItemClassification.progression),
+	"Peak Candle (First Cave)":        ItemData(2793883067, ItemClassification.progression),
+	"Peak Candle (Ciclena Cave)":      ItemData(2793883073, ItemClassification.progression),
+	"Crypts Candle (After Crypt)":     ItemData(2793883082, ItemClassification.progression),
+	"Crypts Candle (Skelvis)":         ItemData(2793883084, ItemClassification.progression),
+	"Volcano Candle (First Room)":     ItemData(2793883087, ItemClassification.progression),
+	"Volcano Candle (Last Room)":      ItemData(2793883089, ItemClassification.progression),
+	"Beach Candle (Tork Cabin)":       ItemData(2793883095, ItemClassification.progression),
+	"Beach Candle (Cave)":             ItemData(2793883098, ItemClassification.progression),
+	"River Candle (Boat)":             ItemData(2793883103, ItemClassification.progression),
+	"River Candle (Last Room)":        ItemData(2793883108, ItemClassification.progression),
+	"Hills Candle (Cave)":             ItemData(2793883110, ItemClassification.progression),
+	"Hills Candle (Music Shrine)":     ItemData(2793883117, ItemClassification.progression),
+	"Fort Candle (Dark Room)":         ItemData(2793883126, ItemClassification.progression),
+	"Fort Candle (Last Room)":         ItemData(2793883134, ItemClassification.progression),
+	"Castle Candle (Right Room)":      ItemData(2793883140, ItemClassification.progression),
+	"Castle Candle (Top Room)":        ItemData(2793883142, ItemClassification.progression),
+	"Lair Candle (Tree Trunk)":        ItemData(2793883150, ItemClassification.progression),
+	"Lair Candle (Tree Top)":          ItemData(2793883151, ItemClassification.progression)
 }
 
-plant_table = {
-	"obj_quest_plant_a":               ItemData(2793883109, 1, ItemClassification.progression, "Swamp_Plant"),
-	"obj_quest_plant_b":               ItemData(2793883110, 1, ItemClassification.progression, "Beach_Plant"),
-	"obj_quest_plant_c":               ItemData(2793883111, 1, ItemClassification.progression, "Hills_Plant")
+coin_items = {
+	"Faramore Coin":                   ItemData(2793883006, ItemClassification.progression),
+	"Forest Coin":                     ItemData(2793883014, ItemClassification.progression),
+	"Caves Coin":                      ItemData(2793883026, ItemClassification.progression),
+	"Desert Coin":                     ItemData(2793883031, ItemClassification.progression),
+	"Canyon Coin":                     ItemData(2793883054, ItemClassification.progression),
+	"Swamp Coin":                      ItemData(2793883059, ItemClassification.progression),
+	"Peak Coin":                       ItemData(2793883071, ItemClassification.progression),
+	"Crypts Coin":                     ItemData(2793883083, ItemClassification.progression),
+	"Volcano Coin":                    ItemData(2793883088, ItemClassification.progression),
+	"Beach Coin":                      ItemData(2793883093, ItemClassification.progression),
+	"River Coin":                      ItemData(2793883105, ItemClassification.progression),
+	"Hills Coin":                      ItemData(2793883112, ItemClassification.progression),
+	"Fort Coin":                       ItemData(2793883129, ItemClassification.progression),
+	"Castle Coin":                     ItemData(2793883145, ItemClassification.progression),
+	"Lair Coin":                       ItemData(2793883154, ItemClassification.progression)
 }
 
-upgrade_table = {
-	"obj_quest_upgrade_power_stones":  ItemData(2793883112, 1, ItemClassification.useful, "Power_Stone_Upgrade"),
-	"obj_quest_upgrade_wallet":        ItemData(2793883113, 1, ItemClassification.useful, "Wallet_Upgrade"),
-	"obj_quest_upgrade_bombs":         ItemData(2793883114, 1, ItemClassification.useful, "Bomb_Upgrade"),
-	"obj_quest_upgrade_lamp_oil":      ItemData(2793883115, 1, ItemClassification.useful, "Lamp_Oil_Upgrade"),
-	"obj_quest_upgrade_ropes":         ItemData(2793883116, 1, ItemClassification.useful, "Rope_Upgrade"),
-	"obj_quest_upgrade_soul_bag":      ItemData(2793883117, 1, ItemClassification.useful, "Soul_Upgrade"),
-	"obj_quest_infinite_soulfire":     ItemData(2793883118, 1, ItemClassification.useful, "Infinite_Soulfire")
+plant_items = {
+	"Swamp Plant":                     ItemData(2793883064, ItemClassification.progression),
+	"Beach Plant":                     ItemData(2793883096, ItemClassification.progression),
+	"Hills Plant":                     ItemData(2793883118, ItemClassification.progression)
 }
 
-life_table = {
-	"obj_lifeup_1":                    ItemData(2793883119, 1, ItemClassification.useful, "Desert_Life-Up"),
-	"obj_lifeup_2":                    ItemData(2793883120, 1, ItemClassification.useful, "Crypts_Life-Up"),
-	"obj_lifeup_3":                    ItemData(2793883121, 1, ItemClassification.useful, "River_Life-Up")
+upgrade_items = {
+	"Power Stone Upgrade":             ItemData(2793883162, ItemClassification.useful),
+	"Wallet Upgrade":                  ItemData(2793883166, ItemClassification.useful),
+	"Infinite Soulfire":               ItemData(2793883167, ItemClassification.useful),
+	"Bomb Upgrade":                    ItemData(2793883168, ItemClassification.useful),
+	"Lamp Oil Upgrade":                ItemData(2793883171, ItemClassification.useful),
+	"Rope Upgrade":                    ItemData(2793883172, ItemClassification.useful),
+	"Soul Upgrade":                    ItemData(2793883192, ItemClassification.useful)
 }
 
-race_table = {
-	"obj_quest_race_reward_1":         ItemData(2793883122, 1, ItemClassification.filler, "Forest_Race_100_Rupees"),
-	"obj_quest_race_reward_2":         ItemData(2793883123, 1, ItemClassification.filler, "Peak_Race_100_Rupees"),
-	"obj_quest_race_reward_3":         ItemData(2793883124, 1, ItemClassification.filler, "Hills_Race_100_Rupees")
+lifeup_items = {
+	"Desert Life-Up":                  ItemData(2793883039, ItemClassification.useful),
+	"Crypts Life-Up":                  ItemData(2793883077, ItemClassification.useful),
+	"River Life-Up":                   ItemData(2793883109, ItemClassification.useful)
 }
 
-trading_table = {
-	"key_findula_dungeon":             ItemData(2793883125, 1, ItemClassification.progression, "Dungeon_Key"),
-	"obj_quest_funky_fungus":          ItemData(2793883126, 1, ItemClassification.progression, "Funky_Fungus"),
-	"obj_quest_snail_salt":            ItemData(2793883127, 1, ItemClassification.progression, "Snail_Salt"),
-	"obj_quest_cleaver_shovel":        ItemData(2793883128, 1, ItemClassification.progression, "Cleaver_Shovel"),
-	"obj_quest_ogre_hair":             ItemData(2793883129, 1, ItemClassification.progression, "Ogre_Hair"),
-	"obj_quest_refined_chains":        ItemData(2793883130, 1, ItemClassification.progression, "Oil_and_Chains"),
-	"obj_quest_chainsword":            ItemData(2793883131, 1, ItemClassification.progression, "Chainsword"),
-	"obj_quest_oil":                   ItemData(2793883132, 1, ItemClassification.progression, "Sacred_Oil")
+race_items = {
+	"Forest Race 100 Rupees":          ItemData(2793883173, ItemClassification.filler),
+	"Peak Race 100 Rupees":            ItemData(2793883174, ItemClassification.filler),
+	"Hills Race 100 Rupees":           ItemData(2793883175, ItemClassification.filler)
 }
 
-jewel_table = {
-	"obj_jof_1":                       ItemData(2793883133, 1, ItemClassification.progression, "Forest_Jewel"),
-	"obj_jof_2":                       ItemData(2793883134, 1, ItemClassification.progression, "Canyon_Jewel"),
-	"obj_jof_3":                       ItemData(2793883135, 1, ItemClassification.progression, "Peak_Jewel"),
-	"obj_jof_4":                       ItemData(2793883136, 1, ItemClassification.progression, "Fort_Jewel"),
-	"obj_jof_5":                       ItemData(2793883137, 1, ItemClassification.progression, "Castle_Jewel")
+trading_items = {
+	"Sacred Oil":                      ItemData(2793883124, ItemClassification.progression),
+	"Dungeon Key":                     ItemData(2793883163, ItemClassification.progression),
+	"Chainsword":                      ItemData(2793883164, ItemClassification.progression),
+	"Snail Salt":                      ItemData(2793883178, ItemClassification.progression),
+	"Ogre Hair":                       ItemData(2793883183, ItemClassification.progression),
+	"Cleaver Shovel":                  ItemData(2793883188, ItemClassification.progression),
+	"Oil and Chains":                  ItemData(2793883189, ItemClassification.progression),
+	"Funky Fungus":                    ItemData(2793883191, ItemClassification.progression)
 }
 
-quest_table = {
-	"obj_quest_bombs":                 ItemData(2793883138, 1, ItemClassification.progression, "Bombs"),
-	"obj_quest_sword_wave":            ItemData(2793883139, 1, ItemClassification.progression, "Sword_Wave"),
-	"obj_quest_golden_fly":            ItemData(2793883140, 1, ItemClassification.progression, "Golden_Fly"),
-	"obj_quest_armor":                 ItemData(2793883141, 1, ItemClassification.progression, "Magic_Armor"),
-	"obj_quest_silver_cricket":        ItemData(2793883142, 1, ItemClassification.progression, "Silver_Cricket"),
-	"obj_quest_rope_ladder":           ItemData(2793883143, 1, ItemClassification.progression, "Rope_Ladder"),
-	"obj_quest_shield_ring":           ItemData(2793883144, 1, ItemClassification.progression, "Shield_Ring"),
-	"obj_quest_compass":               ItemData(2793883145, 1, ItemClassification.progression, "Compass"),
-	"obj_quest_magic_boots":           ItemData(2793883146, 1, ItemClassification.progression, "Griffin_Boots"),
-	"obj_quest_town_bell":             ItemData(2793883147, 1, ItemClassification.progression, "Bell"),
-	"obj_quest_crystal_of_refraction": ItemData(2793883148, 1, ItemClassification.progression, "Crystal_of_Refraction"),
-	"obj_quest_flute":                 ItemData(2793883149, 1, ItemClassification.progression, "Fatal_Flute"),
-	"obj_quest_blue_beam":             ItemData(2793883150, 1, ItemClassification.progression, "Blue_Magic"),
-	"obj_quest_electric_sword":        ItemData(2793883151, 1, ItemClassification.progression, "Lightning_Sword"),
-	"obj_quest_shoes":                 ItemData(2793883152, 1, ItemClassification.progression, "Enchanted_Shoes"),
-	"obj_quest_reflecting_shield":     ItemData(2793883153, 1, ItemClassification.progression, "Reflector_Ring"),
-	"obj_quest_winged_belt":           ItemData(2793883154, 1, ItemClassification.progression, "Winged_Belt"),
-	"obj_quest_sword":                 ItemData(2793883155, 1, ItemClassification.progression, "Purple_Magic"),
-	"obj_quest_citizenship":           ItemData(2793883156, 1, ItemClassification.progression, "Citizenship_Papers"),
-	"obj_quest_canteen":               ItemData(2793883157, 1, ItemClassification.progression, "Canteen"),
-	"obj_quest_beach_calendar":        ItemData(2793883158, 1, ItemClassification.progression, "Calendar"),
-	"obj_quest_dewey_reward":          ItemData(2793883159, 1, ItemClassification.filler, "200_Rupees"),
-	"obj_quest_lantern":               ItemData(2793883160, 1, ItemClassification.progression, "Lantern"),
-	"obj_quest_esc_rope":              ItemData(2793883161, 1, ItemClassification.useful, "Rope"),
-	"obj_quest_fairy_dust":            ItemData(2793883162, 1, ItemClassification.progression, "Fairy_Dust"),
-	"obj_quest_backstep":              ItemData(2793883163, 1, ItemClassification.useful, "Backstep"),
-	"obj_quest_gun":                   ItemData(2793883164, 1, ItemClassification.progression, "Smart_Gun"),
-	"obj_quest_star_earrings":         ItemData(2793883165, 1, ItemClassification.progression, "Star_Earrings"),
-	"obj_quest_pendant":               ItemData(2793883166, 1, ItemClassification.progression, "Power_Pendant"),
-	"obj_quest_pg":                    ItemData(2793883167, 1, ItemClassification.progression, "Bomb_Gauntlet"),
-	"obj_quest_speedy_shoes":          ItemData(2793883168, 1, ItemClassification.progression, "Speedy_Shoes"),
-	"obj_quest_magic_cloak":           ItemData(2793883169, 1, ItemClassification.progression, "Magic_Cloak"),
-	"obj_quest_double_wave":           ItemData(2793883170, 1, ItemClassification.useful, "Double_Wave")
+jewel_items = {
+	"Forest Jewel":                    ItemData(2793883020, ItemClassification.progression),
+	"Canyon Jewel":                    ItemData(2793883049, ItemClassification.progression),
+	"Peak Jewel":                      ItemData(2793883075, ItemClassification.progression),
+	"Fort Jewel":                      ItemData(2793883137, ItemClassification.progression),
+	"Castle Jewel":                    ItemData(2793883149, ItemClassification.progression)
 }
 
-rock_table = {
-	"obj_quest_rock_orange":           ItemData(2793883171, 1, ItemClassification.progression, "Orange_Rock"),
-	"obj_quest_rock_brown":            ItemData(2793883172, 1, ItemClassification.progression, "Brown_Rock"),
-	"obj_quest_rock_grey":             ItemData(2793883173, 1, ItemClassification.progression, "Gray_Rock"),
-	"obj_quest_rock_blue":             ItemData(2793883174, 1, ItemClassification.progression, "Blue_Rock")
+quest_items = {
+	"Bombs":                           ItemData(2793883007, ItemClassification.progression),
+	"Sword Wave":                      ItemData(2793883016, ItemClassification.progression),
+	"Golden Fly":                      ItemData(2793883017, ItemClassification.progression),
+	"Magic Armor":                     ItemData(2793883021, ItemClassification.progression),
+	"Silver Cricket":                  ItemData(2793883022, ItemClassification.progression),
+	"Rope Ladder":                     ItemData(2793883023, ItemClassification.progression),
+	"Shield Ring":                     ItemData(2793883030, ItemClassification.progression),
+	"Compass":                         ItemData(2793883034, ItemClassification.progression),
+	"Griffin Boots":                   ItemData(2793883063, ItemClassification.progression),
+	"Bell":                            ItemData(2793883078, ItemClassification.progression),
+	"Crystal of Refraction":           ItemData(2793883090, ItemClassification.progression),
+	"Fatal Flute":                     ItemData(2793883099, ItemClassification.progression),
+	"Blue Magic":                      ItemData(2793883106, ItemClassification.progression),
+	"Lightning Sword":                 ItemData(2793883111, ItemClassification.progression),
+	"Enchanted Shoes":                 ItemData(2793883128, ItemClassification.progression),
+	"Reflector Ring":                  ItemData(2793883136, ItemClassification.progression),
+	"Winged Belt":                     ItemData(2793883144, ItemClassification.progression),
+	"Purple Magic":                    ItemData(2793883160, ItemClassification.progression),
+	"Citizenship Papers":              ItemData(2793883161, ItemClassification.progression),
+	"Canteen":                         ItemData(2793883165, ItemClassification.progression),
+	"Calendar":                        ItemData(2793883169, ItemClassification.progression),
+	"200 Rupees":                      ItemData(2793883170, ItemClassification.filler),
+	"Lantern":                         ItemData(2793883176, ItemClassification.progression),
+	"Rope":                            ItemData(2793883177, ItemClassification.useful),
+	"Fairy Dust":                      ItemData(2793883179, ItemClassification.progression),
+	"Backstep":                        ItemData(2793883180, ItemClassification.useful),
+	"Smart Gun":                       ItemData(2793883181, ItemClassification.progression),
+	"Star Earrings":                   ItemData(2793883182, ItemClassification.progression),
+	"Power Pendant":                   ItemData(2793883184, ItemClassification.progression),
+	"Bomb Gauntlet":                   ItemData(2793883185, ItemClassification.progression),
+	"Speedy Shoes":                    ItemData(2793883186, ItemClassification.progression),
+	"Magic Cloak":                     ItemData(2793883187, ItemClassification.progression),
+	"Double Wave":                     ItemData(2793883190, ItemClassification.progression)
 }
 
-scroll_table = {
-	"obj_bonus_scroll_1":              ItemData(2793883175, 1, ItemClassification.progression, "Faramore_Bonus"),
-	"obj_bonus_scroll_2":              ItemData(2793883176, 1, ItemClassification.progression, "Forest_Bonus"),
-	"obj_bonus_scroll_3":              ItemData(2793883177, 1, ItemClassification.progression, "Caves_Bonus"),
-	"obj_bonus_scroll_4":              ItemData(2793883178, 1, ItemClassification.progression, "Desert_Bonus"),
-	"obj_bonus_scroll_5":              ItemData(2793883179, 1, ItemClassification.progression, "Canyon_Bonus"),
-	"obj_bonus_scroll_6":              ItemData(2793883180, 1, ItemClassification.progression, "Swamp_Bonus"),
-	"obj_bonus_scroll_7":              ItemData(2793883181, 1, ItemClassification.progression, "Peak_Bonus"),
-	"obj_bonus_scroll_8":              ItemData(2793883182, 1, ItemClassification.progression, "Crypts_Bonus"),
-	"obj_bonus_scroll_9":              ItemData(2793883183, 1, ItemClassification.progression, "Volcano_Bonus"),
-	"obj_bonus_scroll_10":             ItemData(2793883184, 1, ItemClassification.progression, "Beach_Bonus"),
-	"obj_bonus_scroll_11":             ItemData(2793883185, 1, ItemClassification.progression, "River_Bonus"),
-	"obj_bonus_scroll_12":             ItemData(2793883186, 1, ItemClassification.progression, "Hills_Bonus"),
-	"obj_bonus_scroll_13":             ItemData(2793883187, 1, ItemClassification.progression, "Fort_Bonus"),
-	"obj_bonus_scroll_14":             ItemData(2793883188, 1, ItemClassification.progression, "Castle_Bonus"),
-	"obj_bonus_scroll_15":             ItemData(2793883189, 1, ItemClassification.progression, "Lair_Bonus")
+rock_items = {
+	"Orange Rock":                     ItemData(2793883237, ItemClassification.progression),
+	"Brown Rock":                      ItemData(2793883238, ItemClassification.progression),
+	"Gray Rock":                       ItemData(2793883239, ItemClassification.progression),
+	"Blue Rock":                       ItemData(2793883240, ItemClassification.progression)
 }
 
-reward_table = {
-	"obj_quest_rubie_bag_25_1":        ItemData(2793883190, 1, ItemClassification.filler, "Forest_Bonus_Reward"),
-	"obj_quest_rubie_bag_25_2":        ItemData(2793883191, 1, ItemClassification.filler, "Caves_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_1":        ItemData(2793883192, 1, ItemClassification.filler, "Desert_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_2":        ItemData(2793883193, 1, ItemClassification.filler, "Canyon_Bonus_Reward"),
-	"obj_quest_rubie_bag_30_3":        ItemData(2793883194, 1, ItemClassification.filler, "Swamp_Bonus_Reward"),
-	"obj_quest_rubie_bag_40":          ItemData(2793883195, 1, ItemClassification.filler, "Peak_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_1":        ItemData(2793883196, 1, ItemClassification.filler, "Crypts_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_2":        ItemData(2793883197, 1, ItemClassification.filler, "Beach_Bonus_Reward"),
-	"obj_quest_rubie_bag_50_3":        ItemData(2793883198, 1, ItemClassification.filler, "River_Bonus_Reward"),
-	"obj_quest_rubie_bag_75_1":        ItemData(2793883199, 1, ItemClassification.filler, "Hills_Bonus_Reward"),
-	"obj_quest_rubie_bag_75_2":        ItemData(2793883200, 1, ItemClassification.filler, "Fort_Bonus_Reward"),
-	"obj_quest_rubie_bag_100":         ItemData(2793883201, 1, ItemClassification.filler, "Lair_Bonus_Reward")
+scroll_items = {
+	"Faramore Bonus":                  ItemData(2793883003, ItemClassification.progression),
+	"Forest Bonus":                    ItemData(2793883011, ItemClassification.progression),
+	"Caves Bonus":                     ItemData(2793883028, ItemClassification.progression),
+	"Desert Bonus":                    ItemData(2793883036, ItemClassification.progression),
+	"Canyon Bonus":                    ItemData(2793883042, ItemClassification.progression),
+	"Swamp Bonus":                     ItemData(2793883065, ItemClassification.progression),
+	"Peak Bonus":                      ItemData(2793883070, ItemClassification.progression),
+	"Crypts Bonus":                    ItemData(2793883079, ItemClassification.progression),
+	"Volcano Bonus":                   ItemData(2793883086, ItemClassification.progression),
+	"Beach Bonus":                     ItemData(2793883097, ItemClassification.progression),
+	"River Bonus":                     ItemData(2793883102, ItemClassification.progression),
+	"Hills Bonus":                     ItemData(2793883113, ItemClassification.progression),
+	"Fort Bonus":                      ItemData(2793883138, ItemClassification.progression),
+	"Castle Bonus":                    ItemData(2793883148, ItemClassification.progression),
+	"Lair Bonus":                      ItemData(2793883152, ItemClassification.progression)
 }
 
-npc_table = {
-	"npc_boru":                        ItemData(2793883202, 1, ItemClassification.filler, "Faramore_Boru"),
-	"npc_univor":                      ItemData(2793883203, 1, ItemClassification.filler, "Faramore_Univor"),
-	"npc_salvik":                      ItemData(2793883204, 1, ItemClassification.filler, "Faramore_Salvik"),
-	"npc_maki":                        ItemData(2793883205, 1, ItemClassification.filler, "Faramore_Maki"),
-	"npc_payop":                       ItemData(2793883206, 1, ItemClassification.filler, "Faramore_Payop"),
-	"npc_yukeen":                      ItemData(2793883207, 1, ItemClassification.progression, "Faramore_Yukeen"),
-	"npc_mayor":                       ItemData(2793883208, 1, ItemClassification.progression, "Faramore_Covenplate"),
-	"npc_kari":                        ItemData(2793883209, 1, ItemClassification.filler, "Faramore_Kari"),
-	"npc_kari_quest":                  ItemData(2793883210, 1, ItemClassification.progression, "Faramore_Kari_Quest"),
-	"npc_alven":                       ItemData(2793883211, 1, ItemClassification.progression, "Faramore_Alven"),
-	"npc_brinda":                      ItemData(2793883212, 1, ItemClassification.progression, "Faramore_Brinda"),
-	"npc_frich_quest":                 ItemData(2793883213, 1, ItemClassification.progression, "Faramore_Frich"),
-	"npc_rudy":                        ItemData(2793883214, 1, ItemClassification.progression, "Faramore_Rudy"),
-	"npc_barnabuss_quest":             ItemData(2793883215, 1, ItemClassification.progression, "Faramore_Barnabuss"),
-	"npc_denny":                       ItemData(2793883216, 1, ItemClassification.progression, "Faramore_Denny"),
-	"npc_dewey":                       ItemData(2793883217, 1, ItemClassification.progression, "Faramore_Dewey"),
-	"npc_cypress_quest":               ItemData(2793883218, 1, ItemClassification.progression, "Faramore_Cypress"),
-	"npc_munhum_quest":                ItemData(2793883219, 1, ItemClassification.progression, "Faramore_Munhum"),
-	"npc_cypress":                     ItemData(2793883220, 1, ItemClassification.progression, "Forest_Cypress"),
-	"npc_munhum":                      ItemData(2793883221, 1, ItemClassification.progression, "Caves_Munhum"),
-	"npc_ellido":                      ItemData(2793883222, 1, ItemClassification.progression, "Caves_Ellido"),
-	"npc_fairy":                       ItemData(2793883223, 1, ItemClassification.progression, "Desert_Fairy"),
-	"npc_crowdee":                     ItemData(2793883224, 1, ItemClassification.progression, "Canyon_Crowdee"),
-	"npc_motte":                       ItemData(2793883225, 1, ItemClassification.progression, "Canyon_Motte"),
-	"npc_odie":                        ItemData(2793883226, 1, ItemClassification.progression, "Canyon_Odie"),
-	"npc_glubbert":                    ItemData(2793883227, 1, ItemClassification.progression, "Swamp_Glubbert"),
-	"npc_ciclena":                     ItemData(2793883228, 1, ItemClassification.progression, "Peak_Ciclena"),
-	"npc_skelvis":                     ItemData(2793883229, 1, ItemClassification.progression, "Crypts_Skelvis"),
-	"npc_fleetus":                     ItemData(2793883230, 1, ItemClassification.progression, "Beach_Fleetus"),
-	"npc_tork":                        ItemData(2793883231, 1, ItemClassification.progression, "Beach_Tork"),
-	"npc_barnabuss":                   ItemData(2793883232, 1, ItemClassification.filler, "River_Barnabuss"),
-	"npc_francine":                    ItemData(2793883233, 1, ItemClassification.progression, "River_Francine"),
-	"npc_morgh":                       ItemData(2793883234, 1, ItemClassification.progression, "River_Morgh"),
-	"npc_milbert":                     ItemData(2793883235, 1, ItemClassification.progression, "Hills_Milbert"),
-	"npc_zazie":                       ItemData(2793883236, 1, ItemClassification.progression, "Lair_Zazie"),
-	"npc_joe":                         ItemData(2793883237, 1, ItemClassification.filler, "Volcano_Joe")}
-
-locked_npc_table = {
-	"npc_mortar":                      ItemData(2793883238, 1, ItemClassification.progression, "Faramore_Mortar"),
-	"npc_frich":                       ItemData(2793883239, 1, ItemClassification.progression, "Swamp_Frich"),
-	"npc_rudy_start":                  ItemData(2793883240, 3, ItemClassification.progression, ""),
-	"npc_rudy_goal":                   ItemData(2793883241, 3, ItemClassification.progression, ""),
+bonusreward_items = {
+	"Faramore Bonus Reward":           ItemData(2793883241, ItemClassification.filler),
+	"Forest Bonus Reward":             ItemData(2793883242, ItemClassification.filler),
+	"Caves Bonus Reward":              ItemData(2793883243, ItemClassification.filler),
+	"Desert Bonus Reward":             ItemData(2793883244, ItemClassification.filler),
+	"Canyon Bonus Reward":             ItemData(2793883245, ItemClassification.filler),
+	"Swamp Bonus Reward":              ItemData(2793883246, ItemClassification.filler),
+	"Peak Bonus Reward":               ItemData(2793883247, ItemClassification.filler),
+	"Crypts Bonus Reward":             ItemData(2793883248, ItemClassification.filler),
+	"Volcano Bonus Reward":            ItemData(2793883249, ItemClassification.filler),
+	"Beach Bonus Reward":              ItemData(2793883250, ItemClassification.filler),
+	"River Bonus Reward":              ItemData(2793883251, ItemClassification.filler),
+	"Hills Bonus Reward":              ItemData(2793883252, ItemClassification.filler),
+	"Fort Bonus Reward":               ItemData(2793883253, ItemClassification.filler),
+	"Castle Bonus Reward":             ItemData(2793883254, ItemClassification.filler),
+	"Lair Bonus Reward":               ItemData(2793883255, ItemClassification.filler)
 }
 
-beacon_table = {
-	"beacon_default":                  ItemData(2793883242, 1, ItemClassification.progression, "Default_Beacon"),
-	"beacon_durridin":                 ItemData(2793883243, 1, ItemClassification.progression, "Forest_Beacon"),
-	"beacon_anju_desert":              ItemData(2793883244, 1, ItemClassification.progression, "Desert_Beacon"),
-	"beacon_norin_swamp":              ItemData(2793883245, 1, ItemClassification.progression, "Swamp_Beacon"),
-	"beacon_badonc_beach":             ItemData(2793883246, 1, ItemClassification.progression, "Beach_Beacon"),
-	"beacon_lichen_hills":             ItemData(2793883247, 1, ItemClassification.progression, "Hills_Beacon")
+npcspawner_items = {
+	"Swamp Glubbert":                  ItemData(2793883193, ItemClassification.progression),
+	"Peak Ciclena":                    ItemData(2793883194, ItemClassification.progression),
+	"Caves Munhum":                    ItemData(2793883195, ItemClassification.progression),
+	"Faramore Denny":                  ItemData(2793883196, ItemClassification.progression),
+	"Faramore Dewey":                  ItemData(2793883197, ItemClassification.progression),
+	"Faramore Frich":                  ItemData(2793883198, ItemClassification.progression),
+	"Canyon Crowdee":                  ItemData(2793883199, ItemClassification.progression),
+	"Hills Milbert":                   ItemData(2793883200, ItemClassification.progression),
+	"Faramore Barnabuss":              ItemData(2793883201, ItemClassification.progression),
+	"Faramore Kari Quest":             ItemData(2793883202, ItemClassification.progression),
+	"Faramore Yukeen":                 ItemData(2793883203, ItemClassification.progression),
+	"Forest Cypress":                  ItemData(2793883204, ItemClassification.progression),
+	"Caves Ellido":                    ItemData(2793883205, ItemClassification.progression),
+	"Canyon Motte":                    ItemData(2793883206, ItemClassification.progression),
+	"Faramore Brinda":                 ItemData(2793883207, ItemClassification.progression),
+	"Faramore Alven":                  ItemData(2793883208, ItemClassification.progression),
+	"Desert Fairy":                    ItemData(2793883209, ItemClassification.progression),
+	"Faramore Cypress":                ItemData(2793883210, ItemClassification.progression),
+	"River Morgh":                     ItemData(2793883211, ItemClassification.progression),
+	"Faramore Munhum":                 ItemData(2793883212, ItemClassification.progression),
+	"Canyon Odie":                     ItemData(2793883213, ItemClassification.progression),
+	"Lair Zazie":                      ItemData(2793883214, ItemClassification.progression),
+	"Crypts Skelvis":                  ItemData(2793883215, ItemClassification.progression),
+	"Beach Tork":                      ItemData(2793883216, ItemClassification.progression),
+	"Faramore Covenplate":             ItemData(2793883217, ItemClassification.progression),
+	"Beach Fleetus":                   ItemData(2793883218, ItemClassification.progression),
+	"River Francine":                  ItemData(2793883219, ItemClassification.progression),
+	"Faramore Rudy":                   ItemData(2793883220, ItemClassification.progression)
 }
 
-level_table = {
-	"world_faramore_town_unlocked":    ItemData(2793883248, 1, ItemClassification.progression, "Default_1"),
-	"world_durridin_forest_unlocked":  ItemData(2793883249, 1, ItemClassification.progression, "Default_2"),
-	"world_cogwyn_caves_unlocked":     ItemData(2793883250, 1, ItemClassification.progression, "Forest_Beacon_1"),
-	"world_anju_desert_unlocked":      ItemData(2793883251, 1, ItemClassification.progression, "Forest_Beacon_2"),
-	"world_creece_canyon_unlocked":    ItemData(2793883252, 1, ItemClassification.progression, "Forest_Beacon_3"),
-	"world_norin_swamp_unlocked":      ItemData(2793883253, 1, ItemClassification.progression, "Desert_Beacon_1"),
-	"world_chillinax_peaks_unlocked":  ItemData(2793883254, 1, ItemClassification.progression, "Desert_Beacon_2"),
-	"world_boanjale_crypts_unlocked":  ItemData(2793883255, 1, ItemClassification.progression, "Desert_Beacon_3"),
-	"world_sprigum_volcano_unlocked":  ItemData(2793883256, 1, ItemClassification.progression, "Swamp_Beacon_1"),
-	"world_badonc_beach_unlocked":     ItemData(2793883257, 1, ItemClassification.progression, "Swamp_Beacon_2"),
-	"world_ryha_river_unlocked":       ItemData(2793883258, 1, ItemClassification.progression, "Swamp_Beacon_3"),
-	"world_lichen_hills_unlocked":     ItemData(2793883259, 1, ItemClassification.progression, "Beach_Beacon_1"),
-	"world_fort_findula_unlocked":     ItemData(2793883260, 1, ItemClassification.progression, "Beach_Beacon_2"),
-	"world_dennys_castle_unlocked":    ItemData(2793883261, 1, ItemClassification.progression, "Hills_Beacon_1"),
-	"world_daimurs_lair_unlocked":     ItemData(2793883262, 1, ItemClassification.progression, "Hills_Beacon_2")
+npc_items = {
+	"Faramore Boru":                   ItemData(2793883221, ItemClassification.filler),
+	"Faramore Kari":                   ItemData(2793883222, ItemClassification.filler),
+	"Faramore Univor":                 ItemData(2793883223, ItemClassification.filler),
+	"Faramore Salvik":                 ItemData(2793883224, ItemClassification.filler),
+	"Faramore Maki":                   ItemData(2793883225, ItemClassification.filler),
+	"Faramore Payop":                  ItemData(2793883226, ItemClassification.filler),
+	"Volcano Joe":                     ItemData(2793883227, ItemClassification.filler),
+	"River Barnabuss":                 ItemData(2793883228, ItemClassification.filler),
+	"Faramore Mortar":                 ItemData(2793883229, ItemClassification.progression),
+	"Swamp Frich":                     ItemData(2793883230, ItemClassification.progression),
+	"Forest Rudy (Start)":             ItemData(2793883231, ItemClassification.progression),
+	"Forest Rudy (End)":               ItemData(2793883232, ItemClassification.progression),
+	"Peak Rudy (Start)":               ItemData(2793883233, ItemClassification.progression),
+	"Peak Rudy (End)":                 ItemData(2793883234, ItemClassification.progression),
+	"Hills Rudy (Start)":              ItemData(2793883235, ItemClassification.progression),
+	"Hills Rudy (End)":                ItemData(2793883236, ItemClassification.progression)
 }
 
-other_table = {
-	"obj_boss_daimur":                 ItemData(2793883263, 1, ItemClassification.progression, "Daimur"),
-	"obj_null":                        ItemData(2793883264, 3, ItemClassification.filler, "")
+beacon_items = {
+	"Forest Beacon":                   ItemData(2793883019, ItemClassification.progression),
+	"Desert Beacon":                   ItemData(2793883041, ItemClassification.progression),
+	"Swamp Beacon":                    ItemData(2793883066, ItemClassification.progression),
+	"Beach Beacon":                    ItemData(2793883100, ItemClassification.progression),
+	"Hills Beacon":                    ItemData(2793883119, ItemClassification.progression)
 }
 
-# Forest_Rudy_(Start)
-# Peak_Rudy_(Start)
-# Hills_Rudy_(Start)
+levelunlock_items = {
+	"Default 1":                       ItemData(2793883256, ItemClassification.progression),
+	"Default 2":                       ItemData(2793883257, ItemClassification.progression),
+	"Forest Beacon 1":                 ItemData(2793883258, ItemClassification.progression),
+	"Forest Beacon 2":                 ItemData(2793883259, ItemClassification.progression),
+	"Forest Beacon 3":                 ItemData(2793883260, ItemClassification.progression),
+	"Desert Beacon 1":                 ItemData(2793883261, ItemClassification.progression),
+	"Desert Beacon 2":                 ItemData(2793883262, ItemClassification.progression),
+	"Desert Beacon 3":                 ItemData(2793883263, ItemClassification.progression),
+	"Swamp Beacon 1":                  ItemData(2793883264, ItemClassification.progression),
+	"Swamp Beacon 2":                  ItemData(2793883265, ItemClassification.progression),
+	"Swamp Beacon 3":                  ItemData(2793883266, ItemClassification.progression),
+	"Beach Beacon 1":                  ItemData(2793883267, ItemClassification.progression),
+	"Beach Beacon 2":                  ItemData(2793883268, ItemClassification.progression),
+	"Hills Beacon 1":                  ItemData(2793883269, ItemClassification.progression),
+	"Hills Beacon 2":                  ItemData(2793883270, ItemClassification.progression)
+}
 
-# Faramore_Bonus_Reward
-# Volcano_Bonus_Reward
-# Castle_Bonus_Reward
+other_items = {
+	"Daimur":                          ItemData(2793883159, ItemClassification.progression)
+}
 
 all_item_table: Dict[str, ItemData] = {
-    **bag_table,
-    **key_table,
-    **candle_table,
-    **coin_table,
-    **plant_table,
-    **upgrade_table,
-    **life_table,
-    **race_table,
-    **trading_table,
-    **jewel_table,
-    **quest_table,
-    **rock_table,
-    **scroll_table,
-    **reward_table,
-    **npc_table,
-    **locked_npc_table,
-    **beacon_table,
-    **level_table,
-    **other_table,
+	**bag_items,
+	**key_items,
+	**candle_items,
+	**coin_items,
+	**plant_items,
+	**upgrade_items,
+	**lifeup_items,
+	**race_items,
+	**trading_items,
+	**jewel_items,
+	**quest_items,
+	**rock_items,
+	**scroll_items,
+	**bonusreward_items,
+	**npcspawner_items,
+	**npc_items,
+	**beacon_items,
+	**levelunlock_items,
+	**other_items
 }
 
 all_group_table: Dict[str, Dict[str, ItemData]] = {
-    "bag": bag_table,
-    "key": key_table,
-    "candle": candle_table,
-    "coin": coin_table,
-    "plant": plant_table,
-    "upgrade": upgrade_table,
-    "life": life_table,
-    "race": race_table,
-    "trading": trading_table,
-    "jewel": jewel_table,
-    "quest": quest_table,
-    "rock": rock_table,
-    "scroll": scroll_table,
-    "reward": reward_table,
-    "npc": npc_table,
-    "locked_npc": locked_npc_table,
-    "beacon": beacon_table,
-    "level": level_table,
-    "other": other_table
+	"bag": bag_items,
+	"key": key_items,
+	"candle": candle_items,
+	"coin": coin_items,
+	"plant": plant_items,
+	"upgrade": upgrade_items,
+	"lifeup": lifeup_items,
+	"race": race_items,
+	"trading": trading_items,
+	"jewel": jewel_items,
+	"quest": quest_items,
+	"rock": rock_items,
+	"scroll": scroll_items,
+	"bonusreward": bonusreward_items,
+	"npcspawner": npcspawner_items,
+	"npc": npc_items,
+	"beacon": beacon_items,
+	"levelunlock": levelunlock_items,
+	"other": other_items
 }
-
-
-
-"""
-import csv
-with open("../vanilla.csv", "r") as csvfile:
-    vanilla_output = [row for row in csv.reader(csvfile, delimiter=",")]
-
-variable_dictionary = {}
-for i_r, row in enumerate(vanilla_output):
-    if (i_r == 0 or row[0] == "" or row[0].startswith("[")):
-        continue
-    if row[0] in variable_dictionary:
-        raise Exception("Cannot import vanilla.csv")
-    variable_dictionary[row[0]] = row[1].split("//")[0]
-
-string = []
-i = -1
-for key, value in variable_dictionary.items():
-    i += 1
-    add = f'"{value+"\":":33s} ItemData(2793883{i:003}, 1, ItemClassification.progression, "{key}")'
-    string.append(add)
-string = ',\n\t'.join(string)
-print(string)
-"""

@@ -2,8 +2,9 @@ from worlds.AutoWorld import WebWorld, World
 from BaseClasses import Region, Location, Item, Tutorial, ItemClassification, MultiWorld
 from worlds.generic.Rules import add_rule
 
-from .locations import all_locations, trading_locations, default_npc_locked, non_spawner_locations
-from .items import ItemData, all_item_table, all_group_table, beacon_table, scroll_table, npc_table, beacon_table
+from .locations import all_locations
+from .items import ItemData, all_item_table, all_group_table, \
+    npcspawner_items, npc_items, scroll_items, beacon_items
 from .options import ArzetteOptions, LevelOrder, TradingSequence
 
 
@@ -46,8 +47,8 @@ class ArzetteWorld(World):
         # Items (key) and Locations (value) that have been attributed
         # during generate_early to take out of the pool
         # when running self.create_items() and self.create_regions()
+        # Also useful when creating rules for spawner items
         self.early_lock = {}
-        self.spawner_locations = {}
 
         self.barrier_types = {}
         self.level_order = {}
@@ -104,9 +105,6 @@ class ArzetteWorld(World):
             "Beach": ["Hills", "Fort"],
             "Hills": ["Castle", "Lair"]
         }
-        level_to_beacon_name = {
-            data.default_location.split("_")[0]: beacon
-            for beacon, data in beacon_table.items()}
 
         if self.options.level_order.value in {
                 LevelOrder.option_randomize, LevelOrder.option_faramore}:
@@ -154,7 +152,7 @@ class ArzetteWorld(World):
             raise ValueError(f"Config level_order {self.options.level_order.value} not recognised.")
 
         self.level_order = {
-            level_to_beacon_name[beacon]: levels[:]
+            f'{beacon} Beacon': levels[:]
                 for beacon, levels in level_order.items()}
         self.level_beacons = {
             level: beacon
@@ -163,16 +161,9 @@ class ArzetteWorld(World):
 
     def assign_trading(self) -> None:
         # (item, location) tuple of the vanilla trading sequence
-        trading_sequence = []
-        for location in trading_locations:
-            location = location.replace(" ", "_")
-            associated_item = [
-                item_name for item_name, data in all_item_table.items()
-                if data.default_location == location]
-            if len(associated_item) != 1:
-                raise Exception(f"Cannot find associated item for location {location}. "
-                                "Something went wrong.")
-            trading_sequence.append((associated_item[0], location))
+        trading_sequence = [
+            "Sacred Oil", "Funky Fungus", "Snail Salt",
+            "Cleaver Shovel", "Ogre Hair", "Oil and Chains", "Chainsword"]
 
         trading_type = self.options.trading_sequence.value
         if trading_type not in {
@@ -190,72 +181,51 @@ class ArzetteWorld(World):
         elif trading_type == TradingSequence.option_excluded:
             start_position = len(trading_sequence)-2
             # With this option, the Soul Upgrade location is unreachable
-            self.early_lock["obj_quest_rubie_bag_25_1"] = "Soul_Upgrade"
+            self.early_lock["Forest Bonus Reward"] = "Soul_Upgrade"
         if trading_type != TradingSequence.option_included:
             # Locks the first item of the trading sequence in the last location
             # of the sequence that should not be accessible
             if start_position != 0:
-                self.early_lock[trading_sequence[0][0]] = trading_sequence[start_position][1]
+                self.early_lock[trading_sequence[0]] = trading_sequence[start_position]
 
-            for (item, location) in trading_sequence[1:start_position]:
-                self.early_lock[item] = location
+            for location in trading_sequence[1:start_position]:
+                self.early_lock[location] = location
 
     def assign_locked(self) -> None:
         # Those are all locations that need to be locked as vanilla for now
         # due to the randomizer mod's limitation.
 
-        # TODO:
-        # Obviously those lists should identify the locked items, not the locked locations
-        # and reverse search the attributed item to it.
-        # This is horrible and is due to legacy code from the standalone randomizer.
-        location_locked = ["Default Beacon", "Daimur"]
-        location_locked += ["Faramore Bonus Reward",
-                            "Volcano Bonus Reward",
-                            "Castle Bonus Reward"]
-        location_locked += default_npc_locked
-
-        for location in location_locked:
-            location = location.replace(" ", "_")
-            if location.endswith(" Rudy (Start)"):
-                associated_item = ["npc_rudy_start"]
-            elif location.endswith(" Rudy (End)"):
-                associated_item = ["npc_rudy_goal"]
-            else:
-                associated_item = [
-                    item_name for item_name, data in all_item_table.items()
-                    if data.default_location == location]
-            if len(associated_item) != 1:
-                raise Exception(f"Cannot find associated item for location {location}. "
-                                "Something went wrong.")
-            self.early_lock[associated_item[0]] = location
-            if location in default_npc_locked:
-                self.spawner_locations[associated_item[0]] = location
+        for location, locdata in all_locations.items():
+            if not locdata.locked:
+                continue
+            self.early_lock[location] = location
 
     def assign_npc_scroll_beacon(self) -> None:
         # The way the attribution of spawners (npc and scroll) work
-        # is by building the attribute self.spawner_locations
-        # where the key is spawner item name and value is its location
+        # is by looking at the attribute self.early_lock
+        # where the key is spawner item name and value is its location name
         # It is used when creating rules.
+
+        # Assigning spawner items
         spawner_list = []
         if self.options.shuffle_npcs:
-            spawner_list += list(npc_table)
+            spawner_list += [name for name in npcspawner_items if name not in self.early_lock]
         else:
-            for name in list(npc_table):
-                self.early_lock[name] = all_item_table[name].default_location
-                self.spawner_locations[name] = all_item_table[name].default_location
+            for name in list(npcspawner_items):
+                if name not in self.early_lock:
+                    self.early_lock[name] = name
 
         if self.options.shuffle_bonus_scrolls:
-            spawner_list += list(scroll_table)
+            spawner_list += [name for name in scroll_items if name not in self.early_lock]
         else:
-            for name in list(scroll_table):
-                self.early_lock[name] = all_item_table[name].default_location
-                self.spawner_locations[name] = all_item_table[name].default_location
+            for name in list(scroll_items):
+                if name not in self.early_lock:
+                    self.early_lock[name] = name
 
         if len(spawner_list) > 0:
             spawner_locs = [
-                location for location in self.location_name_to_id
-                if location not in non_spawner_locations
-                and location not in self.early_lock.values()]
+                location for location, locdata in all_locations.items()
+                if locdata.can_spawner and (location not in self.early_lock.values())]
 
             self.random.shuffle(spawner_locs)
             spawner_locs = spawner_locs[:len(spawner_list)]
@@ -264,30 +234,40 @@ class ArzetteWorld(World):
                 if location in self.early_lock.values():
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
-                self.spawner_locations[name] = location
 
-        beacon_list = [name for name in beacon_table if name != "beacon_default"]
-        if not self.options.shuffle_beacons:
-            for name in list(beacon_list):
-                self.early_lock[name] = all_item_table[name].default_location
-                self.spawner_locations[name] = all_item_table[name].default_location
-            beacon_list = []
+        # Assigning other local items that are not spawners
+        local_list = []
+        if self.options.shuffle_npcs:
+            local_list += [name for name in npc_items if name not in self.early_lock]
+        else:
+            for name in list(npc_items):
+                if name not in self.early_lock:
+                    self.early_lock[name] = name
 
-        if len(beacon_list) > 0:
+        if self.options.shuffle_beacons:
+            local_list += [name for name in beacon_items if name not in self.early_lock]
+        else:
+            for name in list(beacon_items):
+                if name not in self.early_lock:
+                    self.early_lock[name] = name
+
+        if len(local_list) > 0:
             available_locs = [
-                location for location in self.location_name_to_id
-                if location not in self.early_lock.values()]
+                location for location in all_locations
+                if (location not in self.early_lock.values())]
 
             self.random.shuffle(available_locs)
-            available_locs = available_locs[:len(beacon_list)]
+            available_locs = available_locs[:len(local_list)]
 
-            for name, location in zip(beacon_list, available_locs):
+            for name, location in zip(local_list, available_locs):
                 if location in self.early_lock.values():
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
-                self.spawner_locations[name] = location
+
+        # WHY is self.level_order not used here for the beacons? Should it?
 
     # generate_early() -> assign barrier, level unlocks, npc+scrolls, locked, trading_sequence
+
     # create_items() -> ignore all assigned items in generate_early()
     # create_regions() -> ignore all assigned locations in generate_early()
     # fill_slot_data() -> include all (except default_beacon?)
