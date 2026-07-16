@@ -9,7 +9,7 @@ from .items import ArzetteItem, all_item_table, all_group_table, \
     key_items, upgrade_items, lifeup_items, bonusreward_items, \
     npcspawner_items, npc_items, scroll_items, beacon_items
 from .options import ArzetteOptions, LevelOrder, TradingSequence
-from .rules import set_location_rules
+from .rules import set_location_rules, level_to_locations
 
 class ArzetteWebWorld(WebWorld):
     pass  # todo
@@ -59,7 +59,9 @@ class ArzetteWorld(World):
         self.choose_level_unlock()
         self.assign_trading()
         self.assign_locked()
-        self.assign_npc_scroll_beacon()
+        self.assign_spawner()
+        self.assign_local()
+        self.assign_beacon()
 
     def choose_barrier(self) -> None:
         # The way the barrier randomization works is by creating the dictionnary
@@ -197,7 +199,7 @@ class ArzetteWorld(World):
                 continue
             self.early_lock[location] = location
 
-    def assign_npc_scroll_beacon(self) -> None:
+    def assign_spawner(self) -> None:
         # The way the attribution of spawners (npc and scroll) work
         # is by looking at the attribute self.early_lock
         # where the key is spawner item name and value is its location name
@@ -220,31 +222,25 @@ class ArzetteWorld(World):
                     self.early_lock[name] = name
 
         if len(spawner_list) > 0:
-            spawner_locs = [
+            available_locs = [
                 location for location, locdata in all_locations.items()
                 if locdata.can_spawner and (location not in self.early_lock.values())]
 
-            self.random.shuffle(spawner_locs)
-            spawner_locs = spawner_locs[:len(spawner_list)]
+            self.random.shuffle(available_locs)
+            available_locs = available_locs[:len(spawner_list)]
 
-            for name, location in zip(spawner_list, spawner_locs):
+            for name, location in zip(spawner_list, available_locs):
                 if location in self.early_lock.values():
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
 
+    def assign_local(self) -> None:
         # Assigning other local items that are not spawners
         local_list = []
         if self.options.shuffle_npcs:
             local_list += [name for name in npc_items if name not in self.early_lock]
         else:
             for name in list(npc_items):
-                if name not in self.early_lock:
-                    self.early_lock[name] = name
-
-        if self.options.shuffle_beacons:
-            local_list += [name for name in beacon_items if name not in self.early_lock]
-        else:
-            for name in list(beacon_items):
                 if name not in self.early_lock:
                     self.early_lock[name] = name
 
@@ -261,10 +257,28 @@ class ArzetteWorld(World):
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
 
-        # TODO:
-        # self.level_order should be used here to make sure the beacons spawn in reachable
-        # levels, since they are now attributed early as opposed to during the generation.
-        # Maybe use white lists for them instead to leave them in the generation?
+    def assign_beacon(self) -> None:
+        beacon_list = []
+        if self.options.shuffle_beacons:
+            beacon_list += [name for name in beacon_items if name not in self.early_lock]
+        else:
+            for name in list(beacon_items):
+                if name not in self.early_lock:
+                    self.early_lock[name] = name
+
+        self.random.shuffle(beacon_list)
+        available_levels = self.level_order["Default Beacon"]
+        for beacon in beacon_list:
+            available_locs = [
+                location for level in available_levels
+                for location in level_to_locations[level]
+                if (location not in self.early_lock.values())]
+            self.random.shuffle(available_locs)
+            location = available_locs[0]
+            if location in self.early_lock.values():
+                raise Exception(f"Location {location} already filled.")
+            self.early_lock[beacon] = location
+            available_levels += self.level_order[beacon]
 
     def get_all_chosen_items(self) -> List[str]:
         """Return all item names chosen by the options."""

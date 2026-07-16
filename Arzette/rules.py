@@ -1,16 +1,16 @@
 from typing import TYPE_CHECKING
-from .locations import rock_locations, all_locations
+from .locations import rock_locations, all_locations, all_levels
 
 from worlds.generic.Rules import set_rule, forbid_item, add_rule
-from .locations import faramore_locations, forest_locations, caves_locations, \
-    desert_locations, canyon_locations, swamp_locations, peak_locations, \
-    crypts_locations, volcano_locations, beach_locations, river_locations, \
-    hills_locations, fort_locations, castle_locations, lair_locations
 from BaseClasses import CollectionState
 if TYPE_CHECKING:
     from . import ArzetteWorld
 
-# This supposes that the world class has barrier_types, level_beacons and early_lock attributes
+level_to_locations = {
+    level: [location for location, locdata in all_locations.items()
+            if locdata.spawn_from == level]
+    for level in all_levels
+}
 
 def has_color(color, state: CollectionState, world: "ArzetteWorld"):
     if color == "Red":
@@ -58,56 +58,16 @@ def can_pass_poulture(color: str, state: CollectionState, world: "ArzetteWorld")
 def spawner_reach(spawner: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return world.get_location(world.early_lock[spawner]).can_reach(state)
 
+# This supposes that the world class has barrier_types, level_beacons and early_lock attributes
 def set_location_rules(world: "ArzetteWorld") -> None:
     player = world.player
     options = world.options
 
     # Level access rules
-    for location in faramore_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Faramore", state, world))
-    for location in forest_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Forest", state, world))
-    for location in caves_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Caves", state, world))
-    for location in desert_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Desert", state, world))
-    for location in canyon_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Canyon", state, world))
-    for location in swamp_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Swamp", state, world))
-    for location in peak_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Peak", state, world))
-    for location in crypts_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Crypts", state, world))
-    for location in volcano_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Volcano", state, world))
-    for location in beach_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Beach", state, world))
-    for location in river_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("River", state, world))
-    for location in hills_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Hills", state, world))
-    for location in fort_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Fort", state, world))
-    for location in castle_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Castle", state, world))
-    for location in lair_locations:
-        add_rule(world.get_location(location), lambda state:
-            level_access("Lair", state, world))
+    for level, locations in level_to_locations.items():
+        for location in locations:
+            add_rule(world.get_location(location), lambda state:
+                level_access(level, state, world))
 
     # Faramore Rules
     add_rule(world.get_location("Faramore Key (Well)"), lambda state:
