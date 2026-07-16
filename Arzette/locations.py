@@ -2,7 +2,7 @@ from BaseClasses import Location
 import typing
 
 class ArzetteLocation(Location):
-    game: str = "Arzette"
+    game: str = "Arzette: The Jewel of Faramore"
 
 class LocationData(typing.NamedTuple):
     arzid: int | None

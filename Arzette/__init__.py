@@ -1,44 +1,42 @@
 from worlds.AutoWorld import WebWorld, World
-from BaseClasses import Region, Location, Item, Tutorial, ItemClassification, MultiWorld
-from worlds.generic.Rules import add_rule
+from BaseClasses import Region, Item
+import warnings
+from typing import List, Dict, Any
 
-from .locations import all_locations
-from .items import ItemData, all_item_table, all_group_table, \
+from .locations import ArzetteLocation, all_locations, levelunlock_locations
+from .items import ArzetteItem, all_item_table, all_group_table, \
+    candle_items, coin_items, jewel_items, plant_items, race_items, rock_items, bag_items, \
+    key_items, upgrade_items, lifeup_items, bonusreward_items, \
     npcspawner_items, npc_items, scroll_items, beacon_items
 from .options import ArzetteOptions, LevelOrder, TradingSequence
-
+from .rules import set_location_rules
 
 class ArzetteWebWorld(WebWorld):
     pass  # todo
 
-class ArzetteItem(Item):
-    game: str = "Arzette: The Jewel of Faramore"
-
-class ArzetteLocation(Location):
-    game: str = "Arzette: The Jewel of Faramore"
-
 class ArzetteWorld(World):
     game: str = "Arzette: The Jewel of Faramore"
-    web = ArzetteWebWorld()
+    # web = ArzetteWebWorld()
+    topology_present = True
 
     item_name_groups = {
         "magic": {"Sword Wave", "Smart Gun"},
         "bombs": {"Bombs", "Bomb Gauntlet"},
         "blue": {"Blue Magic", "Purple Magic"},
     }
+
     location_name_groups = {
-        "candles": {location for location in all_locations if "Candle" in location.split()},
-        "coins": {location for location in all_locations if "Coin" in location.split()},
-        "jewels": {location for location in all_locations if "Jewel" in location.split()},
-        "plants": {location for location in all_locations if "Plant" in location.split()},
-        "races": {location for location in all_locations if "Race" in location.split()},
-        "rocks": {location for location in all_locations if "Rock" in location.split()},
-        "bags": {location for location in all_locations if "Bag" in location.split()},
+        "candles": set(candle_items),
+        "coins": set(coin_items),
+        "jewels": set(jewel_items),
+        "plants": set(plant_items),
+        "races": set(race_items),
+        "rocks": set(rock_items),
+        "bags": set(bag_items),
     }
 
     item_name_to_id = {name: data.btid for name, data in all_item_table.items()}
-
-    location_name_to_id = {name: 2793883000+i for i, name in enumerate(all_locations)}
+    location_name_to_id = {name: data.btid for name, data in all_locations.items()}
 
     options: ArzetteOptions
     options_dataclass = ArzetteOptions
@@ -68,9 +66,8 @@ class ArzetteWorld(World):
         # self.barrier_type where the key is the default barrier type and
         # the value is the new barrier type.
         # Every time a rule is called that involves a barrier, it is called through this dictionnary.
-        # This is not ideal and due to legacy code of the standalone randomizer.
-        # It could instead generate the appropriate rules of the new barrier
-        # in rules.py:has_color()
+        # The reason we do not generate the appropriate rules of the new barrier
+        # in rules.py:has_color() is because colored enemies are nos randomized.
 
         default_barrier_types = {
             typ: typ for typ in ["Red", "Blue", "Purple", "Gauntlet", "Flute"]}
@@ -181,7 +178,7 @@ class ArzetteWorld(World):
         elif trading_type == TradingSequence.option_excluded:
             start_position = len(trading_sequence)-2
             # With this option, the Soul Upgrade location is unreachable
-            self.early_lock["Forest Bonus Reward"] = "Soul_Upgrade"
+            self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
         if trading_type != TradingSequence.option_included:
             # Locks the first item of the trading sequence in the last location
             # of the sequence that should not be accessible
@@ -264,10 +261,117 @@ class ArzetteWorld(World):
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
 
-        # WHY is self.level_order not used here for the beacons? Should it?
+        # TODO:
+        # self.level_order should be used here to make sure the beacons spawn in reachable
+        # levels, since they are now attributed early as opposed to during the generation.
+        # Maybe use white lists for them instead to leave them in the generation?
 
-    # generate_early() -> assign barrier, level unlocks, npc+scrolls, locked, trading_sequence
+    def get_all_chosen_items(self) -> List[str]:
+        """Return all item names chosen by the options."""
+        all_chosen_items = []
+        if self.options.shuffle_npcs.value:
+            all_chosen_items += list(npcspawner_items+npc_items)
+        if self.options.shuffle_bags.value:
+            all_chosen_items += list(bag_items)
+        if self.options.shuffle_keys.value:
+            all_chosen_items += [name for name in key_items if name != 'Hills Key']
+        if self.options.shuffle_hills_key.value:
+            all_chosen_items += ['Hills Key']
+        if self.options.shuffle_candles.value:
+            all_chosen_items += list(candle_items)
+        if self.options.shuffle_plants.value:
+            all_chosen_items += list(plant_items)
+        if self.options.shuffle_upgrades.value:
+            all_chosen_items += list(upgrade_items)
+        if self.options.shuffle_life_ups.value:
+            all_chosen_items += list(lifeup_items)
+        if self.options.shuffle_bonus_rewards.value:
+            all_chosen_items += list(bonusreward_items)
+        if self.options.shuffle_race_rewards.value:
+            all_chosen_items += list(race_items)
+        if self.options.shuffle_jewels.value:
+            all_chosen_items += list(jewel_items)
 
-    # create_items() -> ignore all assigned items in generate_early()
-    # create_regions() -> ignore all assigned locations in generate_early()
-    # fill_slot_data() -> include all (except default_beacon?)
+        return all_chosen_items
+
+    def create_regions(self) -> None:
+        active_locations = [name for name in self.get_all_chosen_items()
+                            if name not in self.early_lock.values()]
+        loc_to_id = {name: all_locations[name].arzid for name in active_locations}
+        ret = Region("Menu", self.player, self.multiworld)
+        ret.add_locations(loc_to_id, ArzetteLocation)
+
+        self.multiworld.regions.append(ret)
+
+    def create_item(self, name:str) -> Item:
+        arzette_item = all_item_table.get(name)
+        if not arzette_item:
+            raise ValueError(f"{name} is not a valid item name for Arzette")
+
+        created_item = ArzetteItem(name, arzette_item.type, arzette_item.arzid, self.player)
+        return created_item
+
+    def create_items(self) -> None:
+        active_items = [name for name in self.get_all_chosen_items()
+                        if name not in self.early_lock]
+        itempool = [self.create_item(name) for name in active_items]
+
+        # Add Filler items until all locations are filled
+        total_locations = len(self.multiworld.get_unfilled_locations(self.player))
+        if len(itempool) > total_locations:
+            warnings.warn(
+                "Number of total available items exceeds the number of locations,\
+                    likely there is a bug in the generation."
+            )
+
+        itempool += [self.create_filler() for _ in range(total_locations - len(itempool))]
+        self.multiworld.itempool.extend(itempool)
+
+    def set_rules(self) -> None:
+        set_location_rules(self)
+
+    def fill_slot_data(self) -> Dict[str, Any]:
+
+        early_lock_info = {location: all_locations[name].item_code
+                           for name, location in self.early_lock.items()}
+        excluded_info = {
+            name: all_locations[name].item_code
+            for name in all_locations
+            if (name not in self.early_lock) and
+               (name not in self.early_lock.values()) and
+               (name not in self.get_all_chosen_items())}
+        barrier_codes = {
+            "Red": "b_red_block",
+            "Blue": "b_blue_block",
+            "Purple": "b_purple_block",
+            "Flute": "b_flute_block",
+            "Gauntlet": "b_grey_block"
+        }
+        barrier_info = {
+            key+'_Barrier': barrier_codes[value]
+            for key, value in self.barrier_types.items()
+        }
+        levelunlock_info = {}
+
+        for beacon, levels in self.level_order.items():
+            beacon = beacon.replace("Default Beacon", "Default")
+            for i_l, level in enumerate(levels, 1):
+                itemcode = [locdata.item_code for locdata in levelunlock_locations.values()
+                            if level.lower() in locdata.item_code]
+                if len(itemcode) != 1:
+                    itemcode = 'ERROR'
+                else:
+                    itemcode = itemcode[0]
+                levelunlock_info[f"{beacon} {i_l}"] = itemcode
+
+        excluded_items = {
+            **early_lock_info,
+            **excluded_info,
+            **barrier_info,
+            **levelunlock_info
+        }
+
+        slot_data = {
+            "excluded_items": excluded_items
+        }
+        return slot_data

@@ -178,12 +178,12 @@ Implement Canteen as the alternative to damage_boost option.
 For the standalone randomizer:
 trading_type = 'excluded' is glitched, it seems to put the chainsword vanilla
 The npc items do not seem to be possibly attributed to an npc location
+The foolish npc items do not seem to be possibly attributed to non-spawner locations
 
 For the AP port:
-Item names are not human readable because they correspond to the client mod's variable in-game. This is not ideal for the console log when playing.
-Maybe make items fungible in the AP but transform them in non-fungible in slot_data?
-Rules need to be completely rewritten with the spawners in mind (they are not items anymore)
-Better location.py to avoid local modifications of every object that's imported in __init__, including the replace(" ", "_").
+set-up beacon assign rules - either with location whitelist or manually
+Can the items be fungible in the game? Need to confirm
+Can the beacons unlock items instead of levels? Need to confirm
 Possible randomized start position in trading_sequence = "vanilla"
 
 

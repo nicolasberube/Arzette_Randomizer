@@ -2,7 +2,7 @@ from BaseClasses import Item, ItemClassification
 from typing import Dict, NamedTuple
 
 class ArzetteItem(Item):
-    game: str = "Arzette"
+    game: str = "Arzette: The Jewel of Faramore"
 
 class ItemData(NamedTuple):
     arzid: int | None
