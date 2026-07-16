@@ -50,6 +50,11 @@ class ShuffleCoins(DefaultOnToggle):
     internal_name = "shuffle_coins"
     display_name = "Shuffle Coins"
 
+class ShuffleRocks(DefaultOnToggle):
+    """Include all four rocks (and their locations) in the pool."""
+    internal_name = "shuffle_rocks"
+    display_name = "Shuffle Rocks"
+
 class ShufflePlants(DefaultOnToggle):
     """Include all three of the Cypress' quest's plants (and their locations) in the pool."""
     internal_name = "shuffle_plants"
@@ -129,6 +134,7 @@ class ArzetteOptions(PerGameCommonOptions):
     shuffle_hills_key: ShuffleHillsKey
     shuffle_candles: ShuffleCandles
     shuffle_coins: ShuffleCoins
+    shuffle_rocks: ShuffleRocks
     shuffle_plants: ShufflePlants
     shuffle_upgrades: ShuffleUpgrades
     shuffle_life_ups: ShuffleLifeUps
@@ -156,6 +162,7 @@ arzette_option_groups = [
         ShuffleCandles,
         ShuffleCoins,
         ShuffleUpgrades,
+        ShuffleRocks,
         ShufflePlants,
         ShuffleLifeUps,
         ShuffleBonusScrollRewards,

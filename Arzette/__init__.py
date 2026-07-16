@@ -7,7 +7,7 @@ from .locations import ArzetteLocation, all_locations, levelunlock_locations
 from .items import ArzetteItem, all_item_table, all_group_table, \
     candle_items, coin_items, jewel_items, plant_items, race_items, rock_items, bag_items, \
     key_items, upgrade_items, lifeup_items, bonusreward_items, \
-    npcspawner_items, npc_items, scroll_items, beacon_items
+    npcspawner_items, npc_items, scroll_items, beacon_items, trading_items, quest_items
 from .options import ArzetteOptions, LevelOrder, TradingSequence
 from .rules import set_location_rules, level_to_locations
 
@@ -35,8 +35,8 @@ class ArzetteWorld(World):
         "bags": set(bag_items),
     }
 
-    item_name_to_id = {name: data.btid for name, data in all_item_table.items()}
-    location_name_to_id = {name: data.btid for name, data in all_locations.items()}
+    item_name_to_id = {name: data.arzid for name, data in all_item_table.items()}
+    location_name_to_id = {name: data.arzid for name, data in all_locations.items()}
 
     options: ArzetteOptions
     options_dataclass = ArzetteOptions
@@ -222,9 +222,11 @@ class ArzetteWorld(World):
                     self.early_lock[name] = name
 
         if len(spawner_list) > 0:
+            chosen_locs = self.get_all_chosen_items()
             available_locs = [
                 location for location, locdata in all_locations.items()
-                if locdata.can_spawner and (location not in self.early_lock.values())]
+                if (locdata.can_spawner and (location not in self.early_lock.values()) and
+                    (location in chosen_locs))]
 
             self.random.shuffle(available_locs)
             available_locs = available_locs[:len(spawner_list)]
@@ -245,9 +247,11 @@ class ArzetteWorld(World):
                     self.early_lock[name] = name
 
         if len(local_list) > 0:
+            chosen_locs = self.get_all_chosen_items()
             available_locs = [
                 location for location in all_locations
-                if (location not in self.early_lock.values())]
+                if ((location not in self.early_lock.values()) and
+                    (location in chosen_locs))]
 
             self.random.shuffle(available_locs)
             available_locs = available_locs[:len(local_list)]
@@ -269,10 +273,12 @@ class ArzetteWorld(World):
         self.random.shuffle(beacon_list)
         available_levels = self.level_order["Default Beacon"]
         for beacon in beacon_list:
+            chosen_locs = self.get_all_chosen_items()
             available_locs = [
                 location for level in available_levels
                 for location in level_to_locations[level]
-                if (location not in self.early_lock.values())]
+                if ((location not in self.early_lock.values()) and
+                    (location in chosen_locs))]
             self.random.shuffle(available_locs)
             location = available_locs[0]
             if location in self.early_lock.values():
@@ -282,9 +288,9 @@ class ArzetteWorld(World):
 
     def get_all_chosen_items(self) -> List[str]:
         """Return all item names chosen by the options."""
-        all_chosen_items = []
+        all_chosen_items = list(quest_items)
         if self.options.shuffle_npcs.value:
-            all_chosen_items += list(npcspawner_items+npc_items)
+            all_chosen_items += list(npcspawner_items)+list(npc_items)
         if self.options.shuffle_bags.value:
             all_chosen_items += list(bag_items)
         if self.options.shuffle_keys.value:
@@ -293,18 +299,28 @@ class ArzetteWorld(World):
             all_chosen_items += ['Hills Key']
         if self.options.shuffle_candles.value:
             all_chosen_items += list(candle_items)
-        if self.options.shuffle_plants.value:
-            all_chosen_items += list(plant_items)
+        if self.options.shuffle_coins.value:
+            all_chosen_items += list(coin_items)
         if self.options.shuffle_upgrades.value:
             all_chosen_items += list(upgrade_items)
+        if self.options.shuffle_rocks.value:
+            all_chosen_items += list(rock_items)
+        if self.options.shuffle_plants.value:
+            all_chosen_items += list(plant_items)
         if self.options.shuffle_life_ups.value:
             all_chosen_items += list(lifeup_items)
+        if self.options.shuffle_bonus_scrolls.value:
+            all_chosen_items += list(scroll_items)
         if self.options.shuffle_bonus_rewards.value:
             all_chosen_items += list(bonusreward_items)
         if self.options.shuffle_race_rewards.value:
             all_chosen_items += list(race_items)
         if self.options.shuffle_jewels.value:
             all_chosen_items += list(jewel_items)
+        if self.options.shuffle_beacons.value:
+            all_chosen_items += list(beacon_items)
+        if self.options.trading_sequence.value != TradingSequence.option_vanilla:
+            all_chosen_items += list(trading_items)
 
         return all_chosen_items
 
@@ -334,8 +350,8 @@ class ArzetteWorld(World):
         total_locations = len(self.multiworld.get_unfilled_locations(self.player))
         if len(itempool) > total_locations:
             warnings.warn(
-                "Number of total available items exceeds the number of locations,\
-                    likely there is a bug in the generation."
+                "Number of total available items exceeds the number of locations, "
+                "likely there is a bug in the generation."
             )
 
         itempool += [self.create_filler() for _ in range(total_locations - len(itempool))]

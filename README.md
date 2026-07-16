@@ -179,6 +179,7 @@ For the standalone randomizer:
 trading_type = 'excluded' is glitched, it seems to put the chainsword vanilla
 The npc items do not seem to be possibly attributed to an npc location
 The foolish npc items do not seem to be possibly attributed to non-spawner locations
+Shuffle rocks is defaulted on and not an option
 
 For the AP port:
 Can the items be fungible in the game? Need to confirm
