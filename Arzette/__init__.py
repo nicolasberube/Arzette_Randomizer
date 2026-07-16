@@ -23,9 +23,6 @@ class ArzetteWorld(World):
         "magic": {"Sword Wave", "Smart Gun"},
         "bombs": {"Bombs", "Bomb Gauntlet"},
         "blue": {"Blue Magic", "Purple Magic"},
-    }
-
-    location_name_groups = {
         "candles": set(candle_items),
         "coins": set(coin_items),
         "jewels": set(jewel_items),
@@ -120,11 +117,11 @@ class ArzetteWorld(World):
             level_order = {}
             # beacons is a dynamic list that contains all available beacons
             beacons = ["Default"]
-            if self.options.shuffle_beacons:
+            if self.options.shuffle_beacons.value:
                 beacons = list(default_level_order)
             while len(beacons):
                 beacon = beacons.pop(0)
-                if not self.options.shuffle_beacons:
+                if not self.options.shuffle_beacons.value:
                     # If beacon locations are not random, it needs to unlock at least one
                     # level that has a beacon
                     for i_l, level in enumerate(level_list):
@@ -142,7 +139,7 @@ class ArzetteWorld(World):
                 n_unlocks = len(default_level_order[beacon])-len(level_order[beacon])
                 for _ in range(n_unlocks):
                     if (level_list[0] in default_level_order and
-                            not self.options.shuffle_beacons):
+                            not self.options.shuffle_beacons.value):
                         beacons.append(level_list[0])
                     level_order[beacon].append(level_list.pop(0))
         elif self.options.level_order.value == LevelOrder.option_vanilla:
@@ -207,14 +204,14 @@ class ArzetteWorld(World):
 
         # Assigning spawner items
         spawner_list = []
-        if self.options.shuffle_npcs:
+        if self.options.shuffle_npcs.value:
             spawner_list += [name for name in npcspawner_items if name not in self.early_lock]
         else:
             for name in list(npcspawner_items):
                 if name not in self.early_lock:
                     self.early_lock[name] = name
 
-        if self.options.shuffle_bonus_scrolls:
+        if self.options.shuffle_bonus_scrolls.value:
             spawner_list += [name for name in scroll_items if name not in self.early_lock]
         else:
             for name in list(scroll_items):
@@ -239,7 +236,7 @@ class ArzetteWorld(World):
     def assign_local(self) -> None:
         # Assigning other local items that are not spawners
         local_list = []
-        if self.options.shuffle_npcs:
+        if self.options.shuffle_npcs.value:
             local_list += [name for name in npc_items if name not in self.early_lock]
         else:
             for name in list(npc_items):
@@ -263,7 +260,7 @@ class ArzetteWorld(World):
 
     def assign_beacon(self) -> None:
         beacon_list = []
-        if self.options.shuffle_beacons:
+        if self.options.shuffle_beacons.value:
             beacon_list += [name for name in beacon_items if name not in self.early_lock]
         else:
             for name in list(beacon_items):
@@ -271,7 +268,7 @@ class ArzetteWorld(World):
                     self.early_lock[name] = name
 
         self.random.shuffle(beacon_list)
-        available_levels = self.level_order["Default Beacon"]
+        available_levels = self.level_order["Default Beacon"][:]
         for beacon in beacon_list:
             chosen_locs = self.get_all_chosen_items()
             available_locs = [
@@ -327,24 +324,27 @@ class ArzetteWorld(World):
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
                             if name not in self.early_lock.values()]
-        loc_to_id = {name: all_locations[name].arzid for name in active_locations}
+        loc_to_id = {name: all_locations[name].arzid if name in active_locations else None
+                     for name in all_locations}
         ret = Region("Menu", self.player, self.multiworld)
         ret.add_locations(loc_to_id, ArzetteLocation)
 
         self.multiworld.regions.append(ret)
 
-    def create_item(self, name:str) -> Item:
+    def create_item(self, name:str, event:bool=False) -> Item:
         arzette_item = all_item_table.get(name)
         if not arzette_item:
             raise ValueError(f"{name} is not a valid item name for Arzette")
 
-        created_item = ArzetteItem(name, arzette_item.type, arzette_item.arzid, self.player)
+        arzid = arzette_item.arzid if not event else None
+        created_item = ArzetteItem(name, arzette_item.type, arzid, self.player)
         return created_item
 
     def create_items(self) -> None:
         active_items = [name for name in self.get_all_chosen_items()
                         if name not in self.early_lock]
-        itempool = [self.create_item(name) for name in active_items]
+        itempool = [self.create_item(name, event=name not in active_items)
+                    for name in all_item_table]
 
         # Add Filler items until all locations are filled
         total_locations = len(self.multiworld.get_unfilled_locations(self.player))

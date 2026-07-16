@@ -27,7 +27,10 @@ def has_color(color, state: CollectionState, world: "ArzetteWorld"):
         raise Exception(f"Invalid color {color}")
 
 def level_access(level: str, state: CollectionState, world: "ArzetteWorld"):
-    world.get_location(world.early_lock[world.level_beacons[level]]).can_reach(state)
+    beacon = world.level_beacons[level]
+    if beacon == "Default Beacon":
+        return True
+    return world.get_location(world.early_lock[beacon]).can_reach(state)
 
 def has_barrier(barrier_type: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return has_color(world.barrier_types[barrier_type], state, world)
@@ -605,7 +608,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         ((has_bombs(state, world) and has_barrier("Flute", state, world)) or
          (has_barrier("Purple", state, world) and
           state.has("Speedy Shoes", player) and state.has("Winged Belt", player)) and
-          can_pass_poulture("Red")))
+          can_pass_poulture("Red", state, world)))
 
     for item in ["Lair Bonus",
         "Lair Bag (First Room)", "Lair Coin", "Lair Bag (Lava Room)",
@@ -681,7 +684,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     add_rule(world.get_location("Infinite Soulfire"), lambda state:
         spawner_reach("Faramore Rudy", state, world) and
         level_access("Faramore", state, world) and
-        state.has_group("Bombs", player) and
+        state.has_group("bombs", player) and
         state.has_group("coins", player, 10) and
         state.has("Smart Gun", player) and
         level_access("Forest", state, world) and
@@ -719,7 +722,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location("Forest Race 100 Rupees"), lambda state:
         level_access("Faramore", state, world) and
-        state.has_group("Bombs", player) and
+        state.has_group("bombs", player) and
         state.has_group("coins", player, 1) and
         level_access("Forest", state, world) and
         state.has("Forest Rudy (Start)", player) and
@@ -761,7 +764,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location("Peak Race 100 Rupees"), lambda state:
         level_access("Faramore", state, world) and
-        state.has_group("Bombs", player) and
+        state.has_group("bombs", player) and
         state.has_group("coins", player, 5) and
         level_access("Forest", state, world) and
         state.has("Forest Rudy (Start)", player) and
@@ -799,7 +802,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location("Hills Race 100 Rupees"), lambda state:
         level_access("Faramore", state, world) and
-        state.has_group("Bombs", player) and
+        state.has_group("bombs", player) and
         state.has_group("coins", player, 10) and
         state.has("Smart Gun", player) and
         level_access("Forest", state, world) and
