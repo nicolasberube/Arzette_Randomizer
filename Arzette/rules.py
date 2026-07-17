@@ -69,7 +69,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     # Level access rules
     for level, locations in level_to_locations.items():
         for location in locations:
-            add_rule(world.get_location(location), lambda state:
+            add_rule(world.get_location(location), lambda state, level=level:
                 level_access(level, state, world))
 
     # Faramore Rules

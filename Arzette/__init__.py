@@ -343,8 +343,17 @@ class ArzetteWorld(World):
     def create_items(self) -> None:
         active_items = [name for name in self.get_all_chosen_items()
                         if name not in self.early_lock]
-        itempool = [self.create_item(name, event=name not in active_items)
-                    for name in all_item_table]
+        itempool = []
+        for name in all_item_table:
+            if name not in active_items:
+                add_item = self.create_item(name, event=True)
+                if name in self.early_lock:
+                    self.get_location(self.early_lock[name]).place_locked_item(add_item)
+                else:
+                    self.get_location(name).place_locked_item(add_item)
+                #itempool.append(add_item)
+            else:
+                itempool.append(self.create_item(name, event=False))
 
         # Add Filler items until all locations are filled
         total_locations = len(self.multiworld.get_unfilled_locations(self.player))
