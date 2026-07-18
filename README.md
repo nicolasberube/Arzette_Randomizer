@@ -186,7 +186,9 @@ Can the items be fungible in the game? Need to confirm
 Can the beacons unlock items instead of levels? Need to confirm
 Possible randomized start position in trading_sequence = "vanilla"
 Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
-
+trading_sequence = included crashes (sequence unaccessible)
+shuffle_barrier_types = True crashes (Crypt Coin unaccessible)
+level_order = randomize crashes sometimes (Unaccessible beacon?)
 
 # CREDITS
 

@@ -370,15 +370,6 @@ class ArzetteWorld(World):
         set_location_rules(self)
 
     def fill_slot_data(self) -> Dict[str, Any]:
-
-        early_lock_info = {location: all_locations[name].item_code
-                           for name, location in self.early_lock.items()}
-        excluded_info = {
-            name: all_locations[name].item_code
-            for name in all_locations
-            if (name not in self.early_lock) and
-               (name not in self.early_lock.values()) and
-               (name not in self.get_all_chosen_items())}
         barrier_codes = {
             "Red": "b_red_block",
             "Blue": "b_blue_block",
@@ -390,27 +381,8 @@ class ArzetteWorld(World):
             key+'_Barrier': barrier_codes[value]
             for key, value in self.barrier_types.items()
         }
-        levelunlock_info = {}
-
-        for beacon, levels in self.level_order.items():
-            beacon = beacon.replace("Default Beacon", "Default")
-            for i_l, level in enumerate(levels, 1):
-                itemcode = [locdata.item_code for locdata in levelunlock_locations.values()
-                            if level.lower() in locdata.item_code]
-                if len(itemcode) != 1:
-                    itemcode = 'ERROR'
-                else:
-                    itemcode = itemcode[0]
-                levelunlock_info[f"{beacon} {i_l}"] = itemcode
-
-        excluded_items = {
-            **early_lock_info,
-            **excluded_info,
-            **barrier_info,
-            **levelunlock_info
-        }
 
         slot_data = {
-            "excluded_items": excluded_items
+            "barrier_info": barrier_info
         }
         return slot_data
