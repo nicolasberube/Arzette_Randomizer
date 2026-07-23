@@ -176,19 +176,18 @@ A lot of terrible code stems from iterating on the design, especially the treatm
 Implement Canteen as the alternative to damage_boost option.
 
 For the standalone randomizer:
-trading_type = 'excluded' is glitched, it seems to put the chainsword vanilla
-The npc items do not seem to be possibly attributed to an npc location
-The foolish npc items do not seem to be possibly attributed to non-spawner locations
-Shuffle rocks is defaulted on and not an option
+- trading_type = 'excluded' is glitched, it seems to put the chainsword vanilla
+- The npc items do not seem to be possibly attributed to an npc location
+- The foolish npc items do not seem to be possibly attributed to non-spawner locations
+- Shuffle rocks is defaulted on and not an option
+- Crypts Coin should not be able to spawn an npc or any other spawner items when barrier types is randomised
 
 For the AP port:
-Can the items be fungible in the game? Need to confirm
-Can the beacons unlock items instead of levels? Need to confirm
-Possible randomized start position in trading_sequence = "vanilla"
-Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
-trading_sequence = included crashes (sequence unaccessible)
-shuffle_barrier_types = True crashes (Crypt Coin unaccessible)
-level_order = randomize crashes sometimes (Unaccessible beacon?)
+- level_order = randomize crashes, so the option is deactivated for now.
+- Possible randomized start position in trading_sequence = "vanilla"
+- Add in the doc that items cannot be fungible in the game.
+- Add in the doc that the beacons cannot unlock items instead of levels
+- Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
 
 # CREDITS
 

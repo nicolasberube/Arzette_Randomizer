@@ -330,7 +330,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
         add_rule(world.get_location(item), lambda state:
             state.has("Crypts Key", player))
-    
+
     add_rule(world.get_location("Crypts Candle (After Crypt)"), lambda state:
         state.has("Griffin Boots", player) or state.has("Winged Belt", player))
 

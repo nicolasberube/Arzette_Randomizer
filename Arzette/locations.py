@@ -117,7 +117,7 @@ swamp_locations = {
 	"Swamp Candle (Frich House)":      LocationData(367759061, "obj_sacred_candle_27",            "Candle",      True, False, "Swamp"),
 	"Swamp Key (Griffin Boots)":       LocationData(367759062, "key_norin_2",                     "Key",         True, False, "Swamp"),
 	"Griffin Boots":                   LocationData(367759063, "obj_quest_magic_boots",           "Quest",       True, False, "Swamp"),
-	"Swamp Plant":                     LocationData(367759064, "obj_quest_plant_a",               "Plant",       False, False, "Swamp"),
+	"Swamp Plant":                     LocationData(367759064, "obj_quest_plant_b",               "Plant",       False, False, "Swamp"),
 	"Swamp Bonus":                     LocationData(367759065, "obj_bonus_scroll_6",              "Scroll",      True, False, "Swamp"),
 	"Swamp Beacon":                    LocationData(367759066, "beacon_norin_swamp",              "Beacon",      True, False, "Swamp")
 }
@@ -142,7 +142,7 @@ crypts_locations = {
 	"Crypts Key":                      LocationData(367759080, "key_boanjale",                    "Key",         True, False, "Crypts"),
 	"Crypts Bag (Crypt)":              LocationData(367759081, "obj_item_bag_46",                 "Bag",         True, False, "Crypts"),
 	"Crypts Candle (After Crypt)":     LocationData(367759082, "obj_sacred_candle_28",            "Candle",      True, False, "Crypts"),
-	"Crypts Coin":                     LocationData(367759083, "obj_hidden_coin_boanjale",        "Coin",        True, False, "Crypts"),
+	"Crypts Coin":                     LocationData(367759083, "obj_hidden_coin_boanjale",        "Coin",        False, False, "Crypts"),
 	"Crypts Candle (Skelvis)":         LocationData(367759084, "obj_sacred_candle_11",            "Candle",      True, False, "Crypts"),
 	"Crypts Bag (Skelvis)":            LocationData(367759085, "obj_item_bag_24",                 "Bag",         True, False, "Crypts")
 }
@@ -161,7 +161,7 @@ beach_locations = {
 	"Beach Coin":                      LocationData(367759093, "obj_hidden_coin_badonc",          "Coin",        True, False, "Beach"),
 	"Beach Key (Tork Cabin)":          LocationData(367759094, "key_badonc_2",                    "Key",         True, False, "Beach"),
 	"Beach Candle (Tork Cabin)":       LocationData(367759095, "obj_sacred_candle_14",            "Candle",      True, False, "Beach"),
-	"Beach Plant":                     LocationData(367759096, "obj_quest_plant_b",               "Plant",       True, False, "Beach"),
+	"Beach Plant":                     LocationData(367759096, "obj_quest_plant_a",               "Plant",       True, False, "Beach"),
 	"Beach Bonus":                     LocationData(367759097, "obj_bonus_scroll_10",             "Scroll",      True, False, "Beach"),
 	"Beach Candle (Cave)":             LocationData(367759098, "obj_sacred_candle_13",            "Candle",      True, False, "Beach"),
 	"Fatal Flute":                     LocationData(367759099, "obj_quest_flute",                 "Quest",       True, False, "Beach"),

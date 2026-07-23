@@ -144,8 +144,8 @@ Castle_Coin,obj_hidden_coin_denny
 Lair_Coin,obj_hidden_coin_daimur
 ,
 [QUEST UPGRADES],
-Swamp_Plant,obj_quest_plant_a
-Beach_Plant,obj_quest_plant_b
+Swamp_Plant,obj_quest_plant_b
+Beach_Plant,obj_quest_plant_a
 Hills_Plant,obj_quest_plant_c
 Power_Stone_Upgrade,obj_quest_upgrade_power_stones
 Wallet_Upgrade,obj_quest_upgrade_wallet

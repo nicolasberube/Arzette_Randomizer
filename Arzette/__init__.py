@@ -1,7 +1,8 @@
 from worlds.AutoWorld import WebWorld, World
-from BaseClasses import Region, Item
+from BaseClasses import Region, Item, CollectionState
 import warnings
 from typing import List, Dict, Any
+from worlds.generic.Rules import add_rule
 
 from .locations import ArzetteLocation, all_locations, levelunlock_locations
 from .items import ArzetteItem, all_item_table, all_group_table, \
@@ -48,6 +49,7 @@ class ArzetteWorld(World):
         self.barrier_types = {}
         self.level_order = {}
         self.level_beacons = {}
+        self.unreachables = []
 
         super(ArzetteWorld, self).__init__(world, player)
 
@@ -80,6 +82,9 @@ class ArzetteWorld(World):
         else:
             self.barrier_types = default_barrier_types
 
+        if self.barrier_types["Flute"] != "Flute":
+            self.unreachables.append("Crypts Coin")
+
     def choose_level_unlock(self) -> None:
         # This function could create some seed generation failures for a single world seed
         # when your starting level is Beach or Hills because not enough checks are available.
@@ -102,8 +107,8 @@ class ArzetteWorld(World):
             "Hills": ["Castle", "Lair"]
         }
 
-        if self.options.level_order.value in {
-                LevelOrder.option_randomize, LevelOrder.option_faramore}:
+        #if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
+        if self.options.level_order.value in {LevelOrder.option_faramore}:
             level_list = [level for levels in default_level_order.values()
                           for level in levels]
             if self.options.level_order.value == LevelOrder.option_faramore:
@@ -178,14 +183,15 @@ class ArzetteWorld(World):
             start_position = len(trading_sequence)-2
             # With this option, the Soul Upgrade location is unreachable
             self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
+            self.unreachables.append("Soul Upgrade")
         if trading_type != TradingSequence.option_included:
             # Locks the first item of the trading sequence in the last location
             # of the sequence that should not be accessible
             if start_position != 0:
                 self.early_lock[trading_sequence[0]] = trading_sequence[start_position]
-
             for location in trading_sequence[1:start_position]:
                 self.early_lock[location] = location
+            self.unreachables += trading_sequence[1:start_position+1]
 
     def assign_locked(self) -> None:
         # Those are all locations that need to be locked as vanilla for now
@@ -324,10 +330,15 @@ class ArzetteWorld(World):
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
                             if name not in self.early_lock.values()]
-        loc_to_id = {name: all_locations[name].arzid if name in active_locations else None
-                     for name in all_locations}
+        print('EARLY LOCK')
+        print(self.early_lock)
+        print('UNREACHABLES')
+        print(self.unreachables)
+        self.loc_to_id = {name: all_locations[name].arzid
+                          if name in active_locations else None
+                          for name in all_locations}
         ret = Region("Menu", self.player, self.multiworld)
-        ret.add_locations(loc_to_id, ArzetteLocation)
+        ret.add_locations(self.loc_to_id, ArzetteLocation)
 
         self.multiworld.regions.append(ret)
 
@@ -368,6 +379,8 @@ class ArzetteWorld(World):
 
     def set_rules(self) -> None:
         set_location_rules(self)
+        for location in self.unreachables:
+            add_rule(self.get_location(location), lambda state: True, combine="or")
 
     def fill_slot_data(self) -> Dict[str, Any]:
         barrier_codes = {
@@ -382,7 +395,26 @@ class ArzetteWorld(World):
             for key, value in self.barrier_types.items()
         }
 
+        unpingable_locations = {
+            all_locations[location].arzid: {
+                "item": all_item_table[name].arzid,
+                "flags": all_item_table[name].type.as_flag()}
+            for name, location in self.early_lock.items()}
+
+        pingable_locations = []
+        for location, arzid  in self.loc_to_id.items():
+            if location in unpingable_locations:
+                continue
+            if arzid is None:
+                unpingable_locations[all_locations[location].arzid] = {
+                    "item": all_item_table[location].arzid,
+                    "flags": all_item_table[location].type.as_flag()}
+            else:
+                pingable_locations.append(arzid)
+
         slot_data = {
-            "barrier_info": barrier_info
+            "barrier_info": barrier_info,
+            "unpingable_locations": unpingable_locations,
+            "pingable_locations": pingable_locations
         }
         return slot_data
