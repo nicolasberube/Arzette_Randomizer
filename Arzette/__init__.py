@@ -403,7 +403,7 @@ class ArzetteWorld(World):
 
         pingable_locations = []
         for location, arzid  in self.loc_to_id.items():
-            if location in unpingable_locations:
+            if all_locations[location].arzid in unpingable_locations:
                 continue
             if arzid is None:
                 unpingable_locations[all_locations[location].arzid] = {
