@@ -333,10 +333,12 @@ class ArzetteWorld(World):
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
                             if name not in self.early_lock.values()]
-        print('EARLY LOCK')
-        print(self.early_lock)
-        print('UNREACHABLES')
-        print(self.unreachables)
+        active_locations += [self.early_lock[name] for name in beacon_items]
+        # Debug
+        #print('EARLY LOCK')
+        #print(self.early_lock)
+        #print('UNREACHABLES')
+        #print(self.unreachables)
         self.loc_to_id = {name: all_locations[name].arzid
                           if name in active_locations else None
                           for name in all_locations}
@@ -360,7 +362,8 @@ class ArzetteWorld(World):
         itempool = []
         for name in all_item_table:
             if name not in active_items:
-                add_item = self.create_item(name, event=True)
+                is_event_item = name not in beacon_items
+                add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
                     self.get_location(self.early_lock[name]).place_locked_item(add_item)
                 else:
