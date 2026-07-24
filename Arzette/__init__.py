@@ -44,6 +44,8 @@ class ArzetteWorld(World):
         # during generate_early to take out of the pool
         # when running self.create_items() and self.create_regions()
         # Also useful when creating rules for spawner items
+        # I know the having the items as key instead of locations is
+        # bad practice, it's legacy code and I'm tired.
         self.early_lock = {}
 
         self.barrier_types = {}
@@ -83,6 +85,7 @@ class ArzetteWorld(World):
             self.barrier_types = default_barrier_types
 
         if self.barrier_types["Flute"] != "Flute":
+            self.early_lock["Caves Bonus Reward"] = "Crypts Coin"
             self.unreachables.append("Crypts Coin")
 
     def choose_level_unlock(self) -> None:
@@ -381,6 +384,9 @@ class ArzetteWorld(World):
         set_location_rules(self)
         for location in self.unreachables:
             add_rule(self.get_location(location), lambda state: True, combine="or")
+        # Victory condition
+        self.multiworld.completion_condition[self.player] = \
+            lambda state: state.has("Daimur", self.player)
 
     def fill_slot_data(self) -> Dict[str, Any]:
         barrier_codes = {
