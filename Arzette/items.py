@@ -79,36 +79,36 @@ key_items = {
 }
 
 candle_items = {
-	"Faramore Candle (Empty House)":   ItemData(367759004, ItemClassification.progression),
-	"Faramore Candle (Cypress House)": ItemData(367759005, ItemClassification.progression),
-	"Forest Candle (Tree)":            ItemData(367759012, ItemClassification.progression),
-	"Forest Candle (Cypress)":         ItemData(367759013, ItemClassification.progression),
-	"Caves Candle (First Dark Room)":  ItemData(367759025, ItemClassification.progression),
-	"Caves Candle (Second Dark Room)": ItemData(367759027, ItemClassification.progression),
-	"Desert Candle (Pit)":             ItemData(367759035, ItemClassification.progression),
-	"Desert Candle (Last Room)":       ItemData(367759038, ItemClassification.progression),
-	"Canyon Candle (First Room End)":  ItemData(367759048, ItemClassification.progression),
-	"Canyon Candle (Motte House)":     ItemData(367759056, ItemClassification.progression),
-	"Swamp Candle (First Room)":       ItemData(367759057, ItemClassification.progression),
-	"Swamp Candle (Frich House)":      ItemData(367759061, ItemClassification.progression),
-	"Peak Candle (First Cave)":        ItemData(367759067, ItemClassification.progression),
-	"Peak Candle (Ciclena Cave)":      ItemData(367759073, ItemClassification.progression),
-	"Crypts Candle (After Crypt)":     ItemData(367759082, ItemClassification.progression),
-	"Crypts Candle (Skelvis)":         ItemData(367759084, ItemClassification.progression),
-	"Volcano Candle (First Room)":     ItemData(367759087, ItemClassification.progression),
-	"Volcano Candle (Last Room)":      ItemData(367759089, ItemClassification.progression),
-	"Beach Candle (Tork Cabin)":       ItemData(367759095, ItemClassification.progression),
-	"Beach Candle (Cave)":             ItemData(367759098, ItemClassification.progression),
-	"River Candle (Boat)":             ItemData(367759103, ItemClassification.progression),
-	"River Candle (Last Room)":        ItemData(367759108, ItemClassification.progression),
-	"Hills Candle (Cave)":             ItemData(367759110, ItemClassification.progression),
-	"Hills Candle (Music Shrine)":     ItemData(367759117, ItemClassification.progression),
-	"Fort Candle (Dark Room)":         ItemData(367759126, ItemClassification.progression),
-	"Fort Candle (Last Room)":         ItemData(367759134, ItemClassification.progression),
-	"Castle Candle (Right Room)":      ItemData(367759140, ItemClassification.progression),
-	"Castle Candle (Top Room)":        ItemData(367759142, ItemClassification.progression),
-	"Lair Candle (Tree Trunk)":        ItemData(367759150, ItemClassification.progression),
-	"Lair Candle (Tree Top)":          ItemData(367759151, ItemClassification.progression)
+	"Faramore Candle (Empty House)":   ItemData(367759004, ItemClassification.progression_deprioritized_skip_balancing),
+	"Faramore Candle (Cypress House)": ItemData(367759005, ItemClassification.progression_deprioritized_skip_balancing),
+	"Forest Candle (Tree)":            ItemData(367759012, ItemClassification.progression_deprioritized_skip_balancing),
+	"Forest Candle (Cypress)":         ItemData(367759013, ItemClassification.progression_deprioritized_skip_balancing),
+	"Caves Candle (First Dark Room)":  ItemData(367759025, ItemClassification.progression_deprioritized_skip_balancing),
+	"Caves Candle (Second Dark Room)": ItemData(367759027, ItemClassification.progression_deprioritized_skip_balancing),
+	"Desert Candle (Pit)":             ItemData(367759035, ItemClassification.progression_deprioritized_skip_balancing),
+	"Desert Candle (Last Room)":       ItemData(367759038, ItemClassification.progression_deprioritized_skip_balancing),
+	"Canyon Candle (First Room End)":  ItemData(367759048, ItemClassification.progression_deprioritized_skip_balancing),
+	"Canyon Candle (Motte House)":     ItemData(367759056, ItemClassification.progression_deprioritized_skip_balancing),
+	"Swamp Candle (First Room)":       ItemData(367759057, ItemClassification.progression_deprioritized_skip_balancing),
+	"Swamp Candle (Frich House)":      ItemData(367759061, ItemClassification.progression_deprioritized_skip_balancing),
+	"Peak Candle (First Cave)":        ItemData(367759067, ItemClassification.progression_deprioritized_skip_balancing),
+	"Peak Candle (Ciclena Cave)":      ItemData(367759073, ItemClassification.progression_deprioritized_skip_balancing),
+	"Crypts Candle (After Crypt)":     ItemData(367759082, ItemClassification.progression_deprioritized_skip_balancing),
+	"Crypts Candle (Skelvis)":         ItemData(367759084, ItemClassification.progression_deprioritized_skip_balancing),
+	"Volcano Candle (First Room)":     ItemData(367759087, ItemClassification.progression_deprioritized_skip_balancing),
+	"Volcano Candle (Last Room)":      ItemData(367759089, ItemClassification.progression_deprioritized_skip_balancing),
+	"Beach Candle (Tork Cabin)":       ItemData(367759095, ItemClassification.progression_deprioritized_skip_balancing),
+	"Beach Candle (Cave)":             ItemData(367759098, ItemClassification.progression_deprioritized_skip_balancing),
+	"River Candle (Boat)":             ItemData(367759103, ItemClassification.progression_deprioritized_skip_balancing),
+	"River Candle (Last Room)":        ItemData(367759108, ItemClassification.progression_deprioritized_skip_balancing),
+	"Hills Candle (Cave)":             ItemData(367759110, ItemClassification.progression_deprioritized_skip_balancing),
+	"Hills Candle (Music Shrine)":     ItemData(367759117, ItemClassification.progression_deprioritized_skip_balancing),
+	"Fort Candle (Dark Room)":         ItemData(367759126, ItemClassification.progression_deprioritized_skip_balancing),
+	"Fort Candle (Last Room)":         ItemData(367759134, ItemClassification.progression_deprioritized_skip_balancing),
+	"Castle Candle (Right Room)":      ItemData(367759140, ItemClassification.progression_deprioritized_skip_balancing),
+	"Castle Candle (Top Room)":        ItemData(367759142, ItemClassification.progression_deprioritized_skip_balancing),
+	"Lair Candle (Tree Trunk)":        ItemData(367759150, ItemClassification.progression_deprioritized_skip_balancing),
+	"Lair Candle (Tree Top)":          ItemData(367759151, ItemClassification.progression_deprioritized_skip_balancing)
 }
 
 coin_items = {
@@ -169,23 +169,23 @@ trading_items = {
 }
 
 jewel_items = {
-	"Forest Jewel":                    ItemData(367759020, ItemClassification.progression),
-	"Canyon Jewel":                    ItemData(367759049, ItemClassification.progression),
-	"Peak Jewel":                      ItemData(367759075, ItemClassification.progression),
-	"Fort Jewel":                      ItemData(367759137, ItemClassification.progression),
-	"Castle Jewel":                    ItemData(367759149, ItemClassification.progression)
+	"Forest Jewel":                    ItemData(367759020, ItemClassification.progression | ItemClassification.useful),
+	"Canyon Jewel":                    ItemData(367759049, ItemClassification.progression | ItemClassification.useful),
+	"Peak Jewel":                      ItemData(367759075, ItemClassification.progression | ItemClassification.useful),
+	"Fort Jewel":                      ItemData(367759137, ItemClassification.progression | ItemClassification.useful),
+	"Castle Jewel":                    ItemData(367759149, ItemClassification.progression | ItemClassification.useful)
 }
 
 quest_items = {
-	"Bombs":                           ItemData(367759007, ItemClassification.progression),
-	"Sword Wave":                      ItemData(367759016, ItemClassification.progression),
+	"Bombs":                           ItemData(367759007, ItemClassification.progression | ItemClassification.useful),
+	"Sword Wave":                      ItemData(367759016, ItemClassification.progression | ItemClassification.useful),
 	"Golden Fly":                      ItemData(367759017, ItemClassification.progression),
 	"Magic Armor":                     ItemData(367759021, ItemClassification.progression),
 	"Silver Cricket":                  ItemData(367759022, ItemClassification.progression),
 	"Rope Ladder":                     ItemData(367759023, ItemClassification.progression),
 	"Shield Ring":                     ItemData(367759030, ItemClassification.progression),
 	"Compass":                         ItemData(367759034, ItemClassification.progression),
-	"Griffin Boots":                   ItemData(367759063, ItemClassification.progression),
+	"Griffin Boots":                   ItemData(367759063, ItemClassification.progression | ItemClassification.useful),
 	"Bell":                            ItemData(367759078, ItemClassification.progression),
 	"Crystal of Refraction":           ItemData(367759090, ItemClassification.progression),
 	"Fatal Flute":                     ItemData(367759099, ItemClassification.progression),
@@ -193,23 +193,23 @@ quest_items = {
 	"Lightning Sword":                 ItemData(367759111, ItemClassification.progression),
 	"Enchanted Shoes":                 ItemData(367759128, ItemClassification.progression),
 	"Reflector Ring":                  ItemData(367759136, ItemClassification.progression),
-	"Winged Belt":                     ItemData(367759144, ItemClassification.progression),
-	"Purple Magic":                    ItemData(367759160, ItemClassification.progression),
+	"Winged Belt":                     ItemData(367759144, ItemClassification.progression | ItemClassification.useful),
+	"Purple Magic":                    ItemData(367759160, ItemClassification.progression | ItemClassification.useful),
 	"Citizenship Papers":              ItemData(367759161, ItemClassification.progression),
 	"Canteen":                         ItemData(367759165, ItemClassification.progression),
 	"Calendar":                        ItemData(367759169, ItemClassification.progression),
 	"200 Rupees":                      ItemData(367759170, ItemClassification.filler),
-	"Lantern":                         ItemData(367759176, ItemClassification.progression),
+	"Lantern":                         ItemData(367759176, ItemClassification.progression | ItemClassification.useful),
 	"Rope":                            ItemData(367759177, ItemClassification.useful),
 	"Fairy Dust":                      ItemData(367759179, ItemClassification.progression),
 	"Backstep":                        ItemData(367759180, ItemClassification.useful),
-	"Smart Gun":                       ItemData(367759181, ItemClassification.progression),
+	"Smart Gun":                       ItemData(367759181, ItemClassification.progression | ItemClassification.useful),
 	"Star Earrings":                   ItemData(367759182, ItemClassification.progression),
-	"Power Pendant":                   ItemData(367759184, ItemClassification.progression),
-	"Bomb Gauntlet":                   ItemData(367759185, ItemClassification.progression),
+	"Power Pendant":                   ItemData(367759184, ItemClassification.progression | ItemClassification.useful),
+	"Bomb Gauntlet":                   ItemData(367759185, ItemClassification.progression | ItemClassification.useful),
 	"Speedy Shoes":                    ItemData(367759186, ItemClassification.progression),
 	"Magic Cloak":                     ItemData(367759187, ItemClassification.progression),
-	"Double Wave":                     ItemData(367759190, ItemClassification.progression)
+	"Double Wave":                     ItemData(367759190, ItemClassification.progression | ItemClassification.useful)
 }
 
 rock_items = {
@@ -306,33 +306,33 @@ npc_items = {
 }
 
 beacon_items = {
-	"Forest Beacon":                   ItemData(367759019, ItemClassification.progression),
-	"Desert Beacon":                   ItemData(367759041, ItemClassification.progression),
-	"Swamp Beacon":                    ItemData(367759066, ItemClassification.progression),
-	"Beach Beacon":                    ItemData(367759100, ItemClassification.progression),
-	"Hills Beacon":                    ItemData(367759119, ItemClassification.progression)
+	"Forest Beacon":                   ItemData(367759019, ItemClassification.progression | ItemClassification.useful),
+	"Desert Beacon":                   ItemData(367759041, ItemClassification.progression | ItemClassification.useful),
+	"Swamp Beacon":                    ItemData(367759066, ItemClassification.progression | ItemClassification.useful),
+	"Beach Beacon":                    ItemData(367759100, ItemClassification.progression | ItemClassification.useful),
+	"Hills Beacon":                    ItemData(367759119, ItemClassification.progression | ItemClassification.useful)
 }
 
 levelunlock_items = {
-	"Default 1":                       ItemData(367759256, ItemClassification.progression),
-	"Default 2":                       ItemData(367759257, ItemClassification.progression),
-	"Forest Beacon 1":                 ItemData(367759258, ItemClassification.progression),
-	"Forest Beacon 2":                 ItemData(367759259, ItemClassification.progression),
-	"Forest Beacon 3":                 ItemData(367759260, ItemClassification.progression),
-	"Desert Beacon 1":                 ItemData(367759261, ItemClassification.progression),
-	"Desert Beacon 2":                 ItemData(367759262, ItemClassification.progression),
-	"Desert Beacon 3":                 ItemData(367759263, ItemClassification.progression),
-	"Swamp Beacon 1":                  ItemData(367759264, ItemClassification.progression),
-	"Swamp Beacon 2":                  ItemData(367759265, ItemClassification.progression),
-	"Swamp Beacon 3":                  ItemData(367759266, ItemClassification.progression),
-	"Beach Beacon 1":                  ItemData(367759267, ItemClassification.progression),
-	"Beach Beacon 2":                  ItemData(367759268, ItemClassification.progression),
-	"Hills Beacon 1":                  ItemData(367759269, ItemClassification.progression),
-	"Hills Beacon 2":                  ItemData(367759270, ItemClassification.progression)
+	"Default 1":                       ItemData(367759256, ItemClassification.progression | ItemClassification.useful),
+	"Default 2":                       ItemData(367759257, ItemClassification.progression | ItemClassification.useful),
+	"Forest Beacon 1":                 ItemData(367759258, ItemClassification.progression | ItemClassification.useful),
+	"Forest Beacon 2":                 ItemData(367759259, ItemClassification.progression | ItemClassification.useful),
+	"Forest Beacon 3":                 ItemData(367759260, ItemClassification.progression | ItemClassification.useful),
+	"Desert Beacon 1":                 ItemData(367759261, ItemClassification.progression | ItemClassification.useful),
+	"Desert Beacon 2":                 ItemData(367759262, ItemClassification.progression | ItemClassification.useful),
+	"Desert Beacon 3":                 ItemData(367759263, ItemClassification.progression | ItemClassification.useful),
+	"Swamp Beacon 1":                  ItemData(367759264, ItemClassification.progression | ItemClassification.useful),
+	"Swamp Beacon 2":                  ItemData(367759265, ItemClassification.progression | ItemClassification.useful),
+	"Swamp Beacon 3":                  ItemData(367759266, ItemClassification.progression | ItemClassification.useful),
+	"Beach Beacon 1":                  ItemData(367759267, ItemClassification.progression | ItemClassification.useful),
+	"Beach Beacon 2":                  ItemData(367759268, ItemClassification.progression | ItemClassification.useful),
+	"Hills Beacon 1":                  ItemData(367759269, ItemClassification.progression | ItemClassification.useful),
+	"Hills Beacon 2":                  ItemData(367759270, ItemClassification.progression | ItemClassification.useful)
 }
 
 other_items = {
-	"Daimur":                          ItemData(367759159, ItemClassification.progression)
+	"Daimur":                          ItemData(367759159, ItemClassification.progression | ItemClassification.useful)
 }
 
 all_item_table: Dict[str, ItemData] = {
