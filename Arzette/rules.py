@@ -71,6 +71,9 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         for location in locations:
             add_rule(world.get_location(location), lambda state, level=level:
                 level_access(level, state, world))
+            if level in ["Crypts", "Fort", "Castle", "Lair"]:
+                add_rule(world.get_location(location), lambda state:
+                    state.has("Power Pendant", player))
 
     # Faramore Rules
     add_rule(world.get_location("Faramore Key (Well)"), lambda state:
