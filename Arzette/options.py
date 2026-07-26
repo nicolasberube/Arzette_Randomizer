@@ -15,12 +15,12 @@ Vanilla: Each beacon will unlock its normal levels. Note that beacon locations m
     # option_randomize = 2
     default = 1
 
-class ShuffleBarrierTypes(Toggle):
+class ShuffleBarrierTypes(DefaultOnToggle):
     """When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another."""
     internal_name = "shuffle_barrier_types"
     display_name = "Shuffle Barrier Types"
 
-class ShuffleNPCs(Toggle):
+class ShuffleNPCs(DefaultOnToggle):
     """Include NPCs in the item and location pools. NPCs are always local, and always spawn in the open."""
     internal_name = "shuffle_npcs"
     display_name = "Shuffle NPCs"
@@ -70,17 +70,17 @@ class ShuffleLifeUps(DefaultOnToggle):
     internal_name = "shuffle_lifeups"
     display_name = "Shuffle Life-Ups"
 
-class ShuffleBonusScrolls(Toggle):
+class ShuffleBonusScrolls(DefaultOnToggle):
     """Include Bonus Scrolls in the item and location pools. Bonus Scrolls are always local, and always spawn in the open."""
     internal_name = "shuffle_bonus_scrolls"
     display_name = "Shuffle Bonus Scrolls"
 
-class ShuffleBonusScrollRewards(Toggle):
+class ShuffleBonusScrollRewards(DefaultOnToggle):
     """Include the ruby rewards from the bonus minigame scrolls in the item and location pools."""
     internal_name = "shuffle_bonus_rewards"
     display_name = "Shuffle Bonus Scroll Rewards"
 
-class ShuffleRaceRewards(Toggle):
+class ShuffleRaceRewards(DefaultOnToggle):
     """Include the 100 ruby rewards from the Rudy races in the item and location pools."""
     internal_name = "shuffle_race_rewards"
     display_name = "Shuffle Race Rewards"
@@ -107,7 +107,7 @@ Included: Every item in the Chainsword trading sequence is added to the item and
     option_vanilla = 0
     option_excluded = 1
     option_included = 2
-    default = 2
+    default = 1
 
 class TrickyJumps(Toggle):
     """When enabled, some jumps and movement techniques that are much more difficult than usual may be considered in logic."""

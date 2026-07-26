@@ -185,6 +185,8 @@ For the standalone randomizer:
 For the AP port:
 - level_order = randomize crashes, so the option is deactivated for now. The fix is to have beacons as collectable items and change the level_access() function to a state.has() instead of access_rule (which causes an infinite recursion because of Faramore shop access)
 - Possible randomized start position in trading_sequence = "vanilla"
+- WebWorld
+- Poptracker? Universal Tracker support?
 - Add in the doc that items cannot be fungible in the game.
 - Add in the doc that the beacons cannot unlock items instead of levels
 - Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
