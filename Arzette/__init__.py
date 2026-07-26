@@ -109,11 +109,12 @@ class ArzetteWorld(World):
             "Beach": ["Hills", "Fort"],
             "Hills": ["Castle", "Lair"]
         }
+        all_levels = [level for levels in default_level_order.values()
+                      for level in levels]
 
         #if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
         if self.options.level_order.value in {LevelOrder.option_faramore}:
-            level_list = [level for levels in default_level_order.values()
-                          for level in levels]
+            level_list = all_levels[:]
             if self.options.level_order.value == LevelOrder.option_faramore:
                 level_list = [
                     level for level in level_list if level != "Faramore"]
@@ -162,6 +163,19 @@ class ArzetteWorld(World):
             level: beacon
             for beacon, levels in self.level_order.items()
             for level in levels}
+
+        level_to_id = {}
+        for level in all_levels:
+            possible_locs = [location for location, locdata in levelunlock_locations.items()
+                             if level.lower() in locdata.item_code]
+            if len(possible_locs) != 1:
+                raise Exception(f'Level unlock location not found for level {level}')
+            level_to_id[level] = possible_locs[0]
+        for beacon, levels in self.level_order.items():
+            if beacon == 'Default Beacon':
+                beacon = 'Default'
+            for i_l, level in enumerate(levels, 1):
+                self.early_lock[level_to_id[level]] = f'{beacon} {i_l}'
 
     def assign_trading(self) -> None:
         # (item, location) tuple of the vanilla trading sequence
@@ -333,12 +347,13 @@ class ArzetteWorld(World):
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
                             if name not in self.early_lock.values()]
-        active_locations += [self.early_lock[name] for name in beacon_items]
+        # UNCOMMENT THIS WHEN BEACON ITEMS IS IMPLEMENTED IN CLIENT
+        #active_locations += [self.early_lock[name] for name in beacon_items]
         # Debug
-        #print('EARLY LOCK')
-        #print(self.early_lock)
-        #print('UNREACHABLES')
-        #print(self.unreachables)
+        print('EARLY LOCK')
+        print(self.early_lock)
+        print('UNREACHABLES')
+        print(self.unreachables)
         self.loc_to_id = {name: all_locations[name].arzid
                           if name in active_locations else None
                           for name in all_locations}
@@ -363,6 +378,8 @@ class ArzetteWorld(World):
         for name in all_item_table:
             if name not in active_items:
                 is_event_item = name not in beacon_items
+                # REMOVE THIS WHEN BEACON ITEMS IS IMPLEMENTED IN CLIENT
+                is_event_item = True
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
                     self.get_location(self.early_lock[name]).place_locked_item(add_item)
