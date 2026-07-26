@@ -112,7 +112,8 @@ class ArzetteWorld(World):
         all_levels = [level for levels in default_level_order.values()
                       for level in levels]
 
-        #if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
+        # TODO: BEACON AS ITEM: uncomment this line and remove the one after
+        # if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
         if self.options.level_order.value in {LevelOrder.option_faramore}:
             level_list = all_levels[:]
             if self.options.level_order.value == LevelOrder.option_faramore:
@@ -347,13 +348,15 @@ class ArzetteWorld(World):
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
                             if name not in self.early_lock.values()]
-        # UNCOMMENT THIS WHEN BEACON ITEMS IS IMPLEMENTED IN CLIENT
+        # TODO: BEACON AS ITEM: uncomment this line
         #active_locations += [self.early_lock[name] for name in beacon_items]
         # Debug
         print('EARLY LOCK')
         print(self.early_lock)
         print('UNREACHABLES')
         print(self.unreachables)
+        print('LEVEL ORDER')
+        print(self.level_order)
         self.loc_to_id = {name: all_locations[name].arzid
                           if name in active_locations else None
                           for name in all_locations}
@@ -378,7 +381,7 @@ class ArzetteWorld(World):
         for name in all_item_table:
             if name not in active_items:
                 is_event_item = name not in beacon_items
-                # REMOVE THIS WHEN BEACON ITEMS IS IMPLEMENTED IN CLIENT
+                # TODO: BEACON AS ITEM: remove this line
                 is_event_item = True
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:

@@ -11,7 +11,8 @@ Vanilla: Each beacon will unlock its normal levels. Note that beacon locations m
     display_name = "Level Order"
     option_vanilla = 0
     option_faramore = 1
-    #option_randomize = 2
+    # TODO: BEACON AS ITEM: uncomment this
+    # option_randomize = 2
     default = 1
 
 class ShuffleBarrierTypes(Toggle):
