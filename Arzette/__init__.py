@@ -112,9 +112,7 @@ class ArzetteWorld(World):
         all_levels = [level for levels in default_level_order.values()
                       for level in levels]
 
-        # TODO: BEACON AS ITEM: uncomment this line and remove the one after
-        # if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
-        if self.options.level_order.value in {LevelOrder.option_faramore}:
+        if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
             level_list = all_levels[:]
             if self.options.level_order.value == LevelOrder.option_faramore:
                 level_list = [
@@ -347,9 +345,9 @@ class ArzetteWorld(World):
 
     def create_regions(self) -> None:
         active_locations = [name for name in self.get_all_chosen_items()
-                            if name not in self.early_lock.values()]
-        # TODO: BEACON AS ITEM: uncomment this line
-        #active_locations += [self.early_lock[name] for name in beacon_items]
+                            if (name not in self.early_lock.values())]
+        active_locations += [self.early_lock[name] for name in beacon_items]
+
         # Debug
         print('EARLY LOCK')
         print(self.early_lock)
@@ -381,8 +379,6 @@ class ArzetteWorld(World):
         for name in all_item_table:
             if name not in active_items:
                 is_event_item = name not in beacon_items
-                # TODO: BEACON AS ITEM: remove this line
-                is_event_item = True
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
                     self.get_location(self.early_lock[name]).place_locked_item(add_item)

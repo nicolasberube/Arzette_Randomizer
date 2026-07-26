@@ -4,15 +4,15 @@ from Options import (DefaultOnToggle, Toggle, Choice, PerGameCommonOptions, Opti
 class LevelOrder(Choice):
     """
 Determines which levels are unlocked with beacons.
-Faramore: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your starting levels.
 Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations.
+Faramore: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your starting levels.
+Randomize: Each beacon will unlock 2 or 3 random levels.
     """
     internal_name = "level_order"
     display_name = "Level Order"
     option_vanilla = 0
     option_faramore = 1
-    # TODO: BEACON AS ITEM: uncomment this
-    # option_randomize = 2
+    option_randomize = 2
     default = 1
 
 class ShuffleBarrierTypes(DefaultOnToggle):

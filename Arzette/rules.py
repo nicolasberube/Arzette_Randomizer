@@ -30,7 +30,7 @@ def level_access(level: str, state: CollectionState, world: "ArzetteWorld"):
     beacon = world.level_beacons[level]
     if beacon == "Default Beacon":
         return True
-    return world.get_location(world.early_lock[beacon]).can_reach(state)
+    return state.has(beacon, world.player)
 
 def has_barrier(barrier_type: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return has_color(world.barrier_types[barrier_type], state, world)
