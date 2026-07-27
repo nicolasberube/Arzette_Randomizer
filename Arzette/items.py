@@ -180,7 +180,7 @@ quest_items = {
 	"Bombs":                           ItemData(367759007, ItemClassification.progression | ItemClassification.useful),
 	"Sword Wave":                      ItemData(367759016, ItemClassification.progression | ItemClassification.useful),
 	"Golden Fly":                      ItemData(367759017, ItemClassification.progression),
-	"Magic Armor":                     ItemData(367759021, ItemClassification.progression),
+	"Magic Armor":                     ItemData(367759021, ItemClassification.useful),
 	"Silver Cricket":                  ItemData(367759022, ItemClassification.progression),
 	"Rope Ladder":                     ItemData(367759023, ItemClassification.progression),
 	"Shield Ring":                     ItemData(367759030, ItemClassification.progression),
@@ -190,7 +190,7 @@ quest_items = {
 	"Crystal of Refraction":           ItemData(367759090, ItemClassification.progression),
 	"Fatal Flute":                     ItemData(367759099, ItemClassification.progression),
 	"Blue Magic":                      ItemData(367759106, ItemClassification.progression),
-	"Lightning Sword":                 ItemData(367759111, ItemClassification.progression),
+	"Lightning Sword":                 ItemData(367759111, ItemClassification.useful),
 	"Enchanted Shoes":                 ItemData(367759128, ItemClassification.progression),
 	"Reflector Ring":                  ItemData(367759136, ItemClassification.progression),
 	"Winged Belt":                     ItemData(367759144, ItemClassification.progression | ItemClassification.useful),
@@ -202,14 +202,14 @@ quest_items = {
 	"Lantern":                         ItemData(367759176, ItemClassification.progression | ItemClassification.useful),
 	"Rope":                            ItemData(367759177, ItemClassification.useful),
 	"Fairy Dust":                      ItemData(367759179, ItemClassification.progression),
-	"Backstep":                        ItemData(367759180, ItemClassification.useful),
+	"Backstep":                        ItemData(367759180, ItemClassification.progression | ItemClassification.useful),
 	"Smart Gun":                       ItemData(367759181, ItemClassification.progression | ItemClassification.useful),
 	"Star Earrings":                   ItemData(367759182, ItemClassification.progression),
 	"Power Pendant":                   ItemData(367759184, ItemClassification.progression | ItemClassification.useful),
 	"Bomb Gauntlet":                   ItemData(367759185, ItemClassification.progression | ItemClassification.useful),
 	"Speedy Shoes":                    ItemData(367759186, ItemClassification.progression),
 	"Magic Cloak":                     ItemData(367759187, ItemClassification.progression),
-	"Double Wave":                     ItemData(367759190, ItemClassification.progression | ItemClassification.useful)
+	"Double Wave":                     ItemData(367759190, ItemClassification.useful)
 }
 
 rock_items = {

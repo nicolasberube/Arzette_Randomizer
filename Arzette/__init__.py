@@ -39,6 +39,8 @@ class ArzetteWorld(World):
     options: ArzetteOptions
     options_dataclass = ArzetteOptions
 
+    ut_can_gen_without_yaml = True
+
     def __init__(self, world, player):
         # Items (key) and Locations (value) that have been attributed
         # during generate_early to take out of the pool
@@ -56,13 +58,31 @@ class ArzetteWorld(World):
         super(ArzetteWorld, self).__init__(world, player)
 
     def generate_early(self) -> None:
-        self.choose_barrier()
-        self.choose_level_unlock()
-        self.assign_trading()
-        self.assign_locked()
-        self.assign_spawner()
-        self.assign_local()
-        self.assign_beacon()
+        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
+        if re_gen_passthrough and self.game in re_gen_passthrough:
+            # Universal Tracker trickery
+            slot_data = self.multiworld.re_gen_passthrough[self.game]
+
+            slot_options: dict[str, Any] = slot_data.get("options", {})
+            for key, value in slot_options.items():
+                opt = getattr(self.options, key, None)
+                if opt is not None:
+                    setattr(self.options, key, opt.from_any(value))
+
+            self.barrier_types = slot_data["universal_tracker_info"]["barrier_types"]
+            self.early_lock = slot_data["universal_tracker_info"]["early_lock"]
+            self.unreachables = slot_data["universal_tracker_info"]["unreachables"]
+            self.level_order = slot_data["universal_tracker_info"]["level_order"]
+            self.level_beacons = slot_data["universal_tracker_info"]["level_beacons"]
+        else:
+            # Normal generation
+            self.choose_barrier()
+            self.choose_level_unlock()
+            self.assign_trading()
+            self.assign_locked()
+            self.assign_spawner()
+            self.assign_local()
+            self.assign_beacon()
 
     def choose_barrier(self) -> None:
         # The way the barrier randomization works is by creating the dictionnary
@@ -427,7 +447,7 @@ class ArzetteWorld(World):
             for name, location in self.early_lock.items()}
 
         pingable_locations = []
-        for location, arzid  in self.loc_to_id.items():
+        for location, arzid in self.loc_to_id.items():
             if all_locations[location].arzid in unpingable_locations:
                 continue
             if arzid is None:
@@ -437,9 +457,22 @@ class ArzetteWorld(World):
             else:
                 pingable_locations.append(arzid)
 
+        arzoptions = {option_name: option.value for option_name, option in self.options.__dict__.items()}
+        # plando_items not serialisable, so we can't include it in slot_data.
+        arzoptions.pop("plando_items")
+
+        universal_tracker_info = {
+            "barrier_types": self.barrier_types,
+            "early_lock": self.early_lock,
+            "unreachables": self.unreachables,
+            "level_order": self.level_order,
+            "level_beacons": self.level_beacons,
+            "options": arzoptions
+        }
         slot_data = {
             "barrier_info": barrier_info,
             "unpingable_locations": unpingable_locations,
-            "pingable_locations": pingable_locations
+            "pingable_locations": pingable_locations,
+            "universal_tracker_info": universal_tracker_info
         }
         return slot_data

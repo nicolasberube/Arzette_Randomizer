@@ -183,13 +183,14 @@ For the standalone randomizer:
 - Crypts Coin should not be able to spawn an npc or any other spawner items when barrier types is randomised
 
 For the AP port:
-- level_order = randomize crashes, so the option is deactivated for now. The fix is to have beacons as collectable items and change the level_access() function to a state.has() instead of access_rule (which causes an infinite recursion because of Faramore shop access)
+- level_order = randomize is unstable, it needs more testing
 - Possible randomized start position in trading_sequence = "vanilla"
 - WebWorld
-- Poptracker? Universal Tracker support?
+- Poptracker support?
 - Add in the doc that items cannot be fungible in the game.
 - Add in the doc that the beacons cannot unlock items instead of levels
 - Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
+- Change item flags based on yaml options (Backstep, Magic Cloak, Reflector Ring, etc.)
 
 # CREDITS
 
