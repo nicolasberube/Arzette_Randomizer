@@ -1,23 +1,32 @@
 from worlds.AutoWorld import WebWorld, World
-from BaseClasses import Region, Item, CollectionState
+from BaseClasses import Region, Item, Tutorial
 import warnings
 from typing import List, Dict, Any
 from worlds.generic.Rules import add_rule
 
 from .locations import ArzetteLocation, all_locations, levelunlock_locations
-from .items import ArzetteItem, all_item_table, all_group_table, \
+from .items import ArzetteItem, all_item_table, \
     candle_items, coin_items, jewel_items, plant_items, race_items, rock_items, bag_items, \
     key_items, upgrade_items, lifeup_items, bonusreward_items, \
     npcspawner_items, npc_items, scroll_items, beacon_items, trading_items, quest_items
-from .options import ArzetteOptions, LevelOrder, TradingSequence
+from .options import ArzetteOptions, LevelOrder, TradingSequence, arzette_option_groups
 from .rules import set_location_rules, level_to_locations
 
 class ArzetteWebWorld(WebWorld):
-    pass  # todo
+    setup_en = Tutorial(
+        "Setup Arzette: The Jewel of Faramore",
+        """A guide to setting up Archipelago Arzette on your computer.""",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["Lightmopp"])
+
+    tutorials = [setup_en]
+    option_groups = arzette_option_groups
 
 class ArzetteWorld(World):
     game: str = "Arzette: The Jewel of Faramore"
-    # web = ArzetteWebWorld()
+    web = ArzetteWebWorld()
     topology_present = True
 
     item_name_groups = {

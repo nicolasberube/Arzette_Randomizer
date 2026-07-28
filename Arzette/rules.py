@@ -872,5 +872,6 @@ def set_location_rules(world: "ArzetteWorld") -> None:
          state.has("Power Pendant", player)))
 
     add_rule(world.get_location("Blue Rock"), lambda state:
+        level_access("Beach", state, world) and
         state.has("Beach Key (First House)", player) and
         has_barrier("Blue", state, world))

@@ -356,25 +356,3 @@ all_item_table: Dict[str, ItemData] = {
 	**levelunlock_items,
 	**other_items
 }
-
-all_group_table: Dict[str, Dict[str, ItemData]] = {
-	"bag": bag_items,
-	"key": key_items,
-	"candle": candle_items,
-	"coin": coin_items,
-	"plant": plant_items,
-	"upgrade": upgrade_items,
-	"lifeup": lifeup_items,
-	"race": race_items,
-	"trading": trading_items,
-	"jewel": jewel_items,
-	"quest": quest_items,
-	"rock": rock_items,
-	"scroll": scroll_items,
-	"bonusreward": bonusreward_items,
-	"npcspawner": npcspawner_items,
-	"npc": npc_items,
-	"beacon": beacon_items,
-	"levelunlock": levelunlock_items,
-	"other": other_items
-}
