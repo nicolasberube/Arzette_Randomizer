@@ -186,6 +186,7 @@ For the AP port:
 - level_order = randomize is unstable, it needs more testing
 - Possible randomized start position in trading_sequence = "vanilla"
 - WebWorld
+- Universal tracker bypasses non-pool items. Problems with Hills Keys and possibly other items.
 - Poptracker support?
 - Add in the doc that items cannot be fungible in the game.
 - Add in the doc that the beacons cannot unlock items instead of levels

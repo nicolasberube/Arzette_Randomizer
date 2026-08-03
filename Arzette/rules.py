@@ -188,7 +188,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         has_barrier("Blue", state, world))
 
     add_rule(world.get_location("Desert Life-Up"), lambda state:
-        state.has_group("candles", player, 20))
+        state.has_group("candles", player, 20) and
+        has_barrier("Red", state, world))
 
     add_rule(world.get_location("Desert Beacon"), lambda state:
         has_barrier("Red", state, world) or
@@ -312,7 +313,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)",
             "Crypts Skelvis"]:
         add_rule(world.get_location(item), lambda state:
-            can_pass_boarfoon("Red", state, world))
+            can_pass_boarfoon("Red", state, world) and
+            has_lantern(state, world))
 
     add_rule(world.get_location("Crypts Life-Up"), lambda state:
         has_bombs(state, world) and state.has_group("candles", player, 20) and
@@ -322,12 +324,6 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         has_bombs(state, world) and
         (has_barrier("Blue", state, world) or
          (state.has_group("candles", player, 20) and state.has("Griffin Boots", player))))
-
-    for item in ["Crypts Bonus", "Crypts Key", "Crypts Bag (Crypt)",
-            "Crypts Candle (After Crypt)", "Crypts Coin",
-            "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
-        add_rule(world.get_location(item), lambda state:
-            has_lantern(state, world))
 
     for item in ["Crypts Candle (After Crypt)", "Crypts Coin",
             "Crypts Candle (Skelvis)", "Crypts Bag (Skelvis)", "Crypts Skelvis"]:
@@ -500,7 +496,9 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             "Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
             "Fort Jewel", "Fort Bonus"]:
         add_rule(world.get_location(item), lambda state:
-            state.has("Griffin Boots", player) and state.has("Fort Key (First Room)", player))
+            state.has("Griffin Boots", player) and
+            state.has("Fort Key (First Room)", player) and
+            has_lantern(state, world))
 
     for item in ["Fort Candle (Last Room)", "Fort Bag (Last Room)", "Reflector Ring",
             "Fort Jewel", "Fort Bonus"]:
