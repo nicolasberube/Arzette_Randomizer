@@ -142,7 +142,7 @@ upgrade_items = {
 	"Bomb Upgrade":                    ItemData(367759168, ItemClassification.useful),
 	"Lamp Oil Upgrade":                ItemData(367759171, ItemClassification.useful),
 	"Rope Upgrade":                    ItemData(367759172, ItemClassification.useful),
-	"Soul Upgrade":                    ItemData(367759192, ItemClassification.useful)
+	"Soul Upgrade":                    ItemData(367759192, ItemClassification.filler)
 }
 
 lifeup_items = {

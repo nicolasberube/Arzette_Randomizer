@@ -263,6 +263,10 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             state.has("Swamp Key (Griffin Boots)", player) or
             state.has("Griffin Boots", player) or
             has_barrier("Red", state, world))
+    add_rule(world.get_location("Swamp Bonus"), lambda state:
+        state.has("Griffin Boots", player) or
+        (state.has("Winged Belt", player) and state.has("Speedy Shoes", player) and
+         options.tricky_jumps.value))
 
     add_rule(world.get_location("Swamp Beacon"), lambda state:
         has_bombs(state, world))
@@ -554,6 +558,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location("Castle Candle (Top Room)"), lambda state:
         state.has("Griffin Boots", player) and
+        has_bombs(state, world) and
         (has_barrier("Red", state, world) and
          can_pass_poulture("Red", state, world)) or
         (has_barrier("Blue", state, world) and
@@ -597,7 +602,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has("Castle Key (Nodelki)", player))
 
     for item in ["Castle Bag (Bonus)", "Castle Bonus"]:
-        add_rule(world.get_location("Castle Bonus"), lambda state:
+        add_rule(world.get_location(item), lambda state:
             state.has("Castle Key (Left Room)", player))
 
     # Lair Rules
@@ -852,7 +857,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has("Bombs", player) and has_shop(state, world))
 
     add_rule(world.get_location("Brown Rock"), lambda state:
-        level_access("Canyon", state, world) or
+        (level_access("Canyon", state, world) and
+         has_lantern(state, world)) or
         (level_access("Lair", state, world) and
          state.has("Power Pendant", player) and
          (can_pass_poulture("Blue", state, world) or

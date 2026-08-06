@@ -179,8 +179,10 @@ For the standalone randomizer:
 - trading_type = 'excluded' is glitched, it seems to put the chainsword vanilla
 - The npc items do not seem to be possibly attributed to an npc location
 - The foolish npc items do not seem to be possibly attributed to non-spawner locations
+- npc cannot spawn from other npc. This was changed but will be incompatible with the mod
 - Shuffle rocks is defaulted on and not an option
 - Crypts Coin should not be able to spawn an npc or any other spawner items when barrier types is randomised
+- 6 logic bugs haven't been fixed: forgotten enchanted shoes dark room in fort, forgotten life-up dark room in crypts, forgotten barrier in desert life-up, swamp bonus needs griffin boots, canyon brown rock needs lantern, Castle Candle Top Room needs bombs.
 
 For the AP port:
 - level_order = randomize is unstable, it needs more testing
@@ -190,6 +192,11 @@ For the AP port:
 - Poptracker support?
 - Add in the doc that items cannot be fungible in the game.
 - Add in the doc that the beacons cannot unlock items instead of levels
+- Add in the doc yaml validation rules (barrier + coins shuffling)
+- Add in the doc known bugs: hills beacon lighting up + bonus completed if the item (beacon, reward) was collected already, shield ring does not appear when you have reflector ring making the item uncollectable (related to hills key), power pendant does not render in the inventory, jewel spawn after boss kill (Beeves can spawn on the other side)
+- Add in the doc techniques: start and leave level, tricky jumps, rudy spawns change needs a rudy cave visit, rock quest needs Faramore munhum or collected rock
+- Add in the doc set-up guide: xdelta, location of the connection info files (and save files)
+- Add in the doc checks explanation (bombs in forest, 200 rupees, etc.)
 - Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
 - Change item flags based on yaml options (Backstep, Magic Cloak, Reflector Ring, etc.)
 

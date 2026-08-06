@@ -16,7 +16,10 @@ Randomize: Each beacon will unlock 2 or 3 random levels.
     default = 1
 
 class ShuffleBarrierTypes(DefaultOnToggle):
-    """When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another."""
+    """
+When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another.
+If enabled, then shuffle_coins needs to be enabled as well, or else the Crypts Coin will be unreachable.
+    """
     internal_name = "shuffle_barrier_types"
     display_name = "Shuffle Barrier Types"
 

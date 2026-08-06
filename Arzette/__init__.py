@@ -1,8 +1,10 @@
 from worlds.AutoWorld import WebWorld, World
 from BaseClasses import Region, Item, Tutorial
 import warnings
+from Options import OptionError
 from typing import List, Dict, Any
 from worlds.generic.Rules import add_rule
+import logging
 
 from .locations import ArzetteLocation, all_locations, levelunlock_locations
 from .items import ArzetteItem, all_item_table, \
@@ -72,7 +74,7 @@ class ArzetteWorld(World):
             # Universal Tracker trickery
             slot_data = self.multiworld.re_gen_passthrough[self.game]
 
-            slot_options: dict[str, Any] = slot_data.get("options", {})
+            slot_options: dict[str, Any] = slot_data["universal_tracker_info"].get("options", {})
             for key, value in slot_options.items():
                 opt = getattr(self.options, key, None)
                 if opt is not None:
@@ -85,6 +87,7 @@ class ArzetteWorld(World):
             self.level_beacons = slot_data["universal_tracker_info"]["level_beacons"]
         else:
             # Normal generation
+            self.validate_yaml_options()
             self.choose_barrier()
             self.choose_level_unlock()
             self.assign_trading()
@@ -92,6 +95,12 @@ class ArzetteWorld(World):
             self.assign_spawner()
             self.assign_local()
             self.assign_beacon()
+
+    def validate_yaml_options(self) -> None:
+        if self.options.shuffle_barrier_types.value and not self.options.shuffle_coins.value:
+            raise OptionError(
+                "Shuffle Coins must be enabled to randomize barriers."
+            )
 
     def choose_barrier(self) -> None:
         # The way the barrier randomization works is by creating the dictionnary
@@ -227,7 +236,8 @@ class ArzetteWorld(World):
         elif trading_type == TradingSequence.option_excluded:
             start_position = len(trading_sequence)-2
             # With this option, the Soul Upgrade location is unreachable
-            self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
+            if self.options.shuffle_upgrades.value:
+                self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
             self.unreachables.append("Soul Upgrade")
         if trading_type != TradingSequence.option_included:
             # Locks the first item of the trading sequence in the last location
@@ -377,13 +387,6 @@ class ArzetteWorld(World):
                             if (name not in self.early_lock.values())]
         active_locations += [self.early_lock[name] for name in beacon_items]
 
-        # Debug
-        print('EARLY LOCK')
-        print(self.early_lock)
-        print('UNREACHABLES')
-        print(self.unreachables)
-        print('LEVEL ORDER')
-        print(self.level_order)
         self.loc_to_id = {name: all_locations[name].arzid
                           if name in active_locations else None
                           for name in all_locations}
@@ -402,6 +405,16 @@ class ArzetteWorld(World):
         return created_item
 
     def create_items(self) -> None:
+        # Debug
+        # logging.info('EARLY LOCK')
+        # logging.info(self.early_lock)
+        # logging.info('UNREACHABLES')
+        # logging.info(self.unreachables)
+        # logging.info('LEVEL ORDER')
+        # logging.info(self.level_order)
+        # logging.info('OPTIONS')
+        # logging.info(self.options)
+
         active_items = [name for name in self.get_all_chosen_items()
                         if name not in self.early_lock]
         itempool = []
@@ -410,7 +423,13 @@ class ArzetteWorld(World):
                 is_event_item = name not in beacon_items
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
-                    self.get_location(self.early_lock[name]).place_locked_item(add_item)
+                    # try:
+                        self.get_location(self.early_lock[name]).place_locked_item(add_item)
+                    # except:
+                    #     logging.info('name'+name)
+                    #     logging.info('location'+self.early_lock[name])
+                    #     logging.info('lockeditem'+self.get_location(self.early_lock[name]).item.name)
+                    #     raise Exception()
                 else:
                     self.get_location(name).place_locked_item(add_item)
                 #itempool.append(add_item)

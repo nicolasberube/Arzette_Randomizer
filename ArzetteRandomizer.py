@@ -1288,7 +1288,7 @@ class ArzetteWorld():
             state.has("Castle Key (Nodelki)"))
 
         for item in ["Castle Bag (Bonus)", "Castle Bonus"]:
-            add_rule(self.get_location("Castle Bonus"), lambda state:
+            add_rule(self.get_location(item), lambda state:
                 state.has("Castle Key (Left Room)"))
 
         # Lair Rules
