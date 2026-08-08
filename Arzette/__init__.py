@@ -160,7 +160,7 @@ class ArzetteWorld(World):
         }
         all_levels = [level for levels in default_level_order.values()
                       for level in levels]
-        start_levels = ["Forest", "Desert", "Canyon"]
+        start_levels = ["Faramore", "Forest", "Desert", "Canyon"]
         if self.options.level_order.value != LevelOrder.option_randomize:
             start_levels = all_levels
 

@@ -220,21 +220,21 @@ rock_items = {
 }
 
 scroll_items = {
-	"Faramore Bonus":                  ItemData(367759003, ItemClassification.progression_deprioritized),
-	"Forest Bonus":                    ItemData(367759011, ItemClassification.progression_deprioritized),
-	"Caves Bonus":                     ItemData(367759028, ItemClassification.progression_deprioritized),
-	"Desert Bonus":                    ItemData(367759036, ItemClassification.progression_deprioritized),
-	"Canyon Bonus":                    ItemData(367759042, ItemClassification.progression_deprioritized),
-	"Swamp Bonus":                     ItemData(367759065, ItemClassification.progression_deprioritized),
-	"Peak Bonus":                      ItemData(367759070, ItemClassification.progression_deprioritized),
-	"Crypts Bonus":                    ItemData(367759079, ItemClassification.progression_deprioritized),
-	"Volcano Bonus":                   ItemData(367759086, ItemClassification.progression_deprioritized),
-	"Beach Bonus":                     ItemData(367759097, ItemClassification.progression_deprioritized),
-	"River Bonus":                     ItemData(367759102, ItemClassification.progression_deprioritized),
-	"Hills Bonus":                     ItemData(367759113, ItemClassification.progression_deprioritized),
-	"Fort Bonus":                      ItemData(367759138, ItemClassification.progression_deprioritized),
-	"Castle Bonus":                    ItemData(367759148, ItemClassification.progression_deprioritized),
-	"Lair Bonus":                      ItemData(367759152, ItemClassification.progression_deprioritized)
+	"Faramore Bonus":                  ItemData(367759003, ItemClassification.progression_deprioritized),  # Collect rubies
+	"Forest Bonus":                    ItemData(367759011, ItemClassification.progression_deprioritized),  # Close all of the doors
+	"Caves Bonus":                     ItemData(367759028, ItemClassification.progression_deprioritized),  # Break the targets
+	"Desert Bonus":                    ItemData(367759036, ItemClassification.progression_deprioritized),  # Find the exit
+	"Canyon Bonus":                    ItemData(367759042, ItemClassification.progression_deprioritized),  # Close all of the doors
+	"Swamp Bonus":                     ItemData(367759065, ItemClassification.progression_deprioritized),  # Find the exit
+	"Peak Bonus":                      ItemData(367759070, ItemClassification.progression_deprioritized),  # Break the targets
+	"Crypts Bonus":                    ItemData(367759079, ItemClassification.progression_deprioritized),  # Close all of the doors
+	"Volcano Bonus":                   ItemData(367759086, ItemClassification.progression_deprioritized),  # Collect rubies
+	"Beach Bonus":                     ItemData(367759097, ItemClassification.progression_deprioritized),  # Break the targets
+	"River Bonus":                     ItemData(367759102, ItemClassification.progression_deprioritized),  # Close all of the doors
+	"Hills Bonus":                     ItemData(367759113, ItemClassification.progression_deprioritized),  # Break the targets
+	"Fort Bonus":                      ItemData(367759138, ItemClassification.progression_deprioritized),  # Find the exit
+	"Castle Bonus":                    ItemData(367759148, ItemClassification.progression_deprioritized),  # Collect rubies
+	"Lair Bonus":                      ItemData(367759152, ItemClassification.progression_deprioritized)   # Close all of the doors 
 }
 
 bonusreward_items = {

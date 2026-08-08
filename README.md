@@ -187,16 +187,10 @@ For the standalone randomizer:
 For the AP port:
 - WebWorld
 - Poptracker support?
-- Add in the doc Universal tracker bypasses non-pool items. Problems with Hills Keys and possibly other items.
-- Add in the doc that items cannot be fungible in the game.
-- Add in the doc that the beacons cannot unlock items instead of levels
-- Add in the doc yaml validation rules (barrier + coins shuffling)
-- Add in the doc known bugs: hills beacon lighting up + bonus completed if the item (beacon, reward) was collected already, shield ring does not appear when you have reflector ring making the item uncollectable (related to hills key), power pendant does not render in the inventory, jewel spawn after boss kill (Beeves can spawn on the other side)
-- Add in the doc techniques: start and leave level, tricky jumps, rudy spawns change needs a rudy cave visit, rock quest needs Faramore munhum or collected rock
-- Add in the doc set-up guide: xdelta, location of the connection info files (and save files)
-- Add in the doc checks explanation (bombs in forest, 200 rupees, golden fly with bomb gauntlet, etc.)
 - Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
 - Change item flags based on yaml options (Backstep, Magic Cloak, Reflector Ring, Soul Upgrade, etc.)
+- Include description of checks/NPCs in docs
+- Change item names (Rubies instead of Rupees, better description of NPC?)
 
 # CREDITS
 

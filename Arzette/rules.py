@@ -35,9 +35,40 @@ def level_access(level: str, state: CollectionState, world: "ArzetteWorld"):
 def has_barrier(barrier_type: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return has_color(world.barrier_types[barrier_type], state, world)
 
+def has_money(state: CollectionState, world: "ArzetteWorld") -> bool:
+    # Caves, Castle and Lair need bombs and/or magic, which need money
+    return (state.has("Faramore Bonus") or
+            state.has("Forest Bonus") or
+            state.has("Desert Bonus") or
+            state.has("Canyon Bonus") or
+            state.has("Swamp Bonus") or
+            state.has("Peak Bonus") or
+            state.has("Crypts Bonus") or
+            state.has("Volcano Bonus") or
+            state.has("Beach Bonus") or
+            state.has("River Bonus") or
+            (state.has("Hills Bonus") and state.has("Griffin Boots")) or
+            state.has("Fort Bonus") or
+            state.has("Castle Bonus") or
+            state.has("Lair Bonus") or
+            level_access("Forest", state, world) or
+            level_access("Desert", state, world) or
+            level_access("Canyon", state, world) or
+            (level_access("Swamp", state, world) and world.options.tricky_jumps.value) or
+            level_access("Peak", state, world) or
+            (level_access("Crypts", state, world) and state.has("Power Pendant")) or
+            level_access("Volcano", state, world) or
+            level_access("Beach", state, world) or
+            level_access("River", state, world) or
+            (level_access("Hills", state, world) and world.options.tricky_jumps.value) or
+            (level_access("Fort", state, world) and state.has("Power Pendant")) or
+            (level_access("Lair", state, world) and state.has("Power Pendant") and 
+                state.has("Griffin Boots"))
+            )
+
 def has_shop(state: CollectionState, world: "ArzetteWorld") -> bool:
     return (state.has_group("bags", world.player) or
-            level_access("Faramore", state, world))
+            (level_access("Faramore", state, world) and has_money(state, world)))
 
 def has_bombs(state: CollectionState, world: "ArzetteWorld") -> bool:
     return (state.has_group("bombs", world.player) and has_shop(state, world))
