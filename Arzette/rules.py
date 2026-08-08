@@ -37,33 +37,33 @@ def has_barrier(barrier_type: str, state: CollectionState, world: "ArzetteWorld"
 
 def has_money(state: CollectionState, world: "ArzetteWorld") -> bool:
     # Caves, Castle and Lair need bombs and/or magic, which need money
-    return (state.has("Faramore Bonus") or
-            state.has("Forest Bonus") or
-            state.has("Desert Bonus") or
-            state.has("Canyon Bonus") or
-            state.has("Swamp Bonus") or
-            state.has("Peak Bonus") or
-            state.has("Crypts Bonus") or
-            state.has("Volcano Bonus") or
-            state.has("Beach Bonus") or
-            state.has("River Bonus") or
-            (state.has("Hills Bonus") and state.has("Griffin Boots")) or
-            state.has("Fort Bonus") or
-            state.has("Castle Bonus") or
-            state.has("Lair Bonus") or
+    return (state.has("Faramore Bonus", world.player) or
+            state.has("Forest Bonus", world.player) or
+            state.has("Desert Bonus", world.player) or
+            state.has("Canyon Bonus", world.player) or
+            state.has("Swamp Bonus", world.player) or
+            state.has("Peak Bonus", world.player) or
+            state.has("Crypts Bonus", world.player) or
+            state.has("Volcano Bonus", world.player) or
+            state.has("Beach Bonus", world.player) or
+            state.has("River Bonus", world.player) or
+            (state.has("Hills Bonus", world.player) and state.has("Griffin Boots", world.player)) or
+            state.has("Fort Bonus", world.player) or
+            state.has("Castle Bonus", world.player) or
+            state.has("Lair Bonus", world.player) or
             level_access("Forest", state, world) or
             level_access("Desert", state, world) or
             level_access("Canyon", state, world) or
             (level_access("Swamp", state, world) and world.options.tricky_jumps.value) or
             level_access("Peak", state, world) or
-            (level_access("Crypts", state, world) and state.has("Power Pendant")) or
+            (level_access("Crypts", state, world) and state.has("Power Pendant", world.player)) or
             level_access("Volcano", state, world) or
             level_access("Beach", state, world) or
             level_access("River", state, world) or
             (level_access("Hills", state, world) and world.options.tricky_jumps.value) or
-            (level_access("Fort", state, world) and state.has("Power Pendant")) or
-            (level_access("Lair", state, world) and state.has("Power Pendant") and 
-                state.has("Griffin Boots"))
+            (level_access("Fort", state, world) and state.has("Power Pendant", world.player)) or
+            (level_access("Lair", state, world) and state.has("Power Pendant", world.player) and 
+                state.has("Griffin Boots", world.player))
             )
 
 def has_shop(state: CollectionState, world: "ArzetteWorld") -> bool:
@@ -590,10 +590,10 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     add_rule(world.get_location("Castle Candle (Top Room)"), lambda state:
         state.has("Griffin Boots", player) and
         has_bombs(state, world) and
-        (has_barrier("Red", state, world) and
+        ((has_barrier("Red", state, world) and
          can_pass_poulture("Red", state, world)) or
         (has_barrier("Blue", state, world) and
-         has_barrier("Gauntlet", state, world)))
+         has_barrier("Gauntlet", state, world))))
 
     for item in ["Castle Bag (Top Room)", "Castle Jewel"]:
         add_rule(world.get_location(item), lambda state:

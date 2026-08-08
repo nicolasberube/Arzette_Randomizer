@@ -191,6 +191,7 @@ For the AP port:
 - Change item flags based on yaml options (Backstep, Magic Cloak, Reflector Ring, Soul Upgrade, etc.)
 - Include description of checks/NPCs in docs
 - Change item names (Rubies instead of Rupees, better description of NPC?)
+- Implement get_filler_item_name()
 
 # CREDITS
 

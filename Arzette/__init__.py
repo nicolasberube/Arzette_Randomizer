@@ -106,10 +106,10 @@ class ArzetteWorld(World):
                 self.options.shuffle_bags.value or
                 self.options.shuffle_candles.value or
                 self.options.shuffle_keys.value or
-                self.options.shuffle_coins or
-                self.options.shuffle_upgrades):
+                self.options.shuffle_coins.value or
+                self.options.shuffle_upgrades.value):
             raise OptionError(
-                "Shuffle for a least one common items (npcs, bags, cadles, keys, coins or upgrades) "
+                "Shuffle for a least one common items (npcs, bags, candles, keys, coins or upgrades) "
                 "must be enabled to randomize beacons."
             )
 
