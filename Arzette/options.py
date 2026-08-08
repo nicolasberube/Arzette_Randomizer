@@ -102,15 +102,17 @@ class TradingSequence(Choice):
     """
 Determine how the Chainsword trading sequence is randomized:
 Vanilla: All items except the Dungeon Key will be in their vanilla locations, including the Chainsword.
+Random_Start: One random item of the trading sequence will be shuffled, and the rest of the sequence from that item will be in their vanilla locations, including the Chainsword. The start of the trade quest will be avoided entirely, including Zazie's Soul Upgrade if it doesn't start with the Sacred Oil.
 Excluded: The Dungeon Key, the Sacred Oil & Refined Chains, and the Chainsword items will be shuffled, as well as the locations for the Dungeon Key, the Sacred Oil and the Chainsword. The rest of the trade quest will be avoided entirely, including Zazie's Soul Upgrade.
-Included: Every item in the Chainsword trading sequence is added to the item and location pools.
+Shuffle: Every item in the Chainsword trading sequence is added to the item and location pools.
     """
     internal_name = "trading_sequence"
     display_name = "Trading Sequence"
     option_vanilla = 0
-    option_excluded = 1
-    option_included = 2
-    default = 1
+    option_random_start = 1
+    option_excluded = 2
+    option_shuffle = 3
+    default = 2
 
 class TrickyJumps(Toggle):
     """When enabled, some jumps and movement techniques that are much more difficult than usual may be considered in logic."""

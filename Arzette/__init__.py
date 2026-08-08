@@ -101,6 +101,17 @@ class ArzetteWorld(World):
             raise OptionError(
                 "Shuffle Coins must be enabled to randomize barriers."
             )
+        if self.options.shuffle_beacons.value and not (
+                self.options.shuffle_npcs.value or
+                self.options.shuffle_bags.value or
+                self.options.shuffle_candles.value or
+                self.options.shuffle_keys.value or
+                self.options.shuffle_coins or
+                self.options.shuffle_upgrades):
+            raise OptionError(
+                "Shuffle for a least one common items (npcs, bags, cadles, keys, coins or upgrades) "
+                "must be enabled to randomize beacons."
+            )
 
     def choose_barrier(self) -> None:
         # The way the barrier randomization works is by creating the dictionnary
@@ -149,8 +160,15 @@ class ArzetteWorld(World):
         }
         all_levels = [level for levels in default_level_order.values()
                       for level in levels]
+        start_levels = ["Forest", "Desert", "Canyon"]
+        if self.options.level_order.value != LevelOrder.option_randomize:
+            start_levels = all_levels
 
-        if self.options.level_order.value in {LevelOrder.option_randomize, LevelOrder.option_faramore}:
+        if self.options.level_order.value in {LevelOrder.option_faramore, LevelOrder.option_randomize}:
+        # if self.options.level_order.value in {LevelOrder.option_faramore}:
+            if (self.options.level_order.value == LevelOrder.option_randomize and
+                    self.options.shuffle_bags.value):
+                self.multiworld.local_early_items[self.player]["Forest Bag (First Room 1)"] = 1
             level_list = all_levels[:]
             if self.options.level_order.value == LevelOrder.option_faramore:
                 level_list = [
@@ -183,11 +201,14 @@ class ArzetteWorld(World):
                     level_order[beacon].append("Faramore")
 
                 n_unlocks = len(default_level_order[beacon])-len(level_order[beacon])
-                for _ in range(n_unlocks):
-                    if (level_list[0] in default_level_order and
+                for i_u in range(n_unlocks):
+                    i_l = 0
+                    while (level_list[i_l] not in start_levels) and (beacon == "Default") and (i_u == 0):
+                        i_l += 1
+                    if (level_list[i_l] in default_level_order and
                             not self.options.shuffle_beacons.value):
-                        beacons.append(level_list[0])
-                    level_order[beacon].append(level_list.pop(0))
+                        beacons.append(level_list[i_l])
+                    level_order[beacon].append(level_list.pop(i_l))
         elif self.options.level_order.value == LevelOrder.option_vanilla:
             level_order = default_level_order
         else:
@@ -223,23 +244,25 @@ class ArzetteWorld(World):
         trading_type = self.options.trading_sequence.value
         if trading_type not in {
                 TradingSequence.option_vanilla,
-                TradingSequence.option_included,
+                TradingSequence.option_random_start,
+                TradingSequence.option_shuffle,
                 TradingSequence.option_excluded}:
             raise Exception(f"config file trading_type {trading_type} not recognised.")
 
-        if trading_type == TradingSequence.option_vanilla:
-            # TODO: possible future option
-            # Assuming you want to start later in the sequence
-            # start_position = self.random.randint(0, len(trading_locations)-2)
-            # But we need to treat Zazie's Soul Upgrade location accordingly
-            start_position = 0
+        start_position = 0
+        lock_position = -1
+        if trading_type == TradingSequence.option_random_start:
+            start_position = self.random.randint(0, len(trading_sequence)-2)
         elif trading_type == TradingSequence.option_excluded:
             start_position = len(trading_sequence)-2
-            # With this option, the Soul Upgrade location is unreachable
+        if trading_type in {TradingSequence.option_random_start, TradingSequence.option_vanilla}:
+            lock_position = start_position+1
+        # With this option, the Soul Upgrade location is unreachable
+        if start_position != 0:
             if self.options.shuffle_upgrades.value:
                 self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
             self.unreachables.append("Soul Upgrade")
-        if trading_type != TradingSequence.option_included:
+        if trading_type != TradingSequence.option_shuffle:
             # Locks the first item of the trading sequence in the last location
             # of the sequence that should not be accessible
             if start_position != 0:
@@ -247,6 +270,9 @@ class ArzetteWorld(World):
             for location in trading_sequence[1:start_position]:
                 self.early_lock[location] = location
             self.unreachables += trading_sequence[1:start_position+1]
+            if lock_position > 0:
+                for location in trading_sequence[lock_position:]:
+                    self.early_lock[location] = location
 
     def assign_locked(self) -> None:
         # Those are all locations that need to be locked as vanilla for now
@@ -406,14 +432,15 @@ class ArzetteWorld(World):
 
     def create_items(self) -> None:
         # Debug
-        # logging.info('EARLY LOCK')
-        # logging.info(self.early_lock)
-        # logging.info('UNREACHABLES')
-        # logging.info(self.unreachables)
-        # logging.info('LEVEL ORDER')
-        # logging.info(self.level_order)
-        # logging.info('OPTIONS')
-        # logging.info(self.options)
+        if False:
+            logging.info('EARLY LOCK')
+            logging.info(self.early_lock)
+            logging.info('UNREACHABLES')
+            logging.info(self.unreachables)
+            logging.info('LEVEL ORDER')
+            logging.info(self.level_order)
+            logging.info('OPTIONS')
+            logging.info(self.options)
 
         active_items = [name for name in self.get_all_chosen_items()
                         if name not in self.early_lock]

@@ -467,7 +467,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             state.has("Griffin Boots", player))
 
     add_rule(world.get_location("Hills Coin"), lambda state:
-        has_color("Purple", state, world))
+        has_barrier("Purple", state, world))
 
     for item in ["Hills Bag (Barn)", "Hills Key", "Hills Bag (Music Shrine)",
             "Hills Candle (Music Shrine)"]:
@@ -867,7 +867,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
            has_barrier("Flute", state, world))) and
          has_lantern(state, world) and
          has_barrier("Purple", state, world)) or
-        state.has("Lair Bonus", player))
+        spawner_reach("Lair Bonus", state, world))
 
     add_rule(world.get_location("Gray Rock"), lambda state:
         (level_access("Peak", state, world) and
