@@ -163,12 +163,12 @@ class ArzetteWorld(World):
         all_levels = [level for levels in default_level_order.values()
                       for level in levels]
         start_levels = ["Faramore", "Forest", "Desert", "Canyon"]
-        if self.options.level_order.value != LevelOrder.option_randomize:
+        if self.options.level_order.value != LevelOrder.option_shuffle:
             start_levels = all_levels
 
-        if self.options.level_order.value in {LevelOrder.option_faramore, LevelOrder.option_randomize}:
+        if self.options.level_order.value in {LevelOrder.option_faramore_start_shuffle, LevelOrder.option_shuffle}:
         # if self.options.level_order.value in {LevelOrder.option_faramore}:
-            if (self.options.level_order.value == LevelOrder.option_randomize and
+            if (self.options.level_order.value == LevelOrder.option_shuffle and
                     self.options.shuffle_bags.value):
                 self.progression_bag = self.random.choice(list(bag_items))
                 self.multiworld.local_early_items[self.player][self.progression_bag] = 1
@@ -199,7 +199,7 @@ class ArzetteWorld(World):
                 else:
                     level_order[beacon] = []
 
-                if (self.options.level_order.value == LevelOrder.option_faramore and
+                if (self.options.level_order.value == LevelOrder.option_faramore_start_shuffle and
                         beacon == "Default"):
                     level_order[beacon].append("Faramore")
 
@@ -436,6 +436,11 @@ class ArzetteWorld(World):
         created_item = ArzetteItem(name, classification, arzid, self.player)
         return created_item
 
+    def get_filler_item_name(self) -> str:
+        # I don't think this will work right
+        filler_items = list(bag_items) + list(race_items) + list(bonusreward_items)
+        return self.random.choice(filler_items)
+
     def create_items(self) -> None:
         # Debug
         if False:
@@ -468,6 +473,7 @@ class ArzetteWorld(World):
                 is_event_item = name not in beacon_items
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
+                    # DEBUG
                     # try:
                         self.get_location(self.early_lock[name]).place_locked_item(add_item)
                     # except:
@@ -477,13 +483,20 @@ class ArzetteWorld(World):
                     #     raise Exception()
                 else:
                     self.get_location(name).place_locked_item(add_item)
-                #itempool.append(add_item)
             else:
                 pool_item = self.create_item(name, event=False)
                 if name in fill_useful:
                     pool_item.classification = ItemClassification.useful
                 elif name == self.progression_bag:
                     pool_item.classification = ItemClassification.progression
+                if name == "Lantern" and self.options.no_lantern.value:
+                    pool_item.classification = ItemClassification.useful
+                if name in {"Magic Cloak", "Reflector Ring"} and self.options.damage_boost.value:
+                    pool_item.classification = ItemClassification.useful
+                if name == "Backstep" and not self.options.tricky_jumps.value:
+                    pool_item.classification = ItemClassification.useful
+                if name == "Soul Upgrade" and not ("Soul Upgrade" in self.unreachables):
+                    pool_item.classification = ItemClassification.useful
                 itempool.append(pool_item)
 
         # Add Filler items until all locations are filled

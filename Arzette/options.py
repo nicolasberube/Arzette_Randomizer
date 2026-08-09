@@ -5,14 +5,14 @@ class LevelOrder(Choice):
     """
 Determines which levels are unlocked with beacons.
 Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations.
-Faramore: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your starting levels.
-Randomize: Each beacon will unlock 2 or 3 random levels.
+Faramore_Start_Shuffle: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your starting levels.
+Shuffle: Each beacon will unlock 2 or 3 random levels.
     """
     internal_name = "level_order"
     display_name = "Level Order"
     option_vanilla = 0
-    option_faramore = 1
-    option_randomize = 2
+    option_faramore_start_shuffle = 1
+    option_shuffle = 2
     default = 1
 
 class ShuffleBarrierTypes(DefaultOnToggle):

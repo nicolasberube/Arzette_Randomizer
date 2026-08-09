@@ -188,10 +188,13 @@ For the AP port:
 - WebWorld
 - Poptracker support?
 - Weight the beacon assignation in generate_early() to have less chance of locking it to a hard to reach location, to avoid slow starts.
-- Change item flags based on yaml options (Backstep, Magic Cloak, Reflector Ring, Soul Upgrade, etc.)
+- Add Canteen as alternative to damage_boost option
+- Add Magic Cloak as early Power Pendant alternative
+- Add Bonus warp trick in logic
+- Clean up repo / separate standalone and AP, write proper credits
 - Include description of checks/NPCs in docs
 - Change item names (Rubies instead of Rupees, better description of NPC?)
-- Implement get_filler_item_name()
+- Clean slot_data. Most of universal_tracker_info could be reconstructed from unpingable_locations
 
 # CREDITS
 

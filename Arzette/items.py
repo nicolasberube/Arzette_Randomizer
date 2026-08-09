@@ -138,7 +138,7 @@ plant_items = {
 upgrade_items = {
 	"Power Stone Upgrade":             ItemData(367759162, ItemClassification.useful),
 	"Wallet Upgrade":                  ItemData(367759166, ItemClassification.useful),
-	"Infinite Soulfire":               ItemData(367759167, ItemClassification.progression),
+	"Infinite Soulfire":               ItemData(367759167, ItemClassification.progression_deprioritized_skip_balancing),
 	"Bomb Upgrade":                    ItemData(367759168, ItemClassification.useful),
 	"Lamp Oil Upgrade":                ItemData(367759171, ItemClassification.useful),
 	"Rope Upgrade":                    ItemData(367759172, ItemClassification.useful),
@@ -196,7 +196,7 @@ quest_items = {
 	"Winged Belt":                     ItemData(367759144, ItemClassification.progression),
 	"Purple Magic":                    ItemData(367759160, ItemClassification.progression),
 	"Citizenship Papers":              ItemData(367759161, ItemClassification.progression_deprioritized),
-	"Canteen":                         ItemData(367759165, ItemClassification.progression),
+	"Canteen":                         ItemData(367759165, ItemClassification.useful),
 	"Calendar":                        ItemData(367759169, ItemClassification.progression_deprioritized),
 	"200 Rupees":                      ItemData(367759170, ItemClassification.filler),
 	"Lantern":                         ItemData(367759176, ItemClassification.progression),
