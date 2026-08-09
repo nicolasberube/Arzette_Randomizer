@@ -1,5 +1,5 @@
 from worlds.AutoWorld import WebWorld, World
-from BaseClasses import Region, Item, Tutorial
+from BaseClasses import Region, Item, ItemClassification, Tutorial, CollectionState
 import warnings
 from Options import OptionError
 from typing import List, Dict, Any
@@ -65,6 +65,7 @@ class ArzetteWorld(World):
         self.level_order = {}
         self.level_beacons = {}
         self.unreachables = []
+        self.progression_bag = None
 
         super(ArzetteWorld, self).__init__(world, player)
 
@@ -85,6 +86,7 @@ class ArzetteWorld(World):
             self.unreachables = slot_data["universal_tracker_info"]["unreachables"]
             self.level_order = slot_data["universal_tracker_info"]["level_order"]
             self.level_beacons = slot_data["universal_tracker_info"]["level_beacons"]
+            self.progression_bag = slot_data["universal_tracker_info"].get("progression_bag")
         else:
             # Normal generation
             self.validate_yaml_options()
@@ -168,7 +170,8 @@ class ArzetteWorld(World):
         # if self.options.level_order.value in {LevelOrder.option_faramore}:
             if (self.options.level_order.value == LevelOrder.option_randomize and
                     self.options.shuffle_bags.value):
-                self.multiworld.local_early_items[self.player]["Forest Bag (First Room 1)"] = 1
+                self.progression_bag = self.random.choice(list(bag_items))
+                self.multiworld.local_early_items[self.player][self.progression_bag] = 1
             level_list = all_levels[:]
             if self.options.level_order.value == LevelOrder.option_faramore:
                 level_list = [
@@ -427,7 +430,10 @@ class ArzetteWorld(World):
             raise ValueError(f"{name} is not a valid item name for Arzette")
 
         arzid = arzette_item.arzid if not event else None
-        created_item = ArzetteItem(name, arzette_item.type, arzid, self.player)
+        classification = arzette_item.type
+        if event and name in bag_items:
+            classification = ItemClassification.progression
+        created_item = ArzetteItem(name, classification, arzid, self.player)
         return created_item
 
     def create_items(self) -> None:
@@ -444,6 +450,18 @@ class ArzetteWorld(World):
 
         active_items = [name for name in self.get_all_chosen_items()
                         if name not in self.early_lock]
+
+        # Not all candles/coins are needed for logic. Picks the bare minimum randomly and sets them as progression;
+        # the rest are useful for the fill step and changes back to progression in post_fill.
+        # This lowers the progression density to help the fill step.
+        fill_useful = set()
+        candle_pool = [name for name in active_items if name in candle_items]
+        self.random.shuffle(candle_pool)
+        fill_useful.update(candle_pool[21:])
+        coin_pool = [name for name in active_items if name in coin_items]
+        self.random.shuffle(coin_pool)
+        fill_useful.update(coin_pool[11:])
+
         itempool = []
         for name in all_item_table:
             if name not in active_items:
@@ -461,7 +479,12 @@ class ArzetteWorld(World):
                     self.get_location(name).place_locked_item(add_item)
                 #itempool.append(add_item)
             else:
-                itempool.append(self.create_item(name, event=False))
+                pool_item = self.create_item(name, event=False)
+                if name in fill_useful:
+                    pool_item.classification = ItemClassification.useful
+                elif name == self.progression_bag:
+                    pool_item.classification = ItemClassification.progression
+                itempool.append(pool_item)
 
         # Add Filler items until all locations are filled
         total_locations = len(self.multiworld.get_unfilled_locations(self.player))
@@ -474,6 +497,39 @@ class ArzetteWorld(World):
         itempool += [self.create_filler() for _ in range(total_locations - len(itempool))]
         self.multiworld.itempool.extend(itempool)
 
+    @classmethod
+    def stage_fill_hook(cls, multiworld, progitempool, usefulitempool, filleritempool, fill_locations):
+        # Prefer progression over deprioritized or skip-balancing items when filling.
+        def sort_key(item: Item) -> int:
+            classification = item.classification
+            if classification == ItemClassification.progression_deprioritized_skip_balancing:
+                return 1
+            if classification == ItemClassification.progression_deprioritized:
+                return 2
+            if classification == ItemClassification.progression_skip_balancing:
+                return 3
+            return 4
+
+        arzette_players = {world.player for world in multiworld.get_game_worlds(cls.game)}
+        if not arzette_players:
+            return
+
+        indices = [i for i, item in enumerate(progitempool) if item.player in arzette_players]
+        arzette_items = [progitempool[i] for i in indices]
+        arzette_items.sort(key=sort_key)
+        for i, item in zip(indices, arzette_items):
+            progitempool[i] = item
+
+    def post_fill(self) -> None:
+        # Restore progression on the extra copies that were classified as useful for the fill step.
+        for location in self.multiworld.get_locations(self.player):
+            item = location.item
+            if item is None or item.player != self.player:
+                continue
+            if item.name in candle_items:
+                item.classification = ItemClassification.progression
+            elif item.name in coin_items:
+                item.classification = ItemClassification.progression_deprioritized_skip_balancing
     def set_rules(self) -> None:
         set_location_rules(self)
         for location in self.unreachables:
@@ -481,6 +537,58 @@ class ArzetteWorld(World):
         # Victory condition
         self.multiworld.completion_condition[self.player] = \
             lambda state: state.has("Daimur", self.player)
+
+    # Code written by Mysteryem, to detect an early unbeatable seed.
+    def generate_basic(self) -> None:
+        ## By running this check *before* item plando, it is only necessary to collect the current world's items and
+        ## pre-placed items in the current world, which has much better performance scaling in large multiworlds.
+        test_state = CollectionState(self.multiworld)
+        # Collect our progression items from the item pool.
+        for item in self.multiworld.itempool:
+            if item.player == self.player and item.advancement:
+                test_state.collect(item, True)
+        ## This is being run before the `pre_fill` step, so also collect any items that are going to be placed in the
+        ## `pre_fill` step.
+        # Collect our progression items that are going to be placed in the `pre_fill` step.
+        for item in self.get_pre_fill_items():
+            if item.advancement:
+                test_state.collect(item, True)
+        # Collect our reachable pre-placed progression items.
+        test_state.sweep_for_advancements(self.get_locations())
+        unreachable = [loc for loc in self.get_locations() if not loc.can_reach(test_state)]
+
+        def log_unreachable(reason: str) -> None:
+            if not unreachable:
+                return
+            body = "\n".join(str(loc) for loc in unreachable)
+            logging.warning(
+                "%s generate_basic — %s — %d unreachable location(s):\n%s",
+                self.player_name,
+                reason,
+                len(unreachable),
+                body,
+            )
+
+        ## If the loading zone randomization is performed after the item pool is created, e.g. in `connect_entrances`,
+        ## then accessibility/beatability failures here could be used to perform a limited number of retries at loading
+        ## zone randomization, in which case, this function could be changed to return True/False instead of raising
+        ## exceptions.
+        if not self.multiworld.has_beaten_game(test_state, self.player):
+            log_unreachable("has_beaten_game is False (after granting local advancement + sweep)")
+            raise OptionError(f"{self.player_name}: The game is unbeatable.")
+        ## Technically, MultiWorld.fulfills_accessibility() only raises an exception with __debug__, so it would be
+        ## optional to check accessibility, but note that AP's webhost runs with __debug__=True, so this would fail
+        ## there.
+        if __debug__:
+            ## If you were to opt-in to Items accessibility in the future, that would be a separate check that all your
+            ## pre-placed progression items are reachable.
+            # All locations must be reachable in Full accessibility.
+            if self.options.accessibility == "full" and unreachable:
+                log_unreachable("full accessibility (same can_reach probe as above)")
+                raise OptionError(
+                    f"{self.player_name}: The Full Accessibility requirement could not be met with the rolled loading "
+                    f"zone randomization. {len(unreachable)} location(s) unreachable (see log); first: {unreachable[0]}"
+                )
 
     def fill_slot_data(self) -> Dict[str, Any]:
         barrier_codes = {
@@ -522,6 +630,7 @@ class ArzetteWorld(World):
             "unreachables": self.unreachables,
             "level_order": self.level_order,
             "level_beacons": self.level_beacons,
+            "progression_bag": self.progression_bag,
             "options": arzoptions
         }
         slot_data = {
