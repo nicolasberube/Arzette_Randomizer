@@ -482,11 +482,8 @@ class ArzetteWorld(World):
                 pool_item = self.create_item(name, event=False)
                 if name in fill_useful:
                     pool_item.classification = ItemClassification.useful
-                elif self.progression_bag and name in bag_items:
-                    if name == self.progression_bag:
-                        pool_item.classification = ItemClassification.progression
-                    else:
-                        pool_item.classification = ItemClassification.filler
+                elif name == self.progression_bag:
+                    pool_item.classification = ItemClassification.progression
                 itempool.append(pool_item)
 
         # Add Filler items until all locations are filled
@@ -532,8 +529,7 @@ class ArzetteWorld(World):
             if item.name in candle_items:
                 item.classification = ItemClassification.progression
             elif item.name in coin_items:
-                item.classification = ItemClassification.progression_skip_balancing
-
+                item.classification = ItemClassification.progression_deprioritized_skip_balancing
     def set_rules(self) -> None:
         set_location_rules(self)
         for location in self.unreachables:
