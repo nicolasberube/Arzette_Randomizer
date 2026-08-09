@@ -9,7 +9,7 @@ class ItemData(NamedTuple):
     type: ItemClassification
 
 bag_items = {
-	"Forest Bag (First Room 1)":       ItemData(367759008, ItemClassification.progression),
+	"Forest Bag (First Room 1)":       ItemData(367759008, ItemClassification.filler),
 	"Forest Bag (First Room 2)":       ItemData(367759009, ItemClassification.filler),
 	"Forest Bag (Sword Wave)":         ItemData(367759015, ItemClassification.filler),
 	"Forest Bag (Last Room)":          ItemData(367759018, ItemClassification.filler),
