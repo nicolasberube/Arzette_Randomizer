@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 from worlds.generic.Rules import add_rule
 import logging
 
+from .Names import itemName, locName
 from .locations import ArzetteLocation, all_locations, levelunlock_locations
 from .items import ArzetteItem, all_item_table, \
     candle_items, coin_items, jewel_items, plant_items, race_items, rock_items, bag_items, \
@@ -53,7 +54,7 @@ class ArzetteWorld(World):
     ut_can_gen_without_yaml = True
 
     def __init__(self, world, player):
-        # Items (key) and Locations (value) that have been attributed
+        # Item name (key) and Locations name (value) that have been attributed
         # during generate_early to take out of the pool
         # when running self.create_items() and self.create_regions()
         # Also useful when creating rules for spawner items
@@ -64,8 +65,19 @@ class ArzetteWorld(World):
         self.barrier_types = {}
         self.level_order = {}
         self.level_beacons = {}
+        # Unreachable locations for logic purposes. Should all be in self.early_lock
         self.unreachables = []
         self.progression_bag = None
+
+        item_id_to_name = {arzid: name for name, arzid in self.item_name_to_id.items()}
+        self.loc_to_item = {
+            location: item_id_to_name[arzid]
+            for location, arzid in self.location_name_to_id.items()
+        }
+        self.item_to_loc = {
+            name: location
+            for location, name in self.loc_to_item.items()
+        }
 
         super(ArzetteWorld, self).__init__(world, player)
 
@@ -136,8 +148,8 @@ class ArzetteWorld(World):
             self.barrier_types = default_barrier_types
 
         if self.barrier_types["Flute"] != "Flute":
-            self.early_lock["Caves Bonus Reward"] = "Crypts Coin"
-            self.unreachables.append("Crypts Coin")
+            self.early_lock[itemName.CavesBonusReward] = locName.CryptsCoin
+            self.unreachables.append(locName.CryptsCoin)
 
     def choose_level_unlock(self) -> None:
         # This function could create some seed generation failures for a single world seed
@@ -167,13 +179,12 @@ class ArzetteWorld(World):
             start_levels = all_levels
 
         if self.options.level_order.value in {LevelOrder.option_faramore_start_shuffle, LevelOrder.option_shuffle}:
-        # if self.options.level_order.value in {LevelOrder.option_faramore}:
             if (self.options.level_order.value == LevelOrder.option_shuffle and
                     self.options.shuffle_bags.value):
                 self.progression_bag = self.random.choice(list(bag_items))
                 self.multiworld.local_early_items[self.player][self.progression_bag] = 1
             level_list = all_levels[:]
-            if self.options.level_order.value == LevelOrder.option_faramore:
+            if self.options.level_order.value == LevelOrder.option_faramore_start_shuffle:
                 level_list = [
                     level for level in level_list if level != "Faramore"]
             self.random.shuffle(level_list)
@@ -227,22 +238,33 @@ class ArzetteWorld(World):
 
         level_to_id = {}
         for level in all_levels:
+            # Reading from the item_code is terrible and I'm sorry for it
             possible_locs = [location for location, locdata in levelunlock_locations.items()
                              if level.lower() in locdata.item_code]
             if len(possible_locs) != 1:
                 raise Exception(f'Level unlock location not found for level {level}')
-            level_to_id[level] = possible_locs[0]
+            level_to_id[level] = self.loc_to_item[possible_locs[0]]
+
+        code_to_loc = {
+            data.location_code: location
+            for location, data in all_locations.items()
+        }
         for beacon, levels in self.level_order.items():
             if beacon == 'Default Beacon':
                 beacon = 'Default'
             for i_l, level in enumerate(levels, 1):
-                self.early_lock[level_to_id[level]] = f'{beacon} {i_l}'
+                self.early_lock[level_to_id[level]] = code_to_loc[f'{beacon} {i_l}']
 
     def assign_trading(self) -> None:
         # (item, location) tuple of the vanilla trading sequence
         trading_sequence = [
-            "Sacred Oil", "Funky Fungus", "Snail Salt",
-            "Cleaver Shovel", "Ogre Hair", "Oil and Chains", "Chainsword"]
+            locName.SacredOil,
+            locName.FunkyFungus,
+            locName.SnailSalt,
+            locName.CleaverShovel,
+            locName.OgreHair,
+            locName.OilandChains,
+            locName.Chainsword]
 
         trading_type = self.options.trading_sequence.value
         if trading_type not in {
@@ -263,19 +285,20 @@ class ArzetteWorld(World):
         # With this option, the Soul Upgrade location is unreachable
         if start_position != 0:
             if self.options.shuffle_upgrades.value:
-                self.early_lock["Forest Bonus Reward"] = "Soul Upgrade"
-            self.unreachables.append("Soul Upgrade")
+                self.early_lock[itemName.ForestBonusReward] = locName.SoulUpgrade
+            self.unreachables.append(locName.SoulUpgrade)
         if trading_type != TradingSequence.option_shuffle:
             # Locks the first item of the trading sequence in the last location
             # of the sequence that should not be accessible
             if start_position != 0:
-                self.early_lock[trading_sequence[0]] = trading_sequence[start_position]
+                self.early_lock[self.loc_to_item[trading_sequence[0]]] = \
+                    trading_sequence[start_position]
             for location in trading_sequence[1:start_position]:
-                self.early_lock[location] = location
+                self.early_lock[self.loc_to_item[location]] = location
             self.unreachables += trading_sequence[1:start_position+1]
             if lock_position > 0:
                 for location in trading_sequence[lock_position:]:
-                    self.early_lock[location] = location
+                    self.early_lock[self.loc_to_item[location]] = location
 
     def assign_locked(self) -> None:
         # Those are all locations that need to be locked as vanilla for now
@@ -284,13 +307,17 @@ class ArzetteWorld(World):
         for location, locdata in all_locations.items():
             if not locdata.locked:
                 continue
-            self.early_lock[location] = location
+            self.early_lock[self.loc_to_item[location]] = location
 
     def assign_spawner(self) -> None:
         # The way the attribution of spawners (npc and scroll) work
         # is by looking at the attribute self.early_lock
         # where the key is spawner item name and value is its location name
         # It is used when creating rules.
+
+        logging.info('ASSIGN SPAWNER')
+        logging.info('EARLY LOCK')
+        logging.info(self.early_lock)
 
         # Assigning spawner items
         spawner_list = []
@@ -299,29 +326,38 @@ class ArzetteWorld(World):
         else:
             for name in list(npcspawner_items):
                 if name not in self.early_lock:
-                    self.early_lock[name] = name
+                    self.early_lock[name] = self.item_to_loc[name]
 
         if self.options.shuffle_bonus_scrolls.value:
             spawner_list += [name for name in scroll_items if name not in self.early_lock]
         else:
             for name in list(scroll_items):
                 if name not in self.early_lock:
-                    self.early_lock[name] = name
+                    self.early_lock[name] = self.item_to_loc[name]
 
         if len(spawner_list) > 0:
-            chosen_locs = self.get_all_chosen_items()
+            chosen_locs = self.get_all_chosen_locations()
             available_locs = [
                 location for location, locdata in all_locations.items()
                 if (locdata.can_spawner and (location not in self.early_lock.values()) and
                     (location in chosen_locs))]
 
             self.random.shuffle(available_locs)
+            if len(available_locs) < len(spawner_list):
+                raise Exception('Not enough available locations for all spawners')
             available_locs = available_locs[:len(spawner_list)]
 
             for name, location in zip(spawner_list, available_locs):
                 if location in self.early_lock.values():
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
+
+        logging.info('SPAWNER LIST')
+        logging.info(spawner_list)
+        logging.info('AVAILABLE LOCS')
+        logging.info(available_locs)
+        logging.info('EARLY LOCK')
+        logging.info(self.early_lock)
 
     def assign_local(self) -> None:
         # Assigning other local items that are not spawners
@@ -331,10 +367,10 @@ class ArzetteWorld(World):
         else:
             for name in list(npc_items):
                 if name not in self.early_lock:
-                    self.early_lock[name] = name
+                    self.early_lock[name] = self.item_to_loc[name]
 
         if len(local_list) > 0:
-            chosen_locs = self.get_all_chosen_items()
+            chosen_locs = self.get_all_chosen_locations()
             available_locs = [
                 location for location in all_locations
                 if ((location not in self.early_lock.values()) and
@@ -355,12 +391,12 @@ class ArzetteWorld(World):
         else:
             for name in list(beacon_items):
                 if name not in self.early_lock:
-                    self.early_lock[name] = name
+                    self.early_lock[name] = self.item_to_loc[name]
 
         self.random.shuffle(beacon_list)
         available_levels = self.level_order["Default Beacon"][:]
         for beacon in beacon_list:
-            chosen_locs = self.get_all_chosen_items()
+            chosen_locs = self.get_all_chosen_locations()
             available_locs = [
                 location for level in available_levels
                 for location in level_to_locations[level]
@@ -381,9 +417,9 @@ class ArzetteWorld(World):
         if self.options.shuffle_bags.value:
             all_chosen_items += list(bag_items)
         if self.options.shuffle_keys.value:
-            all_chosen_items += [name for name in key_items if name != 'Hills Key']
+            all_chosen_items += [name for name in key_items if name != itemName.HillsKey]
         if self.options.shuffle_hills_key.value:
-            all_chosen_items += ['Hills Key']
+            all_chosen_items += [itemName.HillsKey]
         if self.options.shuffle_candles.value:
             all_chosen_items += list(candle_items)
         if self.options.shuffle_coins.value:
@@ -411,8 +447,11 @@ class ArzetteWorld(World):
 
         return all_chosen_items
 
+    def get_all_chosen_locations(self):
+        return [self.item_to_loc[name] for name in self.get_all_chosen_items()]
+
     def create_regions(self) -> None:
-        active_locations = [name for name in self.get_all_chosen_items()
+        active_locations = [name for name in self.get_all_chosen_locations()
                             if (name not in self.early_lock.values())]
         active_locations += [self.early_lock[name] for name in beacon_items]
 
@@ -443,7 +482,7 @@ class ArzetteWorld(World):
 
     def create_items(self) -> None:
         # Debug
-        if False:
+        if True:
             logging.info('EARLY LOCK')
             logging.info(self.early_lock)
             logging.info('UNREACHABLES')
@@ -482,20 +521,22 @@ class ArzetteWorld(World):
                     #     logging.info('lockeditem'+self.get_location(self.early_lock[name]).item.name)
                     #     raise Exception()
                 else:
-                    self.get_location(name).place_locked_item(add_item)
+                    self.get_location(self.item_to_loc[name]).place_locked_item(add_item)
             else:
                 pool_item = self.create_item(name, event=False)
                 if name in fill_useful:
                     pool_item.classification = ItemClassification.useful
                 elif name == self.progression_bag:
                     pool_item.classification = ItemClassification.progression
-                if name == "Lantern" and self.options.no_lantern.value:
+                if name == itemName.Lantern and self.options.no_lantern.value:
                     pool_item.classification = ItemClassification.useful
-                if name in {"Magic Cloak", "Reflector Ring"} and self.options.damage_boost.value:
+                if name in {itemName.MagicCloak, itemName.ReflectorRing} and self.options.damage_boost.value:
                     pool_item.classification = ItemClassification.useful
-                if name == "Backstep" and not self.options.tricky_jumps.value:
+                if name == itemName.Backstep and not self.options.tricky_jumps.value:
                     pool_item.classification = ItemClassification.useful
-                if name == "Soul Upgrade" and not ("Soul Upgrade" in self.unreachables):
+                if name == itemName.SoulUpgrade and not (
+                        locName.SoulUpgrade in self.unreachables and
+                        not self.options.shuffle_upgrades.value):
                     pool_item.classification = ItemClassification.useful
                 itempool.append(pool_item)
 
@@ -549,7 +590,7 @@ class ArzetteWorld(World):
             add_rule(self.get_location(location), lambda state: True, combine="or")
         # Victory condition
         self.multiworld.completion_condition[self.player] = \
-            lambda state: state.has("Daimur", self.player)
+            lambda state: state.has(itemName.Daimur, self.player)
 
     # Code written by Mysteryem, to detect an early unbeatable seed.
     def generate_basic(self) -> None:
@@ -628,8 +669,8 @@ class ArzetteWorld(World):
                 continue
             if arzid is None:
                 unpingable_locations[all_locations[location].arzid] = {
-                    "item": all_item_table[location].arzid,
-                    "flags": all_item_table[location].type.as_flag()}
+                    "item": all_item_table[self.loc_to_item[location]].arzid,
+                    "flags": all_item_table[self.loc_to_item[location]].type.as_flag()}
             else:
                 pingable_locations.append(arzid)
 

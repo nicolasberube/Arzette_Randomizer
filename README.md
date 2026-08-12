@@ -193,8 +193,6 @@ For the AP port:
 - Add Bonus warp trick in logic
 - Clean up repo / separate standalone and AP, write proper credits
 - Include description of checks/NPCs in docs
-- Change item names (Rubies instead of Rupees, better description of NPC?)
-- logic for soul upgrades need ennemy or shop access
 - Clean slot_data. Most of universal_tracker_info could be reconstructed from unpingable_locations
 
 # CREDITS
