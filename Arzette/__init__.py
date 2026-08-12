@@ -402,6 +402,9 @@ class ArzetteWorld(World):
                 for location in level_to_locations[level]
                 if ((location not in self.early_lock.values()) and
                     (location in chosen_locs))]
+
+            # Could we weight this assignation to have less chance of locking it
+            # to a hard to reach location, to avoid slow starts?
             self.random.shuffle(available_locs)
             location = available_locs[0]
             if location in self.early_lock.values():

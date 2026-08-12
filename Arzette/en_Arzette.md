@@ -1,6 +1,6 @@
 # Arzette Archipelago randomizer
 
-## Differences between the mod and the bass, un-modified game
+## Differences between the mod and the base, unmodified game
 
 Due to the way the game is coded, and the nature of the need for randomization and unpredictability, the game behaves slightly differently than the base, un-modified game. Here are some of the differences.
 
@@ -10,7 +10,19 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Bombs have been added as a specific unlockable item, associated to a new location at the very start of Forest. Any bombs collected before unlocking them will be lost.
 
-- All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this.
+- All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this. Here are the acronym for the keys
+- FT: Faramore Town
+- DF: Durridin Forest
+- AD: Anju Desert
+- CC: Creece Canyon
+- NS: Norin Swamp
+- CH: Chillinax Peaks
+- BC: Boanjale Crypts
+- BB: Badonc Beach
+- RR: Ryha River
+- LH: Lichen Hills
+- FF: Fort Findula
+- DC: Dennys Castle
 
 - All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game. However, the trading quest menu will be glitched, so one has to remember which item have been collected - unless using the "vanilla", "random_start" or "excluded" option for trading_sequence in the yaml.
 
@@ -44,7 +56,7 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - The Power Pendant and the trading sequence items might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
 
-- The switch to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
+- The pillars to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
 
 ## Information
 
@@ -52,7 +64,7 @@ Some game information might not be known from all players, but are expected to b
 
 - You can press Start to Save and exit to map at any time. It is possible to get stuck in a few levels, so you might need to leave that way.
 
-- To spawn the Rudy Races, you need to have a certain amount of Coins (1 for Forest, 5 for Peak and 10 for Hills) and then visit his cave in Faramore (even though he might not be in it). Visiting his cave between races is necessary to reset his spawn so he can spawn for the next race.
+- To spawn the Rudy Races, you need to have a certain amount of Coins (1 for Forest, 5 for Peak and 10 for Hills) and then visit his cave in Faramore (wether he is in the cave or not). Visiting his cave between races is necessary to reset his spawn so he can spawn for the next race.
 
 - Rocks cannot be collected with your sword unless you either talked to Faramore Munhum once, or you already have a rock in your inventory (received from someone else).
 
@@ -62,8 +74,8 @@ Some game information might not be known from all players, but are expected to b
 
 - Enabling the tricky jumps option in the yaml will mean that the following will be in logic:
     - You can jump on the Faramore shop's roof from the platform above the well with the Winged Belt to access the top left part of the town.
-    - The Forest Rudy Race normally spawns a barrier on the left forbidding you from using the shortcut with the Griffin Boots. However, you can despawn it by entering and leaving the tree.
-    - The Desert Key can be accessed from the right with the Griffin Boots or the Winged Belt+Speedy Shoes
+    - The Forest Rudy Race normally spawns a barrier on the left forbidding you from using the shortcut with the Griffin Boots. However, you can despawn it by entering and leaving the tree sub area on the right.
+    - The Desert Key can be accessed from the right with the Griffin Boots, or the Winged Belt and Speedy Shoes combo
     - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump
     - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes
     - You can technically avoid getting hit by all the enemies in the Volcano without any items
@@ -72,10 +84,21 @@ Some game information might not be known from all players, but are expected to b
     - The right pillar on the Beach for the Key to Tork's cabin can be access by a well timed jump from the front of Tork's cabin, with the Speedy Shoes
     - The Hills Bonus (the one where you start in the middle and need the double jump to get out to hit the targets) can be completed with either the Fatal Flute, or by hitting one target at a time from the middle with perfect accuracy and some luck with the target spawn timing
 
-- Location name explanation
-    - 200 Rupees is the reward from Dewey by giving him the rope ladder
-    - Bombs are at the very start of the Forest level
-    - TODO
+- The NPC's head icons are there to represent their inventory upgrade rewards
+
+Here are the acronym for the keys
+- FT: Faramore Town
+- DF: Durridin Forest
+- AD: Anju Desert
+- CC: Creece Canyon
+- NS: Norin Swamp
+- CH: Chillinax Peaks
+- BC: Boanjale Crypts
+- BB: Badonc Beach
+- RR: Ryha River
+- LH: Lichen Hills
+- FF: Fort Findula
+- DC: Dennys Castle
 
 ## Randomizer info
 
