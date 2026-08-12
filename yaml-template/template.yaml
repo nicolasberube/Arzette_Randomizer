@@ -1,0 +1,236 @@
+﻿# Q. What is this file?
+# A. This file contains options which allow you to configure your multiworld experience while allowing
+#    others to play how they want as well.
+#
+# Q. How do I use it?
+# A. The options in this file are weighted. This means the higher number you assign to a value, the
+#    more chances you have for that option to be chosen. For example, an option like this:
+#
+#    map_shuffle:
+#      on: 5
+#      off: 15
+#
+#    Means you have 5 chances for map shuffle to occur, and 15 chances for map shuffle to be turned
+#    off.
+#
+# Q. I've never seen a file like this before. What characters am I allowed to use?
+# A. This is a .yaml file. You are allowed to use most characters.
+#    To test if your yaml is valid or not, you can use this website:
+#        http://www.yamllint.com/
+#    You can also verify that your Archipelago options are valid at this site:
+#        https://archipelago.gg/check
+
+# Your name in-game, limited to 16 characters.
+#     {player} will be replaced with the player's slot number.
+#     {PLAYER} will be replaced with the player's slot number, if that slot number is greater than 1.
+#     {number} will be replaced with the counter value of the name.
+#     {NUMBER} will be replaced with the counter value of the name, if the counter value is greater than 1.
+name: Player{number}
+
+# Used to describe your yaml. Useful if you have multiple files.
+description: 'Default Arzette: The Jewel of Faramore Template'
+
+game: 'Arzette: The Jewel of Faramore'
+requires:
+  version: 0.6.7 # Version of Archipelago required for this yaml to work as expected.
+  game:
+    'Arzette: The Jewel of Faramore': 0.3.0 # Version of the world required for this yaml to work as expected.
+
+'Arzette: The Jewel of Faramore':
+  ################
+  # Game Options #
+  ################
+  progression_balancing:
+    # A system that can move progression earlier, to try and prevent the player from getting stuck and bored early.
+    # 
+    # A lower setting means more getting stuck. A higher setting means less getting stuck.
+    #
+    # You can define additional values between the minimum and maximum values.
+    # Minimum value is 0
+    # Maximum value is 99
+    random: 0
+    random-low: 0 # random value weighted towards lower values
+    random-high: 0 # random value weighted towards higher values
+    random-range-0-99: 0 # random value between 0 and 99
+    disabled: 0 # equivalent to 0
+    normal: 50 # equivalent to 50
+    extreme: 0 # equivalent to 99
+
+  accessibility:
+    # Set rules for reachability of your items/locations.
+    # 
+    # **Full:** ensure everything can be reached and acquired.
+    # 
+    # **Minimal:** ensure what is needed to reach your goal can be acquired.
+    full: 50
+    minimal: 0
+
+  #################
+  # Logic Options #
+  #################
+  tricky_jumps:
+    # When enabled, some jumps and movement techniques that are much more difficult than usual may be considered in logic. See documentation for more information.
+    'false': 50
+    'true': 0
+
+  no_lantern:
+    # When enabled, you may be expected to navigate dark areas without the lantern.
+    'false': 50
+    'true': 0
+
+  damage_boost:
+    # When enabled, you may be expected to damage boost to an extent that will be possible in casual mode with health drops. When disabled, you can collect everything logically without taking damage.
+    'false': 50
+    'true': 0
+
+  ###################
+  # Shuffle Options #
+  ###################
+  level_order:
+    # Determines which levels are unlocked with beacons. Each beacon will still unlock the same number of levels.
+    # Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations with Shuffle Beacons.
+    # Faramore_Start_Shuffle: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your 2 starting levels to grant access to the shop.
+    # Shuffle: Each beacon will unlock 2 or 3 random levels. Be careful that activating this might lock the store away for a while, and force the player to farm bags to get power stones.
+    vanilla: 0
+    faramore_start_shuffle: 50
+    shuffle: 0
+
+  shuffle_keys:
+    # Include all keys in the item and location pools.
+    # This does not include quest items like the Fort Findula Dungeon Key.
+    # This does also not include the Key in Lichen Hills' Music Shrine.
+    'false': 0
+    'true': 50
+
+  shuffle_hills_key:
+    # Add the Lichen Hills key and its Music Shrine location to the pool.
+    # If spawned in your local game, this key is invisible until the Fatal Flute is played near it, making it difficult to find otherwise.
+    # One would need to know every location check in the game, and play the Flute next to them if they are empty.
+    # The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
+    'false': 50
+    'true': 0
+
+  shuffle_bags:
+    # Include bags in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_candles:
+    # Include all candles in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_coins:
+    # Include all secret coins in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_upgrades:
+    # Include all the capacity upgrades in the item and location pools. This includes Infinite Soulfire.
+    'false': 0
+    'true': 50
+
+  shuffle_rocks:
+    # Include all four colored rocks in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_plants:
+    # Include all three of the Cypress' quest's plants in the item and location poolsl.
+    'false': 0
+    'true': 50
+
+  shuffle_life_ups:
+    # Include all Life-Ups (extra hearts) in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_bonus_rewards:
+    # Include the Rubies rewards from the bonus minigame scrolls in the item and location pools.
+    # Note that Faramore, Volcano and Castle Bonus do not have any rewards.
+    'false': 0
+    'true': 50
+
+  shuffle_race_rewards:
+    # Include the 100 Rubies rewards from the Rudy races in the item and location pools.
+    'false': 0
+    'true': 50
+
+  shuffle_beacons:
+    # Include the Sacred Beacons in the item and location pools.
+    # Sacred Beacons will stay in your local game, cannot spawn from other items, and will still unlock levels when hit.
+    # Not to be confused with Level Order, which decides which level is unlocked by hitting the beacon.
+    'false': 0
+    'true': 50
+
+  shuffle_jewels:
+    # Include the Faramore Jewel shards in the item and location pools. Beating the five bosses will now grant random items.
+    'false': 50
+    'true': 0
+
+  shuffle_npcs:
+    # Include NPCs in the item and location pools. NPCs will stay in your local game.
+    'false': 0
+    'true': 50
+
+  shuffle_bonus_scrolls:
+    # Include Bonus Scrolls in the item and location pools.
+    # Bonus Scrolls will stay in your local game, and cannot spawn from other items.
+    'false': 0
+    'true': 50
+
+  shuffle_barrier_types:
+    # When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another.
+    # If enabled, then Shuffle Coins needs to be enabled as well, or else the Crypts Coin would be unreachable.
+    'false': 0
+    'true': 50
+
+  trading_sequence:
+    # Determine how the Chainsword trading sequence is randomized:
+    # Vanilla: All items except the Dungeon Key will be in their vanilla locations, including the Chainsword. In other words, talking to Alven once will give you random item. Finding the Fort Findula Dungeon Key will kickstart the trading sequence, which will always lead to the Chainsword in the end.
+    # Random_Start: One random item of the trading sequence will be shuffled, and the rest of the sequence from that item will be in their vanilla locations, including the Chainsword. The start of the trade quest will be avoided entirely, including Zazie's Soul Upgrade if it doesn't start with the Sacred Oil.
+    # Excluded: The Dungeon Key, the Sacred Oil & Refined Chains, and the Chainsword items will be shuffled, as well as the locations for the Dungeon Key, the Sacred Oil and the Chainsword. The rest of the trade quest will be avoided entirely, including Zazie's Soul Upgrade. In other words, talking to Alven once will give you random item, talking to Alven with the Sacred Oil and Refined Chains will give you a random item, and going to the end of the Fort Findula Dungeon will give you a random item. Every other NPC interaction in the sequence will ask for an item that you cannot obtain.
+    # Shuffle: Every item in the Chainsword trading sequence is added to the item and location pools. The game has been modified so you can hold multiple items of the trading sequence at the same time, but they might not show up in the inventory.
+    vanilla: 0
+    random_start: 0
+    excluded: 50
+    shuffle: 0
+
+  ###########################
+  # Item & Location Options #
+  ###########################
+  local_items:
+    # Forces these items to be in their native world.
+    []
+
+  non_local_items:
+    # Forces these items to be outside their native world.
+    []
+
+  start_inventory:
+    # Start with the specified amount of these items. Example: "Bomb: 1"
+    {}
+
+  start_hints:
+    # Start with these item's locations prefilled into the ``!hint`` command.
+    []
+
+  start_location_hints:
+    # Start with these locations and their item prefilled into the ``!hint`` command.
+    []
+
+  exclude_locations:
+    # Prevent these locations from having an important item.
+    []
+
+  priority_locations:
+    # Prevent these locations from having an unimportant item.
+    []
+
+  item_links:
+    # Share part of your item pool with other players.
+    []
+
+  plando_items:
+    # Generic items plando.
+    []
