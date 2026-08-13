@@ -115,11 +115,6 @@ class ArzetteWorld(World):
             raise OptionError(
                 "Shuffle Coins must be enabled to randomize barriers."
             )
-        if (self.options.level_order.value != LevelOrder.option_vanilla and
-                not self.options.shuffle_beacons.value):
-            raise OptionError(
-                "Shuffle Beacons must be enabled when Level Order is not Vanilla."
-            )
         if self.options.shuffle_beacons.value and not (
                 self.options.shuffle_npcs.value or
                 self.options.shuffle_bags.value or

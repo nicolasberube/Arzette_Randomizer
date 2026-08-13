@@ -7,7 +7,6 @@ Determines which levels are unlocked with beacons. Each beacon will still unlock
 Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations with Shuffle Beacons.
 Faramore_Start_Shuffle: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your 2 starting levels to grant access to the shop.
 Shuffle: Each beacon will unlock 2 or 3 random levels. Be careful that activating this might lock the store away for a while, and force the player to farm bags to get power stones.
-Using Faramore_Start_Shuffle or Shuffle requires Shuffle Beacons to be enabled.
     """
     internal_name = "level_order"
     display_name = "Level Order"
@@ -21,6 +20,7 @@ class ShuffleBeacons(DefaultOnToggle):
 Include the Sacred Beacons in the item and location pools.
 Sacred Beacons will stay in your local game, cannot spawn from other items, and will still unlock levels when hit.
 Not to be confused with Level Order, which decides which level is unlocked by hitting the beacon.
+Using Faramore_Start_Shuffle or Shuffle Level Order without Shuffle Beacons enabled will make it hard to get a successful generation.
     """
     internal_name = "shuffle_beacons"
     display_name = "Shuffle Beacons"
