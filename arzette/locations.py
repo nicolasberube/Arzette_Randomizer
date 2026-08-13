@@ -117,16 +117,16 @@ canyon_locations = {
 }
 
 swamp_locations = {
-	locName.SwampCandleFirstRoom:        LocationData(367759057, "obj_sacred_candle_8",             "Swamp Candle (First Room)",       "Candle",      True, False, locName.Canyon),
-	locName.SwampBagFirstRoom:           LocationData(367759058, "obj_item_bag_19",                 "Swamp Bag (First Room)",          "Bag",         True, False, locName.Canyon),
-	locName.SwampCoin:                   LocationData(367759059, "obj_hidden_coin_norin",           "Swamp Coin",                      "Coin",        True, False, locName.Canyon),
-	locName.SwampKeyFrichHouse:          LocationData(367759060, "key_norin",                       "Swamp Key (Frich House)",         "Key",         True, False, locName.Canyon),
-	locName.SwampCandleFrichHouse:       LocationData(367759061, "obj_sacred_candle_27",            "Swamp Candle (Frich House)",      "Candle",      True, False, locName.Canyon),
-	locName.SwampKeyGriffinBoots:        LocationData(367759062, "key_norin_2",                     "Swamp Key (Griffin Boots)",       "Key",         True, False, locName.Canyon),
-	locName.GriffinBoots:                LocationData(367759063, "obj_quest_magic_boots",           "Griffin Boots",                   "Quest",       True, False, locName.Canyon),
-	locName.SwampPlant:                  LocationData(367759064, "obj_quest_plant_b",               "Swamp Plant",                     "Plant",       False, False, locName.Canyon),
-	locName.SwampBonus:                  LocationData(367759065, "obj_bonus_scroll_6",              "Swamp Bonus",                     "Scroll",      True, False, locName.Canyon),
-	locName.SwampBeacon:                 LocationData(367759066, "beacon_norin_swamp",              "Swamp Beacon",                    "Beacon",      True, False, locName.Canyon)
+	locName.SwampCandleFirstRoom:        LocationData(367759057, "obj_sacred_candle_8",             "Swamp Candle (First Room)",       "Candle",      True, False, locName.Swamp),
+	locName.SwampBagFirstRoom:           LocationData(367759058, "obj_item_bag_19",                 "Swamp Bag (First Room)",          "Bag",         True, False, locName.Swamp),
+	locName.SwampCoin:                   LocationData(367759059, "obj_hidden_coin_norin",           "Swamp Coin",                      "Coin",        True, False, locName.Swamp),
+	locName.SwampKeyFrichHouse:          LocationData(367759060, "key_norin",                       "Swamp Key (Frich House)",         "Key",         True, False, locName.Swamp),
+	locName.SwampCandleFrichHouse:       LocationData(367759061, "obj_sacred_candle_27",            "Swamp Candle (Frich House)",      "Candle",      True, False, locName.Swamp),
+	locName.SwampKeyGriffinBoots:        LocationData(367759062, "key_norin_2",                     "Swamp Key (Griffin Boots)",       "Key",         True, False, locName.Swamp),
+	locName.GriffinBoots:                LocationData(367759063, "obj_quest_magic_boots",           "Griffin Boots",                   "Quest",       True, False, locName.Swamp),
+	locName.SwampPlant:                  LocationData(367759064, "obj_quest_plant_b",               "Swamp Plant",                     "Plant",       False, False, locName.Swamp),
+	locName.SwampBonus:                  LocationData(367759065, "obj_bonus_scroll_6",              "Swamp Bonus",                     "Scroll",      True, False, locName.Swamp),
+	locName.SwampBeacon:                 LocationData(367759066, "beacon_norin_swamp",              "Swamp Beacon",                    "Beacon",      True, False, locName.Swamp)
 }
 
 peak_locations = {
@@ -306,7 +306,7 @@ npc_spawn_locations = {
 	locName.LairZazie:                   LocationData(367759210, "npc_zazie",                       "Lair Zazie",                      "NPCSpawner",  True, False, locName.Lair),
 	locName.CavesMunhum:                 LocationData(367759211, "npc_munhum",                      "Caves Munhum",                    "NPCSpawner",  True, False, locName.Caves),
 	locName.FaramoreBrinda:              LocationData(367759212, "npc_brinda",                      "Faramore Brinda",                 "NPCSpawner",  True, False, locName.Faramore),
-	locName.SwampGlubbert:               LocationData(367759213, "npc_glubbert",                    "Swamp Glubbert",                  "NPCSpawner",  True, False, locName.Canyon),
+	locName.SwampGlubbert:               LocationData(367759213, "npc_glubbert",                    "Swamp Glubbert",                  "NPCSpawner",  True, False, locName.Swamp),
 	locName.HillsMilbert:                LocationData(367759214, "npc_milbert",                     "Hills Milbert",                   "NPCSpawner",  True, False, locName.Hills),
 	locName.FaramoreCypress:             LocationData(367759215, "npc_cypress_quest",               "Faramore Cypress",                "NPCSpawner",  True, False, locName.Faramore),
 	locName.CanyonOdie:                  LocationData(367759216, "npc_odie",                        "Canyon Odie",                     "NPCSpawner",  True, False, locName.Canyon),
@@ -329,7 +329,7 @@ npc_foolish_locations = {
 
 npc_locked_locations = {
 	locName.FaramoreMortar:              LocationData(367759229, "npc_mortar",                      "Faramore Mortar",                 "NPC",         False, True, locName.Faramore),
-	locName.SwampFrich:                  LocationData(367759230, "npc_frich",                       "Swamp Frich",                     "NPC",         False, True, locName.Canyon),
+	locName.SwampFrich:                  LocationData(367759230, "npc_frich",                       "Swamp Frich",                     "NPC",         False, True, locName.Swamp),
 	locName.ForestRudyStart:             LocationData(367759231, "npc_rudy_start",                  "Forest Rudy (Start)",             "NPC",         False, True, locName.Forest),
 	locName.ForestRudyEnd:               LocationData(367759232, "npc_rudy_goal",                   "Forest Rudy (End)",               "NPC",         False, True, locName.Forest),
 	locName.PeakRudyStart:               LocationData(367759233, "npc_rudy_start",                  "Peak Rudy (Start)",               "NPC",         False, True, locName.Peak),

@@ -30,7 +30,7 @@ class ArzetteWebWorld(WebWorld):
 class ArzetteWorld(World):
     """
     Arzette: The Jewel of Faramore is a platforming action adventure game which serves as a spiritual successor to a pair of infamous CD-i fantasy adventure titles.
-    It is a new interactive animated adventure, that features unique, hand-painted background,
+    It is a new interactive animated adventure, that features unique, hand-painted backgrounds,
     and dozens of fully-voiced, traditionally animated cutscenes, produced in a beloved style familiar to fans of the games Arzette was inspired by.
     """
 

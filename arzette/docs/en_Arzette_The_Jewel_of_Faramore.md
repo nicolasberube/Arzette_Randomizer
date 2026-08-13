@@ -1,8 +1,8 @@
 # Arzette Archipelago randomizer
 
-## Differences between the mod and the base, unmodified game
+## Differences
 
-Due to the way the game is coded, and the nature of the need for randomization and unpredictability, the game behaves slightly differently than the base, un-modified game. Here are some of the differences.
+Due to the way the game is coded, and the nature of the need for randomization and unpredictability, the modded game behaves slightly differently than the base, unmodified game. Here are some of the differences.
 
 - All items are "dropped" by NPCs, including those that were previously granted in cutscenes. Arzette will need to collect all items with her smart sword instead of relying on them being passively given to her.
     - This includes NPC quest rewards, rocks, and jewel shards after defeating bosses.
