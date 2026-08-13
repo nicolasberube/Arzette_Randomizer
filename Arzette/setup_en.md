@@ -9,7 +9,15 @@
 
 - TODO (get inspiration from [this](https://docs.google.com/document/d/1chXFJcNZCV5EQSQ2Rq8UeIWYM6ar3_pV7tq0N0AH8wU) once the steps are set up)
 
-## Set-up the connection info
+## Set-up an Archipelago seed and server (TODO)
+
+- Get the yaml template or the WebWorld
+- Generate a seed
+- Upload it or run it locally
+- Note the connection information
+- optional but recommended: Load Universal Tracker. Mention the location tab, /get_logical_path command for spawner locations
+
+## Set-up the client connection information
 
 - Find the save files folder of the game. On Windows, it is normally located on `C:\Users\[USER]\AppData\Local\Arzette`.
 
@@ -18,6 +26,10 @@
 - Upon booting the game, a pop-up will appear asking you for Archipelago connection information. This information will be saved under `apconfig.txt` in the save files folder. To change connection information, you can either press Y on the title screen, modify the `apconfig.txt` file or delete the `apconfig.txt` file and enter the new information when rebooting the game.
 
 - Sometimes, the game will not boot if the connection information is wrong. If this is the case, delete the `apconfig.txt` file in the save files folder and try again.
+
+- If you select New Game - or if you did not receive a certain item - just close the game and relaunch it.
+
+- If you still have problems, you can always manually edit `savedata_rando.ini` to give yourself an item. But if you find a way to reproduce that bug, please report it to the Archipelago Discord server or to this project's maintainer.
 
 ## Uninstall
 

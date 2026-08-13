@@ -4,7 +4,10 @@
 
 Due to the way the game is coded, and the nature of the need for randomization and unpredictability, the game behaves slightly differently than the base, un-modified game. Here are some of the differences.
 
-- All items are "dropped" by NPCs, including those that were previously granted in cutscenes. Arzette will need to collect all items with her smart sword instead of relying on them being passively given to her. This includes NPC quest rewards, rocks, and jewel shards after defeating bosses, which might spawn on the other side of the room depending on where the boss was upon defeat.
+- All items are "dropped" by NPCs, including those that were previously granted in cutscenes. Arzette will need to collect all items with her smart sword instead of relying on them being passively given to her.
+    - This includes NPC quest rewards, rocks, and jewel shards after defeating bosses.
+    - The capacity upgrades are represented by the heads of the NPC that hands them out.
+    - The Fort Dungeon Key and the Ogre Hair can be notoriously hard to see depending on the background where they spawn.
 
 - To defeat Daimur, five jewel shards are required to be collected, in addition to collecting Purple Magic/The Sword of Faramore.
 
@@ -58,11 +61,19 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - The pillars to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
 
+- Killing Beeves with the Chainsword will make the Jewel Shard spawn on the other side of the room.
+
 ## Information
 
 Some game information might not be known from all players, but are expected to be known.
 
 - You can press Start to Save and exit to map at any time. It is possible to get stuck in a few levels, so you might need to leave that way.
+
+- You need to press L to switch between Red and Blue magic. This is easy to forget.
+
+- You can kill magic-colored Poultures (the flying pterodactyl-like enemies) with the Fatal Flute.
+
+- You can kill magic-colored Boarfoons by reflecting their thrown daggers on them.
 
 - To spawn the Rudy Races, you need to have a certain amount of Coins (1 for Forest, 5 for Peak and 10 for Hills) and then visit his cave in Faramore (wether he is in the cave or not). Visiting his cave between races is necessary to reset his spawn so he can spawn for the next race.
 
@@ -101,6 +112,8 @@ Here are the acronym for the keys
 - DC: Dennys Castle
 
 ## Randomizer info
+
+- If you cannot find a certain spawner (NPC or Bonus Scroll), use the /get_logical_path command followed by the location name to find in which level the spawner is.
 
 - Universal Tracker will assume that every local item (except for beacons) are already collected. This will matter if you did not randomize the Hills Key, then as soon as you have access to the Music Shrine, Universal Tracker will list the location inside the Hills barn as collectable.
 

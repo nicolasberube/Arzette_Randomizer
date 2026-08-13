@@ -96,6 +96,10 @@ def can_pass_poulture(color: str, state: CollectionState, world: "ArzetteWorld")
 def spawner_reach(spawner: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return world.get_location(world.early_lock[spawner]).can_reach(state)
 
+def rock_quest(state: CollectionState, world: "ArzetteWorld"):
+    return (spawner_reach(itemName.FaramoreMunhum, state, world) or
+            state.has_group("rocks", world.player))
+
 # This supposes that the world class has barrier_types, level_beacons and early_lock attributes
 def set_location_rules(world: "ArzetteWorld") -> None:
     player = world.player
@@ -882,8 +886,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     # Rocks Rules
     for item in rock_locations:
         add_rule(world.get_location(item), lambda state:
-            spawner_reach(itemName.FaramoreMunhum, state, world) or
-            state.has_group("rocks", player))
+            rock_quest(state, world))
 
     add_rule(world.get_location(locName.OrangeRock), lambda state:
         level_access("Caves", state, world) and

@@ -7,13 +7,13 @@ from worlds.generic.Rules import add_rule
 import logging
 
 from .Names import itemName, locName
-from .locations import ArzetteLocation, all_locations, levelunlock_locations
+from .locations import ArzetteLocation, all_locations, levelunlock_locations, trading_sequence, all_regions
 from .items import ArzetteItem, all_item_table, \
     candle_items, coin_items, jewel_items, plant_items, race_items, rock_items, bag_items, \
     key_items, upgrade_items, lifeup_items, bonusreward_items, \
     npcspawner_items, npc_items, scroll_items, beacon_items, trading_items, quest_items
 from .options import ArzetteOptions, LevelOrder, TradingSequence, arzette_option_groups
-from .rules import set_location_rules, level_to_locations
+from .rules import set_location_rules, level_access, rock_quest, level_to_locations
 
 class ArzetteWebWorld(WebWorld):
     setup_en = Tutorial(
@@ -250,21 +250,13 @@ class ArzetteWorld(World):
             for location, data in all_locations.items()
         }
         for beacon, levels in self.level_order.items():
-            if beacon == 'Default Beacon':
-                beacon = 'Default'
+            if beacon == "Default Beacon":
+                beacon = "Default"
             for i_l, level in enumerate(levels, 1):
                 self.early_lock[level_to_id[level]] = code_to_loc[f'{beacon} {i_l}']
 
     def assign_trading(self) -> None:
         # (item, location) tuple of the vanilla trading sequence
-        trading_sequence = [
-            locName.SacredOil,
-            locName.FunkyFungus,
-            locName.SnailSalt,
-            locName.CleaverShovel,
-            locName.OgreHair,
-            locName.OilandChains,
-            locName.Chainsword]
 
         trading_type = self.options.trading_sequence.value
         if trading_type not in {
@@ -315,10 +307,6 @@ class ArzetteWorld(World):
         # where the key is spawner item name and value is its location name
         # It is used when creating rules.
 
-        logging.info('ASSIGN SPAWNER')
-        logging.info('EARLY LOCK')
-        logging.info(self.early_lock)
-
         # Assigning spawner items
         spawner_list = []
         if self.options.shuffle_npcs.value:
@@ -352,13 +340,6 @@ class ArzetteWorld(World):
                     raise Exception(f"Location {location} already filled.")
                 self.early_lock[name] = location
 
-        logging.info('SPAWNER LIST')
-        logging.info(spawner_list)
-        logging.info('AVAILABLE LOCS')
-        logging.info(available_locs)
-        logging.info('EARLY LOCK')
-        logging.info(self.early_lock)
-
     def assign_local(self) -> None:
         # Assigning other local items that are not spawners
         local_list = []
@@ -385,6 +366,7 @@ class ArzetteWorld(World):
                 self.early_lock[name] = location
 
     def assign_beacon(self) -> None:
+
         beacon_list = []
         if self.options.shuffle_beacons.value:
             beacon_list += [name for name in beacon_items if name not in self.early_lock]
@@ -461,10 +443,48 @@ class ArzetteWorld(World):
         self.loc_to_id = {name: all_locations[name].arzid
                           if name in active_locations else None
                           for name in all_locations}
-        ret = Region("Menu", self.player, self.multiworld)
-        ret.add_locations(self.loc_to_id, ArzetteLocation)
 
-        self.multiworld.regions.append(ret)
+        region_to_locations = {region: {} for region in all_regions}
+        for location, locdata in all_locations.items():
+            arzid = locdata.arzid if location in active_locations else None
+            spawner = locdata.spawn_from
+            if spawner not in all_regions:
+                spawner = all_locations[self.early_lock[spawner]].spawn_from
+            region_to_locations[spawner][location] = arzid
+
+        for region, locations in region_to_locations.items():
+            ret = Region(region, self.player, self.multiworld)
+            ret.add_locations(locations, ArzetteLocation)
+            self.multiworld.regions.append(ret)
+
+        logging.info('REGIONS LOCATIONS')
+        logging.info(region_to_locations)
+
+        menu_rules = {
+            locName.Faramore: lambda state: level_access(locName.Faramore, state, self),
+            locName.Forest: lambda state: level_access(locName.Forest, state, self),
+            locName.Caves: lambda state: level_access(locName.Caves, state, self),
+            locName.Desert: lambda state: level_access(locName.Desert, state, self),
+            locName.Canyon: lambda state: level_access(locName.Canyon, state, self),
+            locName.Swamp: lambda state: level_access(locName.Swamp, state, self),
+            locName.Peak: lambda state: level_access(locName.Peak, state, self),
+            locName.Crypts: lambda state: level_access(locName.Crypts, state, self),
+            locName.Volcano: lambda state: level_access(locName.Volcano, state, self),
+            locName.Beach: lambda state: level_access(locName.Beach, state, self),
+            locName.River: lambda state: level_access(locName.River, state, self),
+            locName.Hills: lambda state: level_access(locName.Hills, state, self),
+            locName.Fort: lambda state: level_access(locName.Fort, state, self),
+            locName.Castle: lambda state: level_access(locName.Castle, state, self),
+            locName.Lair: lambda state: level_access(locName.Lair, state, self)
+        }
+        self.get_region(locName.Menu).add_exits(exits=menu_rules.keys(), rules=menu_rules)
+        self.get_region(locName.Caves).add_exits(exits={locName.Rocks}, rules={
+            locName.Rocks: lambda state: rock_quest(state, self)
+        })
+        for region in all_regions:
+            if region == locName.Menu:
+                continue
+            self.get_region(region).add_exits(exits={locName.Menu})
 
     def create_item(self, name:str, event:bool=False) -> Item:
         arzette_item = all_item_table.get(name)
@@ -510,9 +530,14 @@ class ArzetteWorld(World):
         fill_useful.update(coin_pool[11:])
 
         itempool = []
+        trading_items = [self.loc_to_item[location] for location in trading_sequence
+                         if location not in self.unreachables]
+        logging.info('TRADING ITEMS')
+        logging.info(trading_items)
         for name in all_item_table:
             if name not in active_items:
-                is_event_item = name not in beacon_items
+                is_event_item = (
+                    (name not in beacon_items) and (name not in trading_items))
                 add_item = self.create_item(name, event=is_event_item)
                 if name in self.early_lock:
                     # DEBUG
@@ -579,7 +604,7 @@ class ArzetteWorld(World):
 
     def post_fill(self) -> None:
         # Restore progression on the extra copies that were classified as useful for the fill step.
-        for location in self.multiworld.get_locations(self.player):
+        for location in self.multiworld.get_locations():
             item = location.item
             if item is None or item.player != self.player:
                 continue
@@ -587,6 +612,7 @@ class ArzetteWorld(World):
                 item.classification = ItemClassification.progression
             elif item.name in coin_items:
                 item.classification = ItemClassification.progression_deprioritized_skip_balancing
+
     def set_rules(self) -> None:
         set_location_rules(self)
         for location in self.unreachables:

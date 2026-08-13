@@ -12,6 +12,7 @@ Various information about the randomizer, differences with the vanilla game, bug
 
 # Future plans
 
+- Finish the setup guide
 - Logic/Options changes
     - Implement Canteen as the alternative to damage_boost option.
     - Implement Magic Cloak as early Power Pendant alternative.
