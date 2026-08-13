@@ -377,8 +377,11 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.GriffinBoots, player) or state.has(itemName.WingedBelt, player))
 
     add_rule(world.get_location(locName.CryptsCoin), lambda state:
-        has_barrier("Flute", state, world) and
-                    world.barrier_types["Flute"] == "Flute")
+        has_barrier("Flute", state, world) and (
+            (world.barrier_types["Flute"] == "Flute") or
+            ((world.barrier_types["Flute"] in ["Red", "Blue", "Purple"]) and
+             (state.has(itemName.SwordWave, player)) and
+             world.options.tricky_jumps.value)))
 
     for item in [locName.CryptsCandleSkelvis, locName.CryptsBagSkelvis, locName.CryptsSkelvis]:
         add_rule(world.get_location(item), lambda state:

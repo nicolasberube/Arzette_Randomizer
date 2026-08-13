@@ -153,7 +153,11 @@ class ArzetteWorld(World):
         else:
             self.barrier_types = default_barrier_types
 
-        if self.barrier_types["Flute"] != "Flute":
+        can_access_crypts_coin = (
+            (self.barrier_types["Flute"] == "Flute") or
+            ((self.barrier_types["Flute"] in ["Red", "Blue", "Purple"]) and
+             self.options.tricky_jumps.value))
+        if not can_access_crypts_coin:
             self.early_lock[itemName.CavesBonusReward] = locName.CryptsCoin
             self.unreachables.append(locName.CryptsCoin)
 

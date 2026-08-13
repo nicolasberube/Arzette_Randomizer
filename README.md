@@ -15,10 +15,10 @@ Various information about the randomizer, differences with the vanilla game, bug
 # Future plans
 
 - Logic/Options changes
-    - Crypts Coin location can be accessed with magic barrier and the sword wave (with a tricky jump option)
     - Implement Canteen as the alternative to damage_boost option.
-    - Implement Magic Cloak as early Power Pendant alternative.
+    - Implement Magic Cloak as Power Pendant alternative.
     - Add [Bonus Scroll level warp bug](arzette/en_Arzette.md#known-bugs) trick in logic.
+    - Investigate the high generation failure rate for the level_order = faramore or shuffle + shuffle_beacon = False combination.
 - Clean slot_data. Most of universal_tracker_info could be reconstructed from unpingable_locations
 - WebWorld and Poptracker support?
 

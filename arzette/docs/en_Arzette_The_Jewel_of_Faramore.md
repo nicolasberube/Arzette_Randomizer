@@ -89,6 +89,7 @@ Some game information might not be known from all players, but are expected to b
     - The Desert Key can be accessed from the right with the Griffin Boots, or the Winged Belt and Speedy Shoes combo
     - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump
     - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes
+    - You can destroy the barrier to access the Crypts Coin with a *very* tight Sword Wave while falling from a jump on its left.
     - You can technically avoid getting hit by all the enemies in the Volcano without any items
     - You can collect the Volcano Coin with a well placed Backstep from one of the platform on the top left, or with the Winged Belt
     - The left pillar on the Beach for the Key to Tork's cabin can be hit with a Bomb, the Sword Wave or the Smart Gun from the leaf of the tree.
