@@ -1,4 +1,5 @@
 import typing
+from ..Names import locName
 from ..options import ShuffleBarrierTypes, ShuffleCoins
 from .test_logic import CasualLogic, TrickyJumpsLogic, NoLanternLogic, DamageBoostLogic, \
     TrickyJumpsNoLanternLogic, TrickyJumpsDamageBoostLogic, NoLanternDamageBoostLogic, \
@@ -15,11 +16,9 @@ BARRIER_CODES = {
 
 class TestShuffledBarrierTypes(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_barrier_types": ShuffleBarrierTypes.option_true,
         "shuffle_coins": ShuffleCoins.option_true,
-
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -35,7 +34,7 @@ class TestShuffledBarrierTypes(ArzetteTestBase):
 
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
-        assert "Crypts Coin" in world_location_names
+        assert locName.CryptsCoin in world_location_names
 
     def test_slot_data(self) -> None:
         barrier_info = self.slot_data["barrier_info"]
@@ -48,11 +47,9 @@ class TestShuffledBarrierTypes(ArzetteTestBase):
 
 class TestVanillaBarrierTypes(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_barrier_types": ShuffleBarrierTypes.option_false,
         "shuffle_coins": ShuffleCoins.option_true,
-
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -73,7 +70,7 @@ class TestVanillaBarrierTypes(ArzetteTestBase):
 
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
-        assert "Crypts Coin" in world_location_names
+        assert locName.CryptsCoin in world_location_names
 
     def test_slot_data(self) -> None:
         barrier_info = self.slot_data["barrier_info"]

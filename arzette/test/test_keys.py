@@ -1,59 +1,51 @@
 from ..items import key_items
+from ..Names import itemName
 from ..options import ShuffleKeys
 from .test_logic import CasualLogic, TrickyJumpsLogic, NoLanternLogic, DamageBoostLogic, \
     TrickyJumpsNoLanternLogic, TrickyJumpsDamageBoostLogic, NoLanternDamageBoostLogic, \
     TrickyJumpsNoLanternDamageBoostLogic
 from . import ArzetteTestBase
 
+# Hills key has its own option.
+SHUFFLED_KEYS = [key for key in key_items if key != itemName.HillsKey]
+
 class TestShuffledKeys(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_keys": ShuffleKeys.option_true,
-
-
     }
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        for key in key_items:
-            if key == "Hills Key":
-                continue
+        for key in SHUFFLED_KEYS:
             assert key in item_pool_names
 
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
-        for key in key_items:
-            if key == "Hills Key":
-                continue
-            assert key in world_location_names
-            location = self.world.get_location(key)
+        for key in SHUFFLED_KEYS:
+            loc_name = self.world.item_to_loc[key]
+            assert loc_name in world_location_names
+            location = self.world.get_location(loc_name)
             assert not location.is_event
 
 class TestVanillaKeys(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_keys": ShuffleKeys.option_false,
-
-
     }
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        for key in key_items:
-            if key == "Hills Key":
-                continue
+        for key in SHUFFLED_KEYS:
             assert key not in item_pool_names
 
     def test_prefills(self) -> None:
-        vanilla_locations = [
-            location for location in self.world.get_locations()
-            if location.name in key_items and location.name != "Hills Key"
-        ]
-        for location in vanilla_locations:
+        for key in SHUFFLED_KEYS:
+            location = self.world.get_location(self.world.item_to_loc[key])
             assert location.is_event
             assert location.item is not None
             assert location.item.is_event
-            assert location.item.name == location.name
+            assert location.item.name == key
 
 class TestShuffledKeysCasual(TestShuffledKeys, CasualLogic):
     options = {
@@ -150,4 +142,3 @@ class TestVanillaKeysTrickyJumpsNoLanternDamageBoost(TestVanillaKeys, TrickyJump
         **TestVanillaKeys.options,
         **TrickyJumpsNoLanternDamageBoostLogic.options,
     }
-

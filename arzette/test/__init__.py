@@ -1,6 +1,7 @@
 from test.bases import WorldTestBase
 from .. import ArzetteWorld
 from ..options import (
+    LevelOrder,
     ShuffleBarrierTypes,
     ShuffleBeacons,
     ShuffleBonusScrolls,
@@ -12,7 +13,9 @@ from ..options import (
 class ArzetteTestBase(WorldTestBase):
     game = "Arzette: The Jewel of Faramore"
     world: ArzetteWorld
-    no_early_lock_options = {
+    # No early-lock options, and vanilla level order so generation can happen without randomising beacons.
+    base_options = {
+        "level_order": LevelOrder.option_vanilla,
         "shuffle_npcs": ShuffleNPCs.option_false,
         "shuffle_bonus_scrolls": ShuffleBonusScrolls.option_false,
         "shuffle_beacons": ShuffleBeacons.option_false,
@@ -20,5 +23,5 @@ class ArzetteTestBase(WorldTestBase):
         "trading_sequence": TradingSequence.option_shuffle,
     }
     options = {
-        **no_early_lock_options,
+        **base_options,
     }

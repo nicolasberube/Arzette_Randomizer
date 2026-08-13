@@ -7,10 +7,8 @@ from . import ArzetteTestBase
 
 class TestShuffledJewels(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_jewels": ShuffleJewels.option_true,
-
-
     }
 
     def test_item_pool(self) -> None:
@@ -21,16 +19,15 @@ class TestShuffledJewels(ArzetteTestBase):
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
         for item_name in jewel_items:
-            assert item_name in world_location_names
-            location = self.world.get_location(item_name)
+            loc_name = self.world.item_to_loc[item_name]
+            assert loc_name in world_location_names
+            location = self.world.get_location(loc_name)
             assert not location.is_event
 
 class TestVanillaJewels(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_jewels": ShuffleJewels.option_false,
-
-
     }
 
     def test_item_pool(self) -> None:
@@ -39,15 +36,12 @@ class TestVanillaJewels(ArzetteTestBase):
             assert item_name not in item_pool_names
 
     def test_prefills(self) -> None:
-        vanilla_locations = [
-            location for location in self.world.get_locations()
-            if location.name in jewel_items
-        ]
-        for location in vanilla_locations:
+        for item_name in jewel_items:
+            location = self.world.get_location(self.world.item_to_loc[item_name])
             assert location.is_event
             assert location.item is not None
             assert location.item.is_event
-            assert location.item.name == location.name
+            assert location.item.name == item_name
 
 class TestShuffledJewelsCasual(TestShuffledJewels, CasualLogic):
     options = {

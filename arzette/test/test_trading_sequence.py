@@ -1,27 +1,18 @@
 import typing
 from ..items import all_item_table, trading_items
-from ..locations import all_locations
+from ..locations import all_locations, trading_sequence
+from ..Names import itemName, locName
 from ..options import TradingSequence
 from .test_logic import CasualLogic, TrickyJumpsLogic, NoLanternLogic, DamageBoostLogic, \
     TrickyJumpsNoLanternLogic, TrickyJumpsDamageBoostLogic, NoLanternDamageBoostLogic, \
     TrickyJumpsNoLanternDamageBoostLogic
 from . import ArzetteTestBase
 
-TRADING_SEQUENCE = [
-    "Sacred Oil",
-    "Funky Fungus",
-    "Snail Salt",
-    "Cleaver Shovel",
-    "Ogre Hair",
-    "Oil and Chains",
-    "Chainsword",
-]
 
 class TestVanillaTradingSequence(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "trading_sequence": TradingSequence.option_vanilla,
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -37,10 +28,9 @@ class TestVanillaTradingSequence(ArzetteTestBase):
             assert item_name not in item_pool_names
 
     def test_prefills(self) -> None:
-        for item_name in TRADING_SEQUENCE:
-            if item_name == "Sacred Oil":
-                continue
-            location = self.world.get_location(item_name)
+        for loc_name in trading_sequence:
+            item_name = self.world.loc_to_item[loc_name]
+            location = self.world.get_location(loc_name)
             assert location.item is not None
             assert location.item.name == item_name
 
@@ -49,18 +39,18 @@ class TestVanillaTradingSequence(ArzetteTestBase):
         unreachables = slot_data["universal_tracker_info"]["unreachables"]
         unpingable_locations = slot_data["unpingable_locations"]
 
-        for item_name in TRADING_SEQUENCE:
-            assert item_name not in unreachables
+        for loc_name in trading_sequence:
+            assert loc_name not in unreachables
 
-        for item_name in TRADING_SEQUENCE[1:]:
-            location_id = all_locations[item_name].arzid
+        for loc_name in trading_sequence:
+            item_name = self.world.loc_to_item[loc_name]
+            location_id = all_locations[loc_name].arzid
             assert unpingable_locations[location_id]["item"] == all_item_table[item_name].arzid
 
 class TestRandomStartTradingSequence(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "trading_sequence": TradingSequence.option_random_start,
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -72,12 +62,12 @@ class TestRandomStartTradingSequence(ArzetteTestBase):
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        assert "Dungeon Key" in item_pool_names or "Dungeon Key" in self.world.early_lock
+        assert itemName.DungeonKey in item_pool_names or itemName.DungeonKey in self.world.early_lock
 
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
         for item_name in trading_items:
-            assert item_name in world_location_names
+            assert self.world.item_to_loc[item_name] in world_location_names
 
     def test_slot_data(self) -> None:
         slot_data = self.slot_data
@@ -85,28 +75,29 @@ class TestRandomStartTradingSequence(ArzetteTestBase):
         unpingable_locations = slot_data["unpingable_locations"]
 
         # The Sacred Oil is locked on the location of the item the sequence starts at.
-        start = self.world.early_lock.get("Sacred Oil", "Sacred Oil")
-        start_index = TRADING_SEQUENCE.index(start)
+        start_loc = self.world.early_lock.get(
+            itemName.SacredOil, self.world.item_to_loc[itemName.SacredOil])
+        start_index = trading_sequence.index(start_loc)
 
-        for item_name in TRADING_SEQUENCE[1:start_index + 1]:
-            assert item_name in unreachables
-        for item_name in TRADING_SEQUENCE[start_index + 1:]:
-            assert item_name not in unreachables
+        for loc_name in trading_sequence[1:start_index + 1]:
+            assert loc_name in unreachables
+        for loc_name in trading_sequence[start_index + 1:]:
+            assert loc_name not in unreachables
 
         if start_index:
-            assert "Soul Upgrade" in unreachables
-            start_id = all_locations[start].arzid
-            assert unpingable_locations[start_id]["item"] == all_item_table["Sacred Oil"].arzid
+            assert locName.SoulUpgrade in unreachables
+            start_id = all_locations[start_loc].arzid
+            assert unpingable_locations[start_id]["item"] == all_item_table[itemName.SacredOil].arzid
 
-        for item_name in TRADING_SEQUENCE[start_index + 1:]:
-            location_id = all_locations[item_name].arzid
+        for loc_name in trading_sequence[start_index + 1:]:
+            item_name = self.world.loc_to_item[loc_name]
+            location_id = all_locations[loc_name].arzid
             assert unpingable_locations[location_id]["item"] == all_item_table[item_name].arzid
 
 class TestExcludedTradingSequence(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "trading_sequence": TradingSequence.option_excluded,
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -118,35 +109,38 @@ class TestExcludedTradingSequence(ArzetteTestBase):
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        for item_name in ("Sacred Oil", "Oil and Chains", "Chainsword", "Dungeon Key"):
-            assert item_name in item_pool_names or item_name in self.world.early_lock
+        assert itemName.SacredOil in item_pool_names or itemName.SacredOil in self.world.early_lock
+        assert itemName.OilandChains in item_pool_names or itemName.OilandChains in self.world.early_lock
+        assert itemName.Chainsword in item_pool_names or itemName.Chainsword in self.world.early_lock
+        assert itemName.DungeonKey in item_pool_names or itemName.DungeonKey in self.world.early_lock
 
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
-        for item_name in ("Sacred Oil", "Oil and Chains", "Chainsword", "Dungeon Key"):
-            assert item_name in world_location_names
+        assert self.world.item_to_loc[itemName.SacredOil] in world_location_names
+        assert self.world.item_to_loc[itemName.OilandChains] in world_location_names
+        assert self.world.item_to_loc[itemName.Chainsword] in world_location_names
+        assert self.world.item_to_loc[itemName.DungeonKey] in world_location_names
 
     def test_slot_data(self) -> None:
         slot_data = self.slot_data
         unreachables = slot_data["universal_tracker_info"]["unreachables"]
         unpingable_locations = slot_data["unpingable_locations"]
 
-        assert "Soul Upgrade" in unreachables
+        assert locName.SoulUpgrade in unreachables
         # Only the Sacred Oil, the Oil and Chains and the Chainsword remain in the pools.
-        for item_name in TRADING_SEQUENCE[1:-1]:
-            assert item_name in unreachables
+        for loc_name in trading_sequence[1:-1]:
+            assert loc_name in unreachables
 
-        oil_and_chains_id = all_locations["Oil and Chains"].arzid
-        assert unpingable_locations[oil_and_chains_id]["item"] == all_item_table["Sacred Oil"].arzid
+        oil_and_chains_id = all_locations[locName.OilandChains].arzid
+        assert unpingable_locations[oil_and_chains_id]["item"] == all_item_table[itemName.SacredOil].arzid
 
-        for item_name in ("Sacred Oil", "Chainsword", "Dungeon Key"):
-            assert all_locations[item_name].arzid in slot_data["pingable_locations"]
+        for item_name in (itemName.SacredOil, itemName.Chainsword, itemName.DungeonKey):
+            assert all_locations[self.world.item_to_loc[item_name]].arzid in slot_data["pingable_locations"]
 
 class TestShuffledTradingSequence(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "trading_sequence": TradingSequence.option_shuffle,
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -164,8 +158,9 @@ class TestShuffledTradingSequence(ArzetteTestBase):
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
         for item_name in trading_items:
-            assert item_name in world_location_names
-            location = self.world.get_location(item_name)
+            loc_name = self.world.item_to_loc[item_name]
+            assert loc_name in world_location_names
+            location = self.world.get_location(loc_name)
             assert not location.is_event
 
     def test_slot_data(self) -> None:
@@ -173,8 +168,9 @@ class TestShuffledTradingSequence(ArzetteTestBase):
         unreachables = slot_data["universal_tracker_info"]["unreachables"]
 
         for item_name in trading_items:
-            assert item_name not in unreachables
-            assert all_locations[item_name].arzid in slot_data["pingable_locations"]
+            loc_name = self.world.item_to_loc[item_name]
+            assert loc_name not in unreachables
+            assert all_locations[loc_name].arzid in slot_data["pingable_locations"]
 
 class TestVanillaTradingSequenceCasual(TestVanillaTradingSequence, CasualLogic):
     options = {
