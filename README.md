@@ -2,6 +2,8 @@
 
 This is a randomizer for Arzette: The Jewel of Faramore. This repository includes both the currently maintained [Archipelago randomizer](arzette/), as well as the deprecated [standalone randomizer](Standalone/).
 
+It is only available for the Windows Steam version of the game.
+
 # [Setup Guide](arzette/setup_en.md)
 
 How to set up the client on your computer.
@@ -12,7 +14,6 @@ Various information about the randomizer, differences with the vanilla game, bug
 
 # Future plans
 
-- Finish the setup guide
 - Logic/Options changes
     - Implement Canteen as the alternative to damage_boost option.
     - Implement Magic Cloak as early Power Pendant alternative.
@@ -23,6 +24,6 @@ Various information about the randomizer, differences with the vanilla game, bug
 # CREDITS
 
 - Randomizer Logic & Program Development - Lightmopp
-- Advice and Test Designs - g0goTBC
+- Advice and Tests - g0goTBC
 - Game Client - Dopply
 - Play Testing - JustCallMeGio, RoobyRoo, Dynomation, FinalFlame, Vicas

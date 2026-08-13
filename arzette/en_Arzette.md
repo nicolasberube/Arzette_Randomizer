@@ -14,18 +14,18 @@ Due to the way the game is coded, and the nature of the need for randomization a
 - Bombs have been added as a specific unlockable item, associated to a new location at the very start of Forest. Any bombs collected before unlocking them will be lost.
 
 - All keys are non-fungible (unique). They technically are in the vanilla game, but there is no actual way of knowing which one you collect except by going to the appropriate level and look for it in the bottom right corner - and test the specific door if there are multiple keys in the level. A modification of the key sprites has been done to accomodate this. Here are the acronym for the keys
-- FT: Faramore Town
-- DF: Durridin Forest
-- AD: Anju Desert
-- CC: Creece Canyon
-- NS: Norin Swamp
-- CH: Chillinax Peaks
-- BC: Boanjale Crypts
-- BB: Badonc Beach
-- RR: Ryha River
-- LH: Lichen Hills
-- FF: Fort Findula
-- DC: Dennys Castle
+    - FT: Faramore Town
+    - DF: Durridin Forest
+    - AD: Anju Desert
+    - CC: Creece Canyon
+    - NS: Norin Swamp
+    - CH: Chillinax Peaks
+    - BC: Boanjale Crypts
+    - BB: Badonc Beach
+    - RR: Ryha River
+    - LH: Lichen Hills
+    - FF: Fort Findula
+    - DC: Dennys Castle
 
 - All items in the trading sequence can be held simultaneously. This is not the case in the vanilla game. However, the trading quest menu will be glitched, so one has to remember which item have been collected - unless using the "vanilla", "random_start" or "excluded" option for trading_sequence in the yaml.
 
@@ -33,13 +33,9 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - NPC requirements have been locked behind an appropriate order activation. For example, if you already have rocks before talking to Faramore Munhum, the rock quest will still be activated appropriately instead of being already completed. If you already have the Sacred Oil and Chains before talking to Alven, he will give you his first item (Fort Findula Dungeon Key in vanilla) before the Chainsword reward. If you already have 250 souls, Zazie will still ask for Sacred Oil before activating the souls quest, and so on.
 
-- Some spawn locations for items are slightly modified to accommodate different items sizes.
-
-- The Hills barn will show a beacon light emanate from it if the Hills beacon is activated, no matter where that Hills beacon was.
+- Some spawn locations for items are slightly modified to accommodate different item sizes.
 
 - Bonus scrolls do not despawn, and can be replayed infinitely. Yes, this includes the "Collect Rubies" ones.
-
-- Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
 
 - All quests and NPC spawning rules (except for the rock quest) are already activated.
     - Dewey does not need Purple Magic to be talked to
@@ -62,6 +58,10 @@ Due to the way the game is coded, and the nature of the need for randomization a
 - The pillars to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
 
 - Killing Beeves with the Chainsword will make the Jewel Shard spawn on the other side of the room.
+
+- The Hills barn will show a beacon light emanate from it if the Hills beacon is activated, no matter where that Hills beacon was.
+
+- Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
 
 ## Information
 
@@ -95,29 +95,11 @@ Some game information might not be known from all players, but are expected to b
     - The right pillar on the Beach for the Key to Tork's cabin can be access by a well timed jump from the front of Tork's cabin, with the Speedy Shoes
     - The Hills Bonus (the one where you start in the middle and need the double jump to get out to hit the targets) can be completed with either the Fatal Flute, or by hitting one target at a time from the middle with perfect accuracy and some luck with the target spawn timing
 
-- The NPC's head icons are there to represent their inventory upgrade rewards
-
-Here are the acronym for the keys
-- FT: Faramore Town
-- DF: Durridin Forest
-- AD: Anju Desert
-- CC: Creece Canyon
-- NS: Norin Swamp
-- CH: Chillinax Peaks
-- BC: Boanjale Crypts
-- BB: Badonc Beach
-- RR: Ryha River
-- LH: Lichen Hills
-- FF: Fort Findula
-- DC: Dennys Castle
-
 ## Randomizer info
 
-- If you cannot find a certain spawner (NPC or Bonus Scroll), use the /get_logical_path command followed by the location name to find in which level the spawner is.
+- Universal Tracker will list as collectable the items that spawn from others (quest items from NPCs and Bonus Scroll Rewards). You *will* need to remember where that spawner is, since the spawner (the NPC of the Bonus Scroll) location can be randomized. If you cannot find a certain spawner (NPC or Bonus Scroll), use the `/get_logical_path` command followed by the location name to find in which level the spawner is.
 
 - Universal Tracker will assume that every local item (except for beacons) are already collected. This will matter if you did not randomize the Hills Key, then as soon as you have access to the Music Shrine, Universal Tracker will list the location inside the Hills barn as collectable.
-
-- Universal Tracker will list as collectable the items that spawn from others (quest items from NPCs and Bonus Scroll Rewards). You *will* need to remember where that spawner is, since the spawner (the NPC of the Bonus Scroll) location can be randomized.
 
 - You cannot randomize barrier types without also randomizing the coins location. This is because randomizing barrier types makes the Crypts coin location inaccessible (that particular barrier can only be broken by the flute and cannot be punched or hit).
 
@@ -127,6 +109,6 @@ The following limitations are due to the way the game is coded and would need re
 
 - Bonus Scrolls, NPCs and Beacons can be randomized, but they will always spawn in your own game world.
 - Faramore NPCs that provide quests cannot be spawned from other objects (NPCs or Bonus scrolls).
-- Frich, the Rudy Races, Mortar (the shop) are not part of the randomization pool.
+- Frich, the Rudy Races, and Mortar (the shop) are not part of the randomization pool.
 - Every bag, coin and candles are uniquely identified and not fungible.
 - Beacons can only unlock levels and not items.
