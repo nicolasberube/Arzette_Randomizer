@@ -23,7 +23,7 @@
 
 ## Set up an Archipelago seed and server
 
-If you already know how to generate an Archipelago seed with an .apworld file, you can download the latest .apworld version from the [releases page](https://github.com/nicolasberube/Arzette_Randomizer/releases) and skip this section straight to [Setting up the client](#set-up-the-client-connection-information).
+If you already know how to generate an Archipelago seed with an .apworld file, you can download the latest .apworld version from the [releases page](https://github.com/nicolasberube/Arzette_Randomizer/releases) and skip this section straight to [setting up the client](#set-up-the-client-connection-information).
 
 - If you do not have Archipelago installed, download the latest stable release of Archipelago for Windows [here](https://github.com/ArchipelagoMW/Archipelago/releases). This randomizer has been tested with the release version 0.6.7. You want the file `Setup.Archipelago.[VERSION].exe`.
 

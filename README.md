@@ -4,11 +4,11 @@ This is a randomizer for Arzette: The Jewel of Faramore. This repository include
 
 It is only available for the Windows Steam version of the game.
 
-# [Setup Guide](arzette/setup_en.md)
+# [Setup Guide](arzette/docs/setup_en.md)
 
 How to set up the client on your computer.
 
-# [Randomizer Information](arzette/en_Arzette.md)
+# [Randomizer Information](arzette/docs/en_Arzette.md)
 
 Various information about the randomizer, differences with the vanilla game, bugs, techniques, etc.
 
@@ -23,7 +23,7 @@ Various information about the randomizer, differences with the vanilla game, bug
 
 # CREDITS
 
-- Randomizer Logic & Program Development - Lightmopp
-- Advice and Tests - g0goTBC
+- APworld Development - Lightmopp
 - Game Client - Dopply
+- Support and Tests - g0goTBC
 - Play Testing - JustCallMeGio, RoobyRoo, Dynomation, FinalFlame, Vicas
