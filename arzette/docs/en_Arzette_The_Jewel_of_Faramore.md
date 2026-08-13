@@ -63,7 +63,7 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
 
-## Information
+## Game info
 
 Some game information might not be known from all players, but are expected to be known.
 

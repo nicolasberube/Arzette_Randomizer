@@ -28,6 +28,12 @@ class ArzetteWebWorld(WebWorld):
     option_groups = arzette_option_groups
 
 class ArzetteWorld(World):
+    """
+    Arzette: The Jewel of Faramore is a platforming action adventure game which serves as a spiritual successor to a pair of infamous CD-i fantasy adventure titles.
+    It is a new interactive animated adventure, that features unique, hand-painted background,
+    and dozens of fully-voiced, traditionally animated cutscenes, produced in a beloved style familiar to fans of the games Arzette was inspired by.
+    """
+
     game: str = "Arzette: The Jewel of Faramore"
     web = ArzetteWebWorld()
     topology_present = True
