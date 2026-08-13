@@ -1,3 +1,4 @@
+from ..Names import itemName
 from ..options import ShuffleHillsKey
 from .test_logic import CasualLogic, TrickyJumpsLogic, NoLanternLogic, DamageBoostLogic, \
     TrickyJumpsNoLanternLogic, TrickyJumpsDamageBoostLogic, NoLanternDamageBoostLogic, \
@@ -6,38 +7,34 @@ from . import ArzetteTestBase
 
 class TestShuffledHillsKey(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_hills_key": ShuffleHillsKey.option_true,
-
-
     }
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        assert "Hills Key" in item_pool_names
+        assert itemName.HillsKey in item_pool_names
 
     def test_locations(self) -> None:
-        location = self.world.get_location("Hills Key")
+        location = self.world.get_location(self.world.item_to_loc[itemName.HillsKey])
         assert not location.is_event
 
 class TestVanillaHillsKey(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_hills_key": ShuffleHillsKey.option_false,
-
-
     }
 
     def test_item_pool(self) -> None:
         item_pool_names = {item.name for item in self.multiworld.itempool}
-        assert "Hills Key" not in item_pool_names
+        assert itemName.HillsKey not in item_pool_names
 
     def test_prefills(self) -> None:
-        location = self.world.get_location("Hills Key")
+        location = self.world.get_location(self.world.item_to_loc[itemName.HillsKey])
         assert location.is_event
         assert location.item is not None
         assert location.item.is_event
-        assert location.item.name == "Hills Key"
+        assert location.item.name == itemName.HillsKey
 
 class TestShuffledHillsKeyCasual(TestShuffledHillsKey, CasualLogic):
     options = {
@@ -134,4 +131,3 @@ class TestVanillaHillsKeyTrickyJumpsNoLanternDamageBoost(TestVanillaHillsKey, Tr
         **TestVanillaHillsKey.options,
         **TrickyJumpsNoLanternDamageBoostLogic.options,
     }
-

@@ -1,7 +1,7 @@
 import typing
 from ..items import bag_items
 from ..locations import all_levels
-from ..options import LevelOrder, ShuffleBags
+from ..options import LevelOrder, ShuffleBags, ShuffleBeacons
 from .test_logic import CasualLogic, TrickyJumpsLogic, NoLanternLogic, DamageBoostLogic, \
     TrickyJumpsNoLanternLogic, TrickyJumpsDamageBoostLogic, NoLanternDamageBoostLogic, \
     TrickyJumpsNoLanternDamageBoostLogic
@@ -9,11 +9,9 @@ from . import ArzetteTestBase
 
 class TestVanillaLevelOrder(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "level_order": LevelOrder.option_vanilla,
         "shuffle_bags": ShuffleBags.option_true,
-
-
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -38,13 +36,12 @@ class TestVanillaLevelOrder(ArzetteTestBase):
         assert universal_tracker_info["level_beacons"]["Forest"] == "Default Beacon"
         assert universal_tracker_info["progression_bag"] is None
 
-class TestFaramoreLevelOrder(ArzetteTestBase):
+class TestFaramoreStartShuffleLevelOrder(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
-        "level_order": LevelOrder.option_faramore,
+        **ArzetteTestBase.base_options,
+        "level_order": LevelOrder.option_faramore_start_shuffle,
         "shuffle_bags": ShuffleBags.option_true,
-
-
+        "shuffle_beacons": ShuffleBeacons.option_true,
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -67,13 +64,12 @@ class TestFaramoreLevelOrder(ArzetteTestBase):
         assert universal_tracker_info["level_beacons"]["Faramore"] == "Default Beacon"
         assert universal_tracker_info["progression_bag"] is None
 
-class TestRandomizedLevelOrder(ArzetteTestBase):
+class TestShuffleLevelOrder(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
-        "level_order": LevelOrder.option_randomize,
+        **ArzetteTestBase.base_options,
+        "level_order": LevelOrder.option_shuffle,
         "shuffle_bags": ShuffleBags.option_true,
-
-
+        "shuffle_beacons": ShuffleBeacons.option_true,
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -157,99 +153,99 @@ class TestVanillaLevelOrderTrickyJumpsNoLanternDamageBoost(TestVanillaLevelOrder
         **TrickyJumpsNoLanternDamageBoostLogic.options,
     }
 
-class TestFaramoreLevelOrderCasual(TestFaramoreLevelOrder, CasualLogic):
+class TestFaramoreStartShuffleLevelOrderCasual(TestFaramoreStartShuffleLevelOrder, CasualLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **CasualLogic.options,
     }
 
-class TestFaramoreLevelOrderTrickyJumps(TestFaramoreLevelOrder, TrickyJumpsLogic):
+class TestFaramoreStartShuffleLevelOrderTrickyJumps(TestFaramoreStartShuffleLevelOrder, TrickyJumpsLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **TrickyJumpsLogic.options,
     }
 
-class TestFaramoreLevelOrderNoLantern(TestFaramoreLevelOrder, NoLanternLogic):
+class TestFaramoreStartShuffleLevelOrderNoLantern(TestFaramoreStartShuffleLevelOrder, NoLanternLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **NoLanternLogic.options,
     }
 
-class TestFaramoreLevelOrderDamageBoost(TestFaramoreLevelOrder, DamageBoostLogic):
+class TestFaramoreStartShuffleLevelOrderDamageBoost(TestFaramoreStartShuffleLevelOrder, DamageBoostLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **DamageBoostLogic.options,
     }
 
-class TestFaramoreLevelOrderTrickyJumpsNoLantern(TestFaramoreLevelOrder, TrickyJumpsNoLanternLogic):
+class TestFaramoreStartShuffleLevelOrderTrickyJumpsNoLantern(TestFaramoreStartShuffleLevelOrder, TrickyJumpsNoLanternLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **TrickyJumpsNoLanternLogic.options,
     }
 
-class TestFaramoreLevelOrderTrickyJumpsDamageBoost(TestFaramoreLevelOrder, TrickyJumpsDamageBoostLogic):
+class TestFaramoreStartShuffleLevelOrderTrickyJumpsDamageBoost(TestFaramoreStartShuffleLevelOrder, TrickyJumpsDamageBoostLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **TrickyJumpsDamageBoostLogic.options,
     }
 
-class TestFaramoreLevelOrderNoLanternDamageBoost(TestFaramoreLevelOrder, NoLanternDamageBoostLogic):
+class TestFaramoreStartShuffleLevelOrderNoLanternDamageBoost(TestFaramoreStartShuffleLevelOrder, NoLanternDamageBoostLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **NoLanternDamageBoostLogic.options,
     }
 
-class TestFaramoreLevelOrderTrickyJumpsNoLanternDamageBoost(TestFaramoreLevelOrder, TrickyJumpsNoLanternDamageBoostLogic):
+class TestFaramoreStartShuffleLevelOrderTrickyJumpsNoLanternDamageBoost(TestFaramoreStartShuffleLevelOrder, TrickyJumpsNoLanternDamageBoostLogic):
     options = {
-        **TestFaramoreLevelOrder.options,
+        **TestFaramoreStartShuffleLevelOrder.options,
         **TrickyJumpsNoLanternDamageBoostLogic.options,
     }
 
-class TestRandomizedLevelOrderCasual(TestRandomizedLevelOrder, CasualLogic):
+class TestShuffleLevelOrderCasual(TestShuffleLevelOrder, CasualLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **CasualLogic.options,
     }
 
-class TestRandomizedLevelOrderTrickyJumps(TestRandomizedLevelOrder, TrickyJumpsLogic):
+class TestShuffleLevelOrderTrickyJumps(TestShuffleLevelOrder, TrickyJumpsLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **TrickyJumpsLogic.options,
     }
 
-class TestRandomizedLevelOrderNoLantern(TestRandomizedLevelOrder, NoLanternLogic):
+class TestShuffleLevelOrderNoLantern(TestShuffleLevelOrder, NoLanternLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **NoLanternLogic.options,
     }
 
-class TestRandomizedLevelOrderDamageBoost(TestRandomizedLevelOrder, DamageBoostLogic):
+class TestShuffleLevelOrderDamageBoost(TestShuffleLevelOrder, DamageBoostLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **DamageBoostLogic.options,
     }
 
-class TestRandomizedLevelOrderTrickyJumpsNoLantern(TestRandomizedLevelOrder, TrickyJumpsNoLanternLogic):
+class TestShuffleLevelOrderTrickyJumpsNoLantern(TestShuffleLevelOrder, TrickyJumpsNoLanternLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **TrickyJumpsNoLanternLogic.options,
     }
 
-class TestRandomizedLevelOrderTrickyJumpsDamageBoost(TestRandomizedLevelOrder, TrickyJumpsDamageBoostLogic):
+class TestShuffleLevelOrderTrickyJumpsDamageBoost(TestShuffleLevelOrder, TrickyJumpsDamageBoostLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **TrickyJumpsDamageBoostLogic.options,
     }
 
-class TestRandomizedLevelOrderNoLanternDamageBoost(TestRandomizedLevelOrder, NoLanternDamageBoostLogic):
+class TestShuffleLevelOrderNoLanternDamageBoost(TestShuffleLevelOrder, NoLanternDamageBoostLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **NoLanternDamageBoostLogic.options,
     }
 
-class TestRandomizedLevelOrderTrickyJumpsNoLanternDamageBoost(TestRandomizedLevelOrder, TrickyJumpsNoLanternDamageBoostLogic):
+class TestShuffleLevelOrderTrickyJumpsNoLanternDamageBoost(TestShuffleLevelOrder, TrickyJumpsNoLanternDamageBoostLogic):
     options = {
-        **TestRandomizedLevelOrder.options,
+        **TestShuffleLevelOrder.options,
         **TrickyJumpsNoLanternDamageBoostLogic.options,
     }
 

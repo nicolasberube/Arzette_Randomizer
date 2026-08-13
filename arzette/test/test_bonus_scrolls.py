@@ -9,7 +9,7 @@ from . import ArzetteTestBase
 
 class TestShuffledBonusScrolls(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
         "shuffle_bonus_scrolls": ShuffleBonusScrolls.option_true,
         "shuffle_bags": ShuffleBags.option_true,
     }
@@ -36,7 +36,7 @@ class TestShuffledBonusScrolls(ArzetteTestBase):
     def test_locations(self) -> None:
         world_location_names = {location.name for location in self.world.get_locations()}
         for item_name in scroll_items:
-            assert item_name in world_location_names
+            assert self.world.item_to_loc[item_name] in world_location_names
 
     def test_slot_data(self) -> None:
         unpingable_locations = self.slot_data["unpingable_locations"]
@@ -46,7 +46,7 @@ class TestShuffledBonusScrolls(ArzetteTestBase):
 
 class TestVanillaBonusScrolls(ArzetteTestBase):
     options = {
-        **ArzetteTestBase.no_early_lock_options,
+        **ArzetteTestBase.base_options,
     }
 
     def world_setup(self, seed: typing.Optional[int] = None) -> None:
@@ -63,12 +63,13 @@ class TestVanillaBonusScrolls(ArzetteTestBase):
 
     def test_early_lock(self) -> None:
         for item_name in scroll_items:
-            assert self.world.early_lock[item_name] == item_name
-            assert self.world.get_location(item_name).item.name == item_name
+            vanilla_loc = self.world.item_to_loc[item_name]
+            assert self.world.early_lock[item_name] == vanilla_loc
+            assert self.world.get_location(vanilla_loc).item.name == item_name
 
     def test_prefills(self) -> None:
         for item_name in scroll_items:
-            location = self.world.get_location(item_name)
+            location = self.world.get_location(self.world.item_to_loc[item_name])
             assert location.is_event
             assert location.item is not None
             assert location.item.is_event
@@ -77,7 +78,7 @@ class TestVanillaBonusScrolls(ArzetteTestBase):
     def test_slot_data(self) -> None:
         unpingable_locations = self.slot_data["unpingable_locations"]
         for item_name in scroll_items:
-            vanilla_id = all_locations[item_name].arzid
+            vanilla_id = all_locations[self.world.item_to_loc[item_name]].arzid
             assert unpingable_locations[vanilla_id]["item"] == all_item_table[item_name].arzid
 
 class TestShuffledBonusScrollsCasual(TestShuffledBonusScrolls, CasualLogic):

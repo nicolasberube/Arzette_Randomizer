@@ -7,7 +7,7 @@ from . import ArzetteTestBase
 
 class TestAllShuffled(ArzetteTestBase):
     options = {
-        "level_order": LevelOrder.option_randomize,
+        "level_order": LevelOrder.option_shuffle,
         "trading_sequence": TradingSequence.option_shuffle,
         "shuffle_barrier_types": ShuffleBarrierTypes.option_true,
         "shuffle_npcs": ShuffleNPCs.option_true,
@@ -25,7 +25,6 @@ class TestAllShuffled(ArzetteTestBase):
         "shuffle_race_rewards": ShuffleRaceRewards.option_true,
         "shuffle_beacons": ShuffleBeacons.option_true,
         "shuffle_jewels": ShuffleJewels.option_true,
-
     }
 
 

@@ -25,7 +25,6 @@ class TestAllVanilla(ArzetteTestBase):
         "shuffle_race_rewards": ShuffleRaceRewards.option_false,
         "shuffle_beacons": ShuffleBeacons.option_false,
         "shuffle_jewels": ShuffleJewels.option_false,
-
     }
 
 

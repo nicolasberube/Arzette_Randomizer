@@ -20,6 +20,7 @@ class ShuffleBeacons(DefaultOnToggle):
 Include the Sacred Beacons in the item and location pools.
 Sacred Beacons will stay in your local game, cannot spawn from other items, and will still unlock levels when hit.
 Not to be confused with Level Order, which decides which level is unlocked by hitting the beacon.
+Using Faramore_Start_Shuffle or Shuffle Level Order without Shuffle Beacons enabled will make it hard to get a successful generation.
     """
     internal_name = "shuffle_beacons"
     display_name = "Shuffle Beacons"
