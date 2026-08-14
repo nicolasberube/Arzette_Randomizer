@@ -467,9 +467,6 @@ class ArzetteWorld(World):
             ret.add_locations(locations, ArzetteLocation)
             self.multiworld.regions.append(ret)
 
-        logging.info('REGIONS LOCATIONS')
-        logging.info(region_to_locations)
-
         menu_rules = {
             locName.Faramore: lambda state: level_access(locName.Faramore, state, self),
             locName.Forest: lambda state: level_access(locName.Forest, state, self),
@@ -515,7 +512,7 @@ class ArzetteWorld(World):
 
     def create_items(self) -> None:
         # Debug
-        if True:
+        if False:
             logging.info('EARLY LOCK')
             logging.info(self.early_lock)
             logging.info('UNREACHABLES')
@@ -542,8 +539,6 @@ class ArzetteWorld(World):
         itempool = []
         trading_items = [self.loc_to_item[location] for location in trading_sequence
                          if location not in self.unreachables]
-        logging.info('TRADING ITEMS')
-        logging.info(trading_items)
         for name in all_item_table:
             if name not in active_items:
                 is_event_item = (

@@ -86,15 +86,16 @@ Some game information might not be known from all players, but are expected to b
 - Enabling the tricky jumps option in the yaml will mean that the following will be in logic:
     - You can jump on the Faramore shop's roof from the platform above the well with the Winged Belt to access the top left part of the town.
     - The Forest Rudy Race normally spawns a barrier on the left forbidding you from using the shortcut with the Griffin Boots. However, you can despawn it by entering and leaving the tree sub area on the right.
-    - The Desert Key can be accessed from the right with the Griffin Boots, or the Winged Belt and Speedy Shoes combo
-    - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump
-    - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes
-    - You can destroy the barrier to access the Crypts Coin with a *very* tight Sword Wave while falling from a jump on its left.
-    - You can technically avoid getting hit by all the enemies in the Volcano without any items
+    - The Desert Key can be accessed from the right with the Griffin Boots, or the Winged Belt and Speedy Shoes combo.
+    - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump.
+    - The Canyon Candle at the end of the first area can be accessed with a jump from a platform on the left with the Winged Belt and Speedy Shoes.
+    - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes.
+    - You can destroy the barrier to access the Crypts Coin with a *very* tight Sword Wave while falling from a jump.
+    - You can technically avoid getting hit by all the enemies in the Volcano without any items.
     - You can collect the Volcano Coin with a well placed Backstep from one of the platform on the top left, or with the Winged Belt
     - The left pillar on the Beach for the Key to Tork's cabin can be hit with a Bomb, the Sword Wave or the Smart Gun from the leaf of the tree.
-    - The right pillar on the Beach for the Key to Tork's cabin can be access by a well timed jump from the front of Tork's cabin, with the Speedy Shoes
-    - The Hills Bonus (the one where you start in the middle and need the double jump to get out to hit the targets) can be completed with either the Fatal Flute, or by hitting one target at a time from the middle with perfect accuracy and some luck with the target spawn timing
+    - The right pillar on the Beach for the Key to Tork's cabin can be access by a well timed jump from the front of Tork's cabin, with the Speedy Shoes.
+    - The Hills Bonus (the one where you start in the middle and need the double jump to get out to hit the targets) can be completed with either the Fatal Flute, or by hitting one target at a time from the middle with perfect accuracy and some luck with the target spawn timing.
 
 ## Randomizer info
 

@@ -239,7 +239,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         has_barrier("Red", state, world))
 
     add_rule(world.get_location(locName.CanyonCandleFirstRoomEnd), lambda state:
-        (state.has(itemName.SpeedyShoes, player) and state.has(itemName.WingedBelt, player)) or
+        (state.has(itemName.SpeedyShoes, player) and state.has(itemName.WingedBelt, player) and
+         options.tricky_jumps.value) or
         state.has(itemName.GriffinBoots, player))
 
     for item in [locName.CanyonJewel, locName.CanyonCrowdee]:

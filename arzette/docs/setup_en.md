@@ -63,11 +63,11 @@ The following is optional but helps to avoid getting lost while playing the game
 
 - Start the game either from Steam, or by double clicking on your now patched `Arzette.exe` in your Steam game folder.
 
-- Upon booting the game, a pop-up will appear asking you for Archipelago connection information. This information will be saved under `apconfig.txt` in the save files folder. To change connection information, you can either press Y on the title screen, directly modify the `apconfig.txt` file, or delete the `apconfig.txt` file and enter the new information when rebooting the game.
+- Upon booting the game, a pop-up will appear asking you for Archipelago connection information. This information will be saved under `apconfig.txt` in the save files folder. To change connection information, you can either press Y on the title screen (you will need to reboot the game after entering the new information there), or directly modify the `apconfig.txt` file, or delete the `apconfig.txt` file and enter the new information when rebooting the game.
 
 - Sometimes, the game will not boot if the connection information is wrong. If this is the case, delete the `apconfig.txt` file in the save files folder and try again.
 
-- If you select New Game during your playthrough - or if you did not receive a certain item when it was sent - just close the game and relaunch it to resync with the server.
+- If you select New Game during your playthrough, or if you did not receive a certain item when it was sent, just close the game and relaunch it to resync with the server.
 
 - If you still have problems, you can always manually edit `savedata_rando.ini` to give yourself an item. But if you find a way to reproduce that bug, please report it to the Archipelago Discord server or to this project's maintainer.
 
