@@ -57,7 +57,7 @@ class ShuffleHillsKey(Toggle):
 Add the Lichen Hills key and its Music Shrine location to the pool.
 If spawned in your local game, this key is invisible until the Fatal Flute is played near it, making it difficult to find otherwise.
 One would need to know every location check in the game, and play the Flute next to them if they are empty.
-The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
+The only other empty location would be the Shield Ring if you already collected the Reflecting Ring.
     """
     internal_name = "shuffle_hills_key"
     display_name = "Shuffle Hills Key"

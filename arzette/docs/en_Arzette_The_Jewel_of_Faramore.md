@@ -49,7 +49,13 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 ## Known bugs
 
-- The shield ring will not spawn if you already have the reflector ring, making the item uncollectable.
+- The game cannot load if the connection information is wrong. You need to manually edit or delete the `apconfig.txt` file from the save folder to fix this.
+
+- Changing the connection information from within the game by pressing Y needs a reboot.
+
+- Connecting to another player from the same seed will not reset the save file.
+
+- The shield ring will not spawn if you already have the reflecting ring, making the item uncollectable.
 
 - Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 

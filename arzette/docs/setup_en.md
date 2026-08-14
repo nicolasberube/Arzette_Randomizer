@@ -59,7 +59,7 @@ The following is optional but helps to avoid getting lost while playing the game
 
 - Find the save files folder of the game. On Windows, it is normally located on `C:\Users\[USER]\AppData\Local\Arzette`.
 
-- You do not need to back up your save file `savedata.ini`. The Archipelago save file will be separate as `savedata_rando.ini`.
+- You do not need to back up your save file `savedata.ini`. The Archipelago save file will be separate as `savedata_rando.ini`. Note that if you play multiple players on the same seed, there will be save file conflicts and you will need to manage them manually.
 
 - Start the game either from Steam, or by double clicking on your now patched `Arzette.exe` in your Steam game folder.
 
@@ -67,9 +67,13 @@ The following is optional but helps to avoid getting lost while playing the game
 
 - Sometimes, the game will not boot if the connection information is wrong. If this is the case, delete the `apconfig.txt` file in the save files folder and try again.
 
-- If you select New Game during your playthrough, or if you did not receive a certain item when it was sent, just close the game and relaunch it to resync with the server.
+- Sometimes, you might not receive all your items on your first connection. On your very first connection to a seed, after you select New Game, it is recommended to reboot the game. It should work properly after that.
 
-- If you still have problems, you can always manually edit `savedata_rando.ini` to give yourself an item. But if you find a way to reproduce that bug, please report it to the Archipelago Discord server or to this project's maintainer.
+- If you want to change the difficulty in the middle of a playhrough, you can try to start a New Game at the desired difficulty, and then rebooting the game to resync with the server and receive your items. You can also simply manually edit the `[difficulty]` part of `savedata_rando.ini`. While I would recommend the latter, both those methods have not been thoroughly tested.
+
+- If you have another syncing problem, try closing the game and relaunching it to resync with the server.
+
+- If you still have problems, you can always manually edit `savedata_rando.ini` to give yourself an item. But if you find a way to reproduce that bug, please report it (keep all the yaml used to generate the seed and the `AP_[NUMBERS].zip` file) to the Archipelago Discord server or to this project's maintainer.
 
 ## Switching between randomizer and vanilla
 
@@ -78,7 +82,7 @@ The following is optional but helps to avoid getting lost while playing the game
     - Rename your original files `Arzette_original.exe` to `Arzette.exe`, `data_original.win` to `data.win` and `textures_original` to `textures`. The game should now revert to its vanilla state.
     - To revert back to playing the randomizer, just revert back the previous 2 steps.
 
-- If you didn't back up your files, you can unintal the mod is to simply verify integrity of game files through Steam as described [here](#patch-the-game-files)
+- If you didn't back up your files, you can uninstall the mod by simply verifing the integrity of game files through Steam as described [here](#patch-the-game-files).
 
 ## More info
 
