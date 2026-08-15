@@ -211,7 +211,7 @@ quest_items = {
 	itemName.BombGauntlet:               ItemData(367759185, ItemClassification.progression),
 	itemName.SpeedyShoes:                ItemData(367759186, ItemClassification.progression),
 	itemName.MagicCloak:                 ItemData(367759187, ItemClassification.progression),
-	itemName.DoubleWave:                 ItemData(367759190, ItemClassification.useful)
+	itemName.DoubleWave:                 ItemData(367759190, ItemClassification.progression_deprioritized)
 }
 
 rock_items = {

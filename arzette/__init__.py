@@ -335,7 +335,7 @@ class ArzetteWorld(World):
 
         if len(spawner_list) > 0:
             chosen_locs = self.get_all_chosen_locations()
-            forbidden_locs = [locName.HillsCoin]
+            forbidden_locs = [locName.HillsCoin, locName.DesertLifeUp]
             available_locs = [
                 location for location, locdata in all_locations.items()
                 if (locdata.can_spawner and (location not in self.early_lock.values()) and
@@ -566,7 +566,7 @@ class ArzetteWorld(World):
                     pool_item.classification = ItemClassification.useful
                 if name in {itemName.MagicCloak, itemName.ReflectorRing} and self.options.damage_boost.value:
                     pool_item.classification = ItemClassification.progression_deprioritized
-                if name == itemName.Backstep and not self.options.tricky_jumps.value:
+                if name in {itemName.Backstep, itemName.DoubleWave} and not self.options.tricky_jumps.value:
                     pool_item.classification = ItemClassification.useful
                 if name == itemName.SoulUpgrade and not (
                         locName.SoulUpgrade in self.unreachables and

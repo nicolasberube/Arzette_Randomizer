@@ -98,12 +98,13 @@ Some game information might not be known from all players, but are expected to b
     - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump.
     - The Canyon Candle at the end of the first area can be accessed with a jump from a platform on the left with the Winged Belt and Speedy Shoes.
     - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes.
-    - You can destroy the barrier to access the Crypts Coin with a *very* tight Sword Wave while falling from a jump.
+    - You can destroy the barrier to access the Crypts Coin with a *very* tight Double Wave while falling from a jump.
     - You can technically avoid getting hit by all the enemies in the Volcano without any items.
     - You can collect the Volcano Coin with a well placed Backstep from one of the platform on the top left, or with the Winged Belt
     - The left pillar on the Beach for the Key to Tork's cabin can be hit with a Bomb, the Sword Wave or the Smart Gun from the leaf of the tree.
     - The right pillar on the Beach for the Key to Tork's cabin can be access by a well timed jump from the front of Tork's cabin, with the Speedy Shoes.
     - The Hills Bonus (the one where you start in the middle and need the double jump to get out to hit the targets) can be completed with either the Fatal Flute, or by hitting one target at a time from the middle with perfect accuracy and some luck with the target spawn timing.
+    - Nodelki can be beaten with only the Winged Belt.
 
 ## Randomizer info
 
