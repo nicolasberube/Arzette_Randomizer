@@ -643,6 +643,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location(locName.CastleJewel), lambda state:
         state.has_group("candles", player, 20) and
+        state.has(itemName.CastleKeyNodelki, player) and
         can_beat_nodelki(state, world))
 
     for item in [locName.CastleBagBonus, locName.CastleBonus]:
