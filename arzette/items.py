@@ -185,7 +185,7 @@ quest_items = {
 	itemName.MagicArmor:                 ItemData(367759021, ItemClassification.useful),
 	itemName.SilverCricket:              ItemData(367759022, ItemClassification.progression_deprioritized),
 	itemName.RopeLadder:                 ItemData(367759023, ItemClassification.progression_deprioritized),
-	itemName.ShieldRing:                 ItemData(367759030, ItemClassification.useful),
+	itemName.ShieldRing:                 ItemData(367759030, ItemClassification.progression_deprioritized),
 	itemName.Compass:                    ItemData(367759034, ItemClassification.progression_deprioritized),
 	itemName.GriffinBoots:               ItemData(367759063, ItemClassification.progression),
 	itemName.Bell:                       ItemData(367759078, ItemClassification.progression_deprioritized),

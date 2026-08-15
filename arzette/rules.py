@@ -93,6 +93,14 @@ def can_pass_poulture(color: str, state: CollectionState, world: "ArzetteWorld")
     return (has_color(color, state, world) or state.has(itemName.FatalFlute, world.player) or
             has_cloak(state, world) or world.options.damage_boost.value)
 
+def can_beat_nodelki(state: CollectionState, world: "ArzetteWorld") -> bool:
+    return (state.has(itemName.GriffinBoots, world.player) or
+            (state.has(itemName.WingedBelt, world.player) and world.options.tricky_jumps.value) or
+            state.has(itemName.MagicCloak, world.player) or
+            state.has(itemName.Chainsword, world.player) or
+            state.has(itemName.ShieldRing, world.player) or
+            state.has(itemName.ReflectorRing, world.player))
+
 def spawner_reach(spawner: str, state: CollectionState, world: "ArzetteWorld") -> bool:
     return world.get_location(world.early_lock[spawner]).can_reach(state)
 
@@ -349,9 +357,6 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         add_rule(world.get_location(item), lambda state:
             state.has_group("candles", player, 20))
 
-    add_rule(world.get_location(locName.PeakBagAfterApatu), lambda state:
-        state.has(itemName.PeakJewel, player))
-
     # Crypts Rules
     for item in [locName.CryptsLifeUp, locName.Bell, locName.CryptsBonus, locName.CryptsKey,
                  locName.CryptsBagCrypt, locName.CryptsCandleAfterCrypt, locName.CryptsCoin,
@@ -565,9 +570,6 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         add_rule(world.get_location(item), lambda state:
             can_pass_poulture("Blue", state, world))
 
-    add_rule(world.get_location(locName.FortBonus), lambda state:
-        state.has(itemName.FortJewel, player))
-
     # Castle Rules
     add_rule(world.get_location(locName.CastleBagEntrance), lambda state:
         state.has(itemName.GriffinBoots, player))
@@ -641,7 +643,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location(locName.CastleJewel), lambda state:
         state.has_group("candles", player, 20) and
-        state.has(itemName.CastleKeyNodelki, player))
+        can_beat_nodelki(state, world))
 
     for item in [locName.CastleBagBonus, locName.CastleBonus]:
         add_rule(world.get_location(item), lambda state:

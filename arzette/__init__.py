@@ -565,7 +565,7 @@ class ArzetteWorld(World):
                 if name == itemName.Lantern and self.options.no_lantern.value:
                     pool_item.classification = ItemClassification.useful
                 if name in {itemName.MagicCloak, itemName.ReflectorRing} and self.options.damage_boost.value:
-                    pool_item.classification = ItemClassification.useful
+                    pool_item.classification = ItemClassification.progression_deprioritized
                 if name == itemName.Backstep and not self.options.tricky_jumps.value:
                     pool_item.classification = ItemClassification.useful
                 if name == itemName.SoulUpgrade and not (

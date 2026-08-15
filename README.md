@@ -10,7 +10,7 @@ How to set up the client on your computer.
 
 # [Randomizer Information](arzette/docs/en_Arzette.md)
 
-Various information about the randomizer, differences with the vanilla game, bugs, techniques, etc.
+Various information about the randomizer, known bugs, techniques, differences with the vanilla game, etc.
 
 # Future plans
 

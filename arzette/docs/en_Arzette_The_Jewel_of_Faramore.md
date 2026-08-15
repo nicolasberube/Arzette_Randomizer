@@ -59,7 +59,7 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 
-- The Power Pendant and the trading sequence items might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
+- The Power Pendant and the Chainsword trading sequence items might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
 
 - The pillars to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
 
@@ -68,6 +68,8 @@ Due to the way the game is coded, and the nature of the need for randomization a
 - The Hills barn will show a beacon light emanate from it if the Hills beacon is activated, no matter where that Hills beacon was.
 
 - Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
+
+- The region for the Rocks might not always show the correct path to it through Universal Tracker or `/get_logical_path`.
 
 ## Game info
 
