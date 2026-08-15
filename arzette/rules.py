@@ -729,19 +729,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location(locName.InfiniteSoulfire), lambda state:
         spawner_reach(itemName.FaramoreRudy, state, world) and
-        level_access("Faramore", state, world) and
-        state.has_group("bombs", player) and
-        state.has_group("coins", player, 10) and
-        state.has(itemName.SmartGun, player) and
-        level_access("Forest", state, world) and
-        world.get_location(locName.ForestRudyStart).can_reach(state) and
-        world.get_location(locName.ForestRudyEnd).can_reach(state) and
-        level_access("Peak", state, world) and
-        world.get_location(locName.PeakRudyStart).can_reach(state) and
-        world.get_location(locName.PeakRudyEnd).can_reach(state) and
-        level_access("Hills", state, world) and
-        world.get_location(locName.HillsRudyStart).can_reach(state) and
-        world.get_location(locName.HillsRudyEnd).can_reach(state))
+        world.get_location(locName.HillsRace100Rupees).can_reach(state))
 
     add_rule(world.get_location(locName.BombUpgrade), lambda state:
         spawner_reach(itemName.FaramoreBarnabuss, state, world) and
@@ -759,7 +747,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
 
     add_rule(world.get_location(locName.Calendar), lambda state:
         spawner_reach(itemName.FaramoreDenny, state, world) and
-        world.get_location(locName.CastleJewel).can_access(state))
+        world.get_location(locName.CastleJewel).can_reach(state))
 
     # Forest Rules
     add_rule(world.get_location(locName.Lantern), lambda state:
@@ -767,12 +755,11 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.CitizenshipPapers, player))
 
     add_rule(world.get_location(locName.ForestRace100Rupees), lambda state:
+        spawner_reach(itemName.ForestRudyStart) and
+        spawner_reach(itemName.ForestRudyEnd) and
         level_access("Faramore", state, world) and
         state.has_group("bombs", player) and
-        state.has_group("coins", player, 1) and
-        level_access("Forest", state, world) and
-        world.get_location(locName.ForestRudyStart).can_reach(state) and
-        world.get_location(locName.ForestRudyEnd).can_reach(state))
+        state.has_group("coins", player, 1))
 
     # Caves Rules
     add_rule(world.get_location(locName.Rope), lambda state:
@@ -809,15 +796,10 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.CrystalofRefraction, player))
 
     add_rule(world.get_location(locName.PeakRace100Rupees), lambda state:
-        level_access("Faramore", state, world) and
-        state.has_group("bombs", player) and
+        spawner_reach(itemName.PeakRudyStart) and
+        spawner_reach(itemName.PeakRudyEnd) and
         state.has_group("coins", player, 5) and
-        level_access("Forest", state, world) and
-        world.get_location(locName.ForestRudyStart).can_reach(state) and
-        world.get_location(locName.ForestRudyEnd).can_reach(state) and
-        level_access("Peak", state, world) and
-        world.get_location(locName.PeakRudyStart).can_reach(state) and
-        world.get_location(locName.PeakRudyEnd).can_reach(state))
+        world.get_location(locName.ForestRace100Rupees).can_reach(state))
 
     # Crypts Rules
     add_rule(world.get_location(locName.BombGauntlet), lambda state:
@@ -847,19 +829,11 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.SwordWave, player))
 
     add_rule(world.get_location(locName.HillsRace100Rupees), lambda state:
-        level_access("Faramore", state, world) and
-        state.has_group("bombs", player) and
+        spawner_reach(itemName.HillsRudyStart) and
+        spawner_reach(itemName.HillsRudyEnd) and
         state.has_group("coins", player, 10) and
-        state.has(itemName.SmartGun, player) and
-        level_access("Forest", state, world) and
-        world.get_location(locName.ForestRudyStart).can_reach(state) and
-        world.get_location(locName.ForestRudyEnd).can_reach(state) and
-        level_access("Peak", state, world) and
-        world.get_location(locName.PeakRudyStart).can_reach(state) and
-        world.get_location(locName.PeakRudyEnd).can_reach(state) and
-        level_access("Hills", state, world) and
-        world.get_location(locName.HillsRudyStart).can_reach(state) and
-        world.get_location(locName.HillsRudyEnd).can_reach(state))
+        state.has(itemName.SmartGun, player) and  # Yes you need the smartgun for this race to spawn
+        world.get_location(locName.PeakRace100Rupees).can_reach(state))
 
     # Lair Rules
     add_rule(world.get_location(locName.FunkyFungus), lambda state:
