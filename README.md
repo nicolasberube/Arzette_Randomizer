@@ -14,6 +14,7 @@ Various information about the randomizer, differences with the vanilla game, bug
 
 # Future plans
 
+- Race Rewards logic seems broken and needs to be tested. Possibly same with Calendar.
 - Logic/Options changes
     - Implement Canteen as the alternative to damage_boost option.
     - Implement Magic Cloak as Power Pendant alternative.

@@ -335,10 +335,11 @@ class ArzetteWorld(World):
 
         if len(spawner_list) > 0:
             chosen_locs = self.get_all_chosen_locations()
+            forbidden_locs = [locName.HillsCoin]
             available_locs = [
                 location for location, locdata in all_locations.items()
                 if (locdata.can_spawner and (location not in self.early_lock.values()) and
-                    (location in chosen_locs))]
+                    (location in chosen_locs) and (location not in forbidden_locs))]
 
             self.random.shuffle(available_locs)
             if len(available_locs) < len(spawner_list):
