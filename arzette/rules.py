@@ -757,8 +757,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.CitizenshipPapers, player))
 
     add_rule(world.get_location(locName.ForestRace100Rupees), lambda state:
-        spawner_reach(itemName.ForestRudyStart) and
-        spawner_reach(itemName.ForestRudyEnd) and
+        spawner_reach(itemName.ForestRudyStart, state, world) and
+        spawner_reach(itemName.ForestRudyEnd, state, world) and
         level_access("Faramore", state, world) and
         state.has_group("bombs", player) and
         state.has_group("coins", player, 1))
@@ -798,8 +798,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.CrystalofRefraction, player))
 
     add_rule(world.get_location(locName.PeakRace100Rupees), lambda state:
-        spawner_reach(itemName.PeakRudyStart) and
-        spawner_reach(itemName.PeakRudyEnd) and
+        spawner_reach(itemName.PeakRudyStart, state, world) and
+        spawner_reach(itemName.PeakRudyEnd, state, world) and
         state.has_group("coins", player, 5) and
         world.get_location(locName.ForestRace100Rupees).can_reach(state))
 
@@ -831,8 +831,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         state.has(itemName.SwordWave, player))
 
     add_rule(world.get_location(locName.HillsRace100Rupees), lambda state:
-        spawner_reach(itemName.HillsRudyStart) and
-        spawner_reach(itemName.HillsRudyEnd) and
+        spawner_reach(itemName.HillsRudyStart, state, world) and
+        spawner_reach(itemName.HillsRudyEnd, state, world) and
         state.has_group("coins", player, 10) and
         state.has(itemName.SmartGun, player) and  # Yes you need the smartgun for this race to spawn
         world.get_location(locName.PeakRace100Rupees).can_reach(state))
