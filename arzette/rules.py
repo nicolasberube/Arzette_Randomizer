@@ -517,7 +517,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     add_rule(world.get_location(locName.HillsCoin), lambda state:
         has_barrier("Purple", state, world))
 
-    for item in [locName.HillsBagBarn, locName.HillsKey,
+    for item in [locName.HillsKey,
                  locName.HillsBagMusicShrine, locName.HillsCandleMusicShrine]:
         add_rule(world.get_location(item), lambda state:
             has_bombs(state, world))
