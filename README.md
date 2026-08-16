@@ -14,7 +14,7 @@ Various information about the randomizer, known bugs, techniques, differences wi
 
 # Future plans
 
-- Check if you can defeat Nodelki with minimal items.
+- Plant quest seems glitched, either when plants are spawned or when giving the plants to Cypress
 - Logic/Options changes
     - Implement Canteen as the alternative to damage_boost option.
     - Implement Magic Cloak as Power Pendant alternative.

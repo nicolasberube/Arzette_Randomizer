@@ -387,7 +387,9 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             (world.barrier_types["Flute"] == "Flute") or
             ((world.barrier_types["Flute"] in ["Red", "Blue", "Purple"]) and
              state.has(itemName.SwordWave, player) and state.has(itemName.DoubleWave, player) and
-             world.options.tricky_jumps.value)))
+             world.options.tricky_jumps.value) or
+            ((world.barrier_types["Flute"] == "Gauntlet") and
+              world.options.tricky_jumps.value)))
 
     for item in [locName.CryptsCandleSkelvis, locName.CryptsBagSkelvis, locName.CryptsSkelvis]:
         add_rule(world.get_location(item), lambda state:
@@ -430,7 +432,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
             
     for item in [locName.FatalFlute, locName.BeachBeacon]:
         add_rule(world.get_location(item), lambda state:
-            can_pass_boarfoon("Blue", state, world) or state.has(itemName.WingedBelt))
+            can_pass_boarfoon("Blue", state, world) or state.has(itemName.WingedBelt, player))
 
     add_rule(world.get_location(locName.BeachKeyTorkCabin), lambda state:
         state.has(itemName.GriffinBoots, player) or
@@ -522,9 +524,12 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         add_rule(world.get_location(item), lambda state:
             has_bombs(state, world))
 
+    add_rule(world.get_location(locName.HillsKey), lambda state:
+        state.has(itemName.FatalFlute, player))
+
     for item in [locName.HillsPlant, locName.HillsBeacon, locName.HillsMilbert]:
         add_rule(world.get_location(item), lambda state:
-            state.has(itemName.HillsKey, player) and state.has(itemName.FatalFlute, player))
+            state.has(itemName.HillsKey, player))
 
     # Fort Rules
     for item in [locName.FortBagDungeon1, locName.FortBagDungeon2,
