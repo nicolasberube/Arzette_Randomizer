@@ -28,7 +28,7 @@ Not to be confused with Level Order, which decides which level is unlocked by hi
 class ShuffleBarrierTypes(DefaultOnToggle):
     """
 When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another.
-If enabled, then Shuffle Coins needs to be enabled as well, or else the Crypts Coin would be unreachable.
+If enabled, then Shuffle Coins or Tricky Jumps needs to be enabled as well, or else the Crypts Coin would be unreachable.
     """
     internal_name = "shuffle_barrier_types"
     display_name = "Shuffle Barrier Types"

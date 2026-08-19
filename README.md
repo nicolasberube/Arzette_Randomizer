@@ -15,13 +15,13 @@ Various information about the randomizer, known bugs, techniques, differences wi
 # Future plans
 
 - Plant quest seems glitched, either when plants are spawned or when giving the plants to Cypress
+- A way to fix the [Shield Ring not spawning bug](arzette/en_Arzette.md#known-bugs).
 - Logic/Options changes
     - Implement Canteen as the alternative to damage_boost option.
     - Implement Magic Cloak as Power Pendant alternative.
     - Add [Bonus Scroll level warp bug](arzette/en_Arzette.md#known-bugs) trick in logic.
     - Investigate the high generation failure rate for the level_order = faramore or shuffle + shuffle_beacon = False combination.
 - A way to find where some key NPCs are without looking at the spoiler log (Faramore Munhum, Forest Cypress)
-- A way to fix the [Shield Ring not spawning bug](arzette/en_Arzette.md#known-bugs).
 - Clean slot_data. Most of universal_tracker_info could be reconstructed from unpingable_locations
 - WebWorld and Poptracker support?
 

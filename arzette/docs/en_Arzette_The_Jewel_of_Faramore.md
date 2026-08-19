@@ -111,6 +111,7 @@ Some game information might not be known from all players, but are expected to b
 - Universal Tracker will list as collectable the items that spawn from others (quest items from NPCs and Bonus Scroll Rewards). You *will* need to remember where that spawner is, since the spawner (the NPC of the Bonus Scroll) location can be randomized.
     - If you cannot find a certain spawner (NPC or Bonus Scroll), use the `/get_logical_path` command followed by the location name to find in which level the spawner is.
     - Another way is to edit the `host.yaml` file in your Archipelago folder, search for the `universal_tracker` section and to set `include_region_name` to true, which will show the region for all the checks.
+    - For quest needing multiple NPCs (Faramore Munhum for the rocks quest, Forest Cypress for the Citizenship papers), you will need to remember them. Make sure you talk to Munhum and Cypress as soon as you see them, it should avoid having to track them back.
 
 - Universal Tracker will assume that every local item (except for beacons) are already collected. This will matter if you did not randomize the Hills Key, then as soon as you have access to the Music Shrine, Universal Tracker will list the location inside the Hills barn as collectable.
 

@@ -524,12 +524,10 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         add_rule(world.get_location(item), lambda state:
             has_bombs(state, world))
 
-    add_rule(world.get_location(locName.HillsKey), lambda state:
-        state.has(itemName.FatalFlute, player))
-
     for item in [locName.HillsPlant, locName.HillsBeacon, locName.HillsMilbert]:
         add_rule(world.get_location(item), lambda state:
-            state.has(itemName.HillsKey, player))
+            state.has(itemName.HillsKey, player) and
+            state.has(itemName.FatalFlute, player))
 
     # Fort Rules
     for item in [locName.FortBagDungeon1, locName.FortBagDungeon2,
@@ -561,7 +559,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
                  locName.FortJewel, locName.FortBonus]:
         add_rule(world.get_location(item), lambda state:
             state.has(itemName.FortKeyTopRoom, player) and
-            has_barrier("Blue", state, world))
+            has_barrier("Blue", state, world) and
+            has_bombs(state, world))
 
     for item in [locName.FortBagLastRoom, locName.ReflectorRing, locName.FortJewel, locName.FortBonus]:
         add_rule(world.get_location(item), lambda state:

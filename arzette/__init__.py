@@ -117,9 +117,10 @@ class ArzetteWorld(World):
             self.assign_beacon()
 
     def validate_yaml_options(self) -> None:
-        if self.options.shuffle_barrier_types.value and not self.options.shuffle_coins.value:
+        if self.options.shuffle_barrier_types.value and not (
+                self.options.shuffle_coins.value or self.options.tricky_jumps.value):
             raise OptionError(
-                "Shuffle Coins must be enabled to randomize barriers."
+                "Shuffle Coins or Tricky Jumps must be enabled to randomize barriers."
             )
         if self.options.shuffle_beacons.value and not (
                 self.options.shuffle_npcs.value or
@@ -617,6 +618,10 @@ class ArzetteWorld(World):
                 item.classification = ItemClassification.progression
             elif item.name in coin_items:
                 item.classification = ItemClassification.progression_deprioritized_skip_balancing
+            # For Universal Tracker purposes, since the item has already been placed at this point.
+            if location.player == self.player and item.name == itemName.HillsKey:
+                add_rule(location, lambda state:
+                    state.has(itemName.FatalFlute, self.player))
 
     def set_rules(self) -> None:
         set_location_rules(self)
