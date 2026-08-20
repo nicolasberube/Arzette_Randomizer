@@ -55,11 +55,9 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Connecting to another player from the same seed will not reset the save file.
 
-- The shield ring will not spawn if you already have the reflecting ring, making the item uncollectable.
-
 - Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 
-- The Power Pendant and the Chainsword trading sequence items might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
+- The Power Pendant, Reflector Ring, the Chainsword trading sequence items (and possibly some others) might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
 
 - The pillars to spawn the Fairy in the Desert cannot be activated, since the Fairy location is already spawned.
 
@@ -70,6 +68,8 @@ Due to the way the game is coded, and the nature of the need for randomization a
 - Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
 
 - The region for the Rocks might not always show the correct path to it through Universal Tracker or `/get_logical_path`.
+
+- The Hills Key will show up in logic in Universal Tracker before obtaining the Fatal Flute if it spawned in your own world. This will not forbid proper seed completion.
 
 ## Game info
 

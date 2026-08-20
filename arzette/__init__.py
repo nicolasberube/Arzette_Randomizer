@@ -619,6 +619,7 @@ class ArzetteWorld(World):
             elif item.name in coin_items:
                 item.classification = ItemClassification.progression_deprioritized_skip_balancing
             # For Universal Tracker purposes, since the item has already been placed at this point.
+            # This does not work.
             if location.player == self.player and item.name == itemName.HillsKey:
                 add_rule(location, lambda state:
                     state.has(itemName.FatalFlute, self.player))
