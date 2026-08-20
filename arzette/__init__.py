@@ -39,9 +39,9 @@ class ArzetteWorld(World):
     topology_present = True
 
     item_name_groups = {
-        "magic": {"Sword Wave", "Smart Gun"},
-        "bombs": {"Bombs", "Bomb Gauntlet"},
-        "blue": {"Blue Magic", "Purple Magic"},
+        "magic": {itemName.SwordWave, itemName.SmartGun},
+        "bombs": {itemName.Bombs, itemName.BombGauntlet},
+        "blue": {itemName.BlueMagic, itemName.PurpleMagic},
         "candles": set(candle_items),
         "coins": set(coin_items),
         "jewels": set(jewel_items),
@@ -84,6 +84,7 @@ class ArzetteWorld(World):
             name: location
             for location, name in self.loc_to_item.items()
         }
+        self.hills_key_location = None
 
         super(ArzetteWorld, self).__init__(world, player)
 
@@ -105,6 +106,7 @@ class ArzetteWorld(World):
             self.level_order = slot_data["universal_tracker_info"]["level_order"]
             self.level_beacons = slot_data["universal_tracker_info"]["level_beacons"]
             self.progression_bag = slot_data["universal_tracker_info"].get("progression_bag")
+            self.hills_key_location = slot_data["universal_tracker_info"].get("hills_key_location")
         else:
             # Normal generation
             self.validate_yaml_options()
@@ -486,7 +488,7 @@ class ArzetteWorld(World):
             locName.Lair: lambda state: level_access(locName.Lair, state, self)
         }
         self.get_region(locName.Menu).add_exits(exits=menu_rules.keys(), rules=menu_rules)
-        self.get_region(locName.Caves).add_exits(exits={locName.Rocks}, rules={
+        self.get_region(locName.Menu).add_exits(exits={locName.Rocks}, rules={
             locName.Rocks: lambda state: rock_quest(state, self)
         })
         for region in all_regions:
@@ -618,11 +620,6 @@ class ArzetteWorld(World):
                 item.classification = ItemClassification.progression
             elif item.name in coin_items:
                 item.classification = ItemClassification.progression_deprioritized_skip_balancing
-            # For Universal Tracker purposes, since the item has already been placed at this point.
-            # This does not work.
-            if location.player == self.player and item.name == itemName.HillsKey:
-                add_rule(location, lambda state:
-                    state.has(itemName.FatalFlute, self.player))
 
     def set_rules(self) -> None:
         set_location_rules(self)
@@ -631,6 +628,10 @@ class ArzetteWorld(World):
         # Victory condition
         self.multiworld.completion_condition[self.player] = \
             lambda state: state.has(itemName.Daimur, self.player)
+        # Hills Key logic for Universal Tracker
+        if self.hills_key_location:
+            add_rule(self.get_location(self.hills_key_location),
+                     lambda state: state.has(itemName.FatalFlute, self.player))
 
     # Code written by Mysteryem, to detect an early unbeatable seed.
     def generate_basic(self) -> None:
@@ -718,6 +719,16 @@ class ArzetteWorld(World):
         # plando_items not serialisable, so we can't include it in slot_data.
         arzoptions.pop("plando_items")
 
+        # Find Hills Key location for Universal Tracker
+        hills_key_location = None
+        for location in self.multiworld.get_locations(self.player):
+            item = location.item
+            if item is None or item.player != self.player:
+                continue
+            if item.name == itemName.HillsKey:
+                hills_key_location = location.name
+                break
+
         universal_tracker_info = {
             "barrier_types": self.barrier_types,
             "early_lock": self.early_lock,
@@ -725,7 +736,8 @@ class ArzetteWorld(World):
             "level_order": self.level_order,
             "level_beacons": self.level_beacons,
             "progression_bag": self.progression_bag,
-            "options": arzoptions
+            "options": arzoptions,
+            "hills_key_location": hills_key_location
         }
         slot_data = {
             "barrier_info": barrier_info,

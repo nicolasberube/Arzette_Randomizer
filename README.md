@@ -20,6 +20,7 @@ Various information about the randomizer, known bugs, techniques, differences wi
     - Add [Bonus Scroll level warp bug](arzette/en_Arzette.md#known-bugs) trick in logic.
     - Investigate the high generation failure rate for the level_order = faramore/shuffle + shuffle_beacon = False combination.
 - A way to find where some key NPCs are without looking at the spoiler log (Faramore Munhum, Forest Cypress)
+- A way to get the path to a particular rock color (probably through better coding of regions)
 - Clean slot_data. Most of universal_tracker_info could be reconstructed from unpingable_locations
 - WebWorld and Poptracker support?
 

@@ -67,10 +67,6 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Any bonus scroll will show as already completed with their spawned item present if its specific rubies reward was already received elsewhere.
 
-- The region for the Rocks might not always show the correct path to it through Universal Tracker or `/get_logical_path`.
-
-- The Hills Key will show up in logic in Universal Tracker before obtaining the Fatal Flute if it spawned in your own world. This will not forbid proper seed completion.
-
 ## Game info
 
 Some game information might not be known from all players, but are expected to be known.
