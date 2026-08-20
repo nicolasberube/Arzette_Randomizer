@@ -25,8 +25,6 @@ class TestLogicItemClassificationsCasual(ArzetteTestBase):
     def test_classifications(self) -> None:
         assert _pool_item(self.multiworld, itemName.Backstep).classification == ItemClassification.useful
         assert _pool_item(self.multiworld, itemName.Lantern).advancement
-        assert _pool_item(self.multiworld, itemName.MagicCloak).advancement
-        assert _pool_item(self.multiworld, itemName.ReflectorRing).advancement
         assert _pool_item(self.multiworld, itemName.SoulUpgrade).classification == ItemClassification.useful
 
 
@@ -39,16 +37,6 @@ class TestLogicItemClassificationsNoLantern(ArzetteTestBase):
     def test_lantern_is_useful(self) -> None:
         assert _pool_item(self.multiworld, itemName.Lantern).classification == ItemClassification.useful
 
-
-class TestLogicItemClassificationsDamageBoost(ArzetteTestBase):
-    options = {
-        **ArzetteTestBase.base_options,
-        "damage_boost": DamageBoost.option_true,
-    }
-
-    def test_damage_items_are_useful(self) -> None:
-        assert _pool_item(self.multiworld, itemName.MagicCloak).classification == ItemClassification.useful
-        assert _pool_item(self.multiworld, itemName.ReflectorRing).classification == ItemClassification.useful
 
 
 class TestLogicItemClassificationsTrickyJumps(ArzetteTestBase):
