@@ -362,7 +362,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
                  locName.CryptsBagCrypt, locName.CryptsCandleAfterCrypt, locName.CryptsCoin,
                  locName.CryptsCandleSkelvis, locName.CryptsBagSkelvis, locName.CryptsSkelvis]:
         add_rule(world.get_location(item), lambda state:
-            can_pass_boarfoon("Red", state, world) and
+            (can_pass_boarfoon("Red", state, world) or state.has(itemName.WingedBelt, player)) and
             has_lantern(state, world))
 
     add_rule(world.get_location(locName.CryptsLifeUp), lambda state:
@@ -408,8 +408,8 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     for item in [locName.VolcanoCandleFirstRoom, locName.VolcanoCoin,
                  locName.VolcanoCandleLastRoom, locName.CrystalofRefraction]:
         add_rule(world.get_location(item), lambda state:
-            state.has_group("magic", player) or options.tricky_jumps.value or
-            options.damage_boost.value)
+            state.has_group("magic", player) or state.has(itemName.MagicCloak, player) or
+            options.tricky_jumps.value or options.damage_boost.value)
 
     add_rule(world.get_location(locName.VolcanoCoin), lambda state:
         state.has(itemName.GriffinBoots, player) or state.has(itemName.WingedBelt, player) or

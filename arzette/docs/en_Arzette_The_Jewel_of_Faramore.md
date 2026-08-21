@@ -55,6 +55,8 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - Connecting to another player from the same seed will not reset the save file.
 
+- The names of received items in the client's messages are sometimes not exactly the same as the real item's name.
+
 - Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 
 - The Power Pendant, Reflector Ring, the Chainsword trading sequence items (and possibly some others) might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.
