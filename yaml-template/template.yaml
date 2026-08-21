@@ -91,6 +91,7 @@ requires:
     # Vanilla: Each beacon will unlock its normal levels. Note that beacon locations may still be shuffled to random locations with Shuffle Beacons.
     # Faramore_Start_Shuffle: Each beacon will unlock 2 or 3 random levels, but Faramore Town is guaranteed to be one of your 2 starting levels to grant access to the shop.
     # Shuffle: Each beacon will unlock 2 or 3 random levels. Be careful that activating this might lock the store away for a while, and force the player to farm bags to get power stones.
+    # Using Level Order = Faramore_Start_Shuffle or Shuffle without enabling Shuffle Beacons will make it hard to get a successful generation.
     vanilla: 0
     faramore_start_shuffle: 50
     shuffle: 0
@@ -106,7 +107,7 @@ requires:
     # Add the Lichen Hills key and its Music Shrine location to the pool.
     # If spawned in your local game, this key is invisible until the Fatal Flute is played near it, making it difficult to find otherwise.
     # One would need to know every location check in the game, and play the Flute next to them if they are empty.
-    # The only other empty location would be the Shield Ring if you already collected the Reflector Ring.
+    # The only other empty location would be the Shield Ring if you already collected the Reflecting Ring.
     'false': 50
     'true': 0
 
@@ -181,7 +182,7 @@ requires:
 
   shuffle_barrier_types:
     # When enabled, will randomize the barrier types. All barriers of a certain type will be changed to another.
-    # If enabled, then Shuffle Coins needs to be enabled as well, or else the Crypts Coin would be unreachable.
+    # If enabled, then Shuffle Coins or Tricky Jumps needs to be enabled as well, or else the Crypts Coin would be unreachable.
     'false': 0
     'true': 50
 
