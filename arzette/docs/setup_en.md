@@ -17,7 +17,7 @@
 
 - Move the file `xdelta3.exe` to the Steam game folder with the other files.
 
-- Double click the `apply_patches.bat`. If you have a security warning pop up, click `Run`.
+- Make sure the game is not running, then double click the `apply_patches.bat`. If you have a security warning pop up, click `Run`.
 
 - The patches should be completed automatically.
 

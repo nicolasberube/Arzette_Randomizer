@@ -93,7 +93,9 @@ Some game information might not be known from all players, but are expected to b
     - The Desert Key can be accessed from the right with the Griffin Boots, or the Winged Belt and Speedy Shoes combo.
     - The Desert Beacon can be accessed without breaking the barrier with a well executed double jump.
     - The Canyon Candle at the end of the first area can be accessed with a jump from a platform on the left with the Winged Belt and Speedy Shoes.
+    - You can reach Odie's platform in Motte's house with a double jump and bypass the barrier.
     - The Swamp Bonus can be accessed without the Griffin Boots by jumping from the ladder with the Winged Belt and the Speedy Shoes.
+    - You can get in the Swamp Empty house with a double jump and bypass the barrier.
     - You can destroy the barrier to access the Crypts Coin with the Double Wave or the Bomb Gauntlet, but you need to be in a *very* precise position.
     - You can technically avoid getting hit by all the enemies in the Volcano without any items.
     - You can collect the Volcano Coin with a well placed Backstep from one of the platform on the top left, or with the Winged Belt

@@ -269,7 +269,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     for item in [locName.CanyonCandleMotteHouse, locName.CanyonOdie]:
         add_rule(world.get_location(item), lambda state:
             has_barrier("Red", state, world) or
-            state.has(itemName.GriffinBoots, player))
+            (state.has(itemName.GriffinBoots, player) and options.tricky_jumps.value))
 
     add_rule(world.get_location(locName.CanyonCandleMotteHouse), lambda state:
         has_barrier("Blue", state, world))
@@ -310,7 +310,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     for item in [locName.GriffinBoots, locName.SwampPlant, locName.SwampBonus]:
         add_rule(world.get_location(item), lambda state:
             state.has(itemName.SwampKeyGriffinBoots, player) or
-            state.has(itemName.GriffinBoots, player) or
+            (state.has(itemName.GriffinBoots, player) and options.tricky_jumps.value) or
             has_barrier("Red", state, world))
     add_rule(world.get_location(locName.SwampBonus), lambda state:
         state.has(itemName.GriffinBoots, player) or
@@ -592,6 +592,7 @@ def set_location_rules(world: "ArzetteWorld") -> None:
         can_pass_poulture("Red", state, world))
 
     add_rule(world.get_location(locName.CastleKeyNodelki), lambda state:
+        has_barrier("Blue", state, world) and
         (has_barrier("Red", state, world) and
          (state.has(itemName.GriffinBoots, player) or
           (has_barrier("Blue", state, world) and
@@ -653,6 +654,9 @@ def set_location_rules(world: "ArzetteWorld") -> None:
     for item in [locName.CastleBagBonus, locName.CastleBonus]:
         add_rule(world.get_location(item), lambda state:
             state.has(itemName.CastleKeyLeftRoom, player))
+
+    add_rule(world.get_location(locName.CastleBonus), lambda state:
+        has_barrier("Purple", state, world))
 
     # Lair Rules
     add_rule(world.get_location(locName.LairCandleTreeTrunk), lambda state:
