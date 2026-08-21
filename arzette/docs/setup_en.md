@@ -86,4 +86,4 @@ The following is optional but helps to avoid getting lost while playing the game
 
 ## More info
 
-Make sure to read the [Randomizer Information](en_Arzette.md) page for more information, techniques and known bugs about this randomizer.
+Make sure to read the [Randomizer Information](en_Arzette_The_Jewel_of_Faramore.md) page for more information, techniques and known bugs about this randomizer.

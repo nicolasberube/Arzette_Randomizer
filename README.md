@@ -8,7 +8,7 @@ It is only available for the Windows Steam version of the game.
 
 How to set up the client on your computer.
 
-# [Randomizer Information](arzette/docs/en_Arzette.md)
+# [Randomizer Information](arzette/docs/en_Arzette_The_Jewel_of_Faramore.md)
 
 Various information about the randomizer, known bugs, techniques, differences with the vanilla game, etc.
 
