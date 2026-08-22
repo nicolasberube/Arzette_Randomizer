@@ -57,6 +57,8 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 - The names of received items in the client's messages are sometimes not exactly the same as the real item's name.
 
+- The Shield ring might not spawn if you already collected the Reflecting ring.
+
 - Entering a Bonus Scroll from another level, and then Save & Exit to Map allows you to enter the level the vanilla Bonus Scroll is from, even if it isn't unlocked.
 
 - The Power Pendant, Reflector Ring, the Chainsword trading sequence items (and possibly some others) might not be rendered in the inventory because of conflicts with the other items that can spawn in that inventory slot.

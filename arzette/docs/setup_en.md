@@ -59,13 +59,13 @@ The following is optional but helps to avoid getting lost while playing the game
 
 - Find the save files folder of the game. On Windows, it is normally located on `C:\Users\[USER]\AppData\Local\Arzette`.
 
-- You do not need to back up your save file `savedata.ini`. The Archipelago save file will be separate as `savedata_rando.ini`. Note that if you play multiple players on the same seed, there will be save file conflicts and you will need to manage them manually.
-
 - Start the game either from Steam, or by double clicking on your now patched `Arzette.exe` in your Steam game folder.
 
-- Upon booting the game, a pop-up will appear asking you for Archipelago connection information. This information will be saved under `apconfig.txt` in the save files folder. To change connection information, you can either press Y on the title screen (you will need to reboot the game after entering the new information there), or directly modify the `apconfig.txt` file, or delete the `apconfig.txt` file and enter the new information when rebooting the game.
+- Upon booting the game, a pop-up will appear asking you for Archipelago connection information. Note that the server and the the port number are entered separately (see [the end of the previous section](#set-up-an-archipelago-seed-and-server) for info on the conncetion information). This information will be saved under `apconfig.txt` in the save files folder. To change connection information, you can either press Y on the title screen (you will need to reboot the game after entering the new information there), or directly modify the `apconfig.txt` file, or delete the `apconfig.txt` file and enter the new information when rebooting the game.
 
 - Sometimes, the game will not boot if the connection information is wrong. If this is the case, delete the `apconfig.txt` file in the save files folder and try again.
+
+- You will need to clear your save file upon starting a new seed. Note that you do not need to back up your save file `savedata.ini`. When playing, the Archipelago save file will be separate as `savedata_rando.ini`. Note that if you play multiple players on the same seed, there will be save file conflicts and you will need to manage them manually.
 
 - Sometimes, you might not receive all your items on your first connection. On your very first connection to a seed, after you select New Game, it is recommended to reboot the game. It should work properly after that.
 
