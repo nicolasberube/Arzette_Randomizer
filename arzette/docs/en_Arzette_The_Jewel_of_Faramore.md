@@ -49,6 +49,8 @@ Due to the way the game is coded, and the nature of the need for randomization a
 
 ## Known bugs
 
+- You can collect the 200 Rubies location without the Rope Ladder if you already have the 200 Rubies item.
+
 - The game cannot load if the connection information is wrong. You need to manually edit or delete the `apconfig.txt` file from the save folder to fix this.
 
 - Changing the connection information from within the game by pressing Y needs a reboot.
