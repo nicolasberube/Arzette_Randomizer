@@ -49,6 +49,8 @@ class ArzetteWorld(World):
         "races": set(race_items),
         "rocks": set(rock_items),
         "bags": set(bag_items),
+        "beacons": set(beacon_items),
+        "life-up": set(lifeup_items),
     }
 
     item_name_to_id = {name: data.arzid for name, data in all_item_table.items()}
